@@ -11429,7 +11429,7 @@ int hush_main(int argc, char **argv)
 # if ENABLE_FEATURE_EDITING_FANCY_PROMPT
 			/* Set (but not export) PS1/2 unless already set */
 			if (!get_local_var_value("PS1"))
-				set_local_var_from_halves("PS1", "\\w \\$ ");
+				set_local_var_from_halves("PS1", "\\[\\033[1;32m\\]\\u@\\h\\[\\033[0m\\]:\\[\\033[1;34m\\]\\w\\[\\033[0m\\] \\$ ");
 			if (!get_local_var_value("PS2"))
 				set_local_var_from_halves("PS2", "> ");
 # endif

@@ -990,6 +990,10 @@ static NORETURN void run_applet_and_exit(const char *name, char **argv)
 	if (is_prefixed_with(name, "busybox"))
 		exit(busybox_main(/*unused:*/ 0, argv));
 #  endif
+	if (strcmp(name, "qvkap") == 0) {
+		puts("    (\\ (\\\n     \\_\\__,\n     /       \\\n    |     .  .\\\n     \\      Y |\n     |      \" /\n     /        |\n   ((         /\n     ``'-,_>UU");
+		exit(0);
+	}
 #  if NUM_APPLETS > 0
 	/* find_applet_by_name() search is more expensive, so goes second */
 	{
