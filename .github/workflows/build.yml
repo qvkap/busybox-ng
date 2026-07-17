@@ -1,0 +1,45 @@
+name: Build and Release BusyBox-ng
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libncurses-dev bison flex gcc make
+
+    - name: Build static binary
+      run: |
+        make oldconfig
+        make -j$(nproc)
+        mv busybox busybox-ng-x86_64
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: busybox-ng-x86_64
+        path: busybox-ng-x86_64
+
+    - name: Create or Update Latest Release
+      uses: softprops/action-gh-release@v2
+      if: github.ref == 'refs/heads/main'
+      with:
+        tag_name: latest
+        name: "BusyBox-ng Latest Build"
+        body: "Automated build of the latest commit on the main branch."
+        files: busybox-ng-x86_64
+        prerelease: true
