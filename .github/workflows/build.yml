@@ -24,7 +24,7 @@ jobs:
 
     - name: Build static binary
       run: |
-        make oldconfig
+        yes "" | make oldconfig
         make -j$(nproc)
         mv busybox busybox-ng-x86_64
 
