@@ -10,8 +10,9 @@ Hello everyone, this is my mini project! I removed utilities that I personally d
 * **Custom `curl` Applet:** Added a lightweight, built-in `curl` implementation with support for HTTP/HTTPS, custom methods (`-X`), headers (`-H`), and request bodies (`-d`).
 * **Modern `wget2`:** Re-written `wget` implementation that acts as a robust `wget2` with native TLS support through the internal `ssl_client`.
 * **Zero Dependencies:** Fully static compilation (`CONFIG_STATIC=y`), meaning it requires no external libraries (like glibc or musl) to run on a target system.
+* **100% GNU Coreutils Compatibility:** All `coreutils` applets have been maximized with full POSIX and GNU feature-flags enabled for complete script compatibility.
+* **Enhanced `vim` Applet:** The builtin `vi` editor has been aliased to `vim` and configured with maximum features (undo, regex search, yank marks, colon commands).
 * **Debloated:** Removed unused and heavy applets (like `dpkg`, `rpm`, `zstdcat`, `lzop`, etc.) to keep the binary as small as possible while retaining core Unix functionalities.
-
 ## Usage
 
 Since this is a multi-call binary, you can use it just like the original BusyBox:

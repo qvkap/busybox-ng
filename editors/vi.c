@@ -177,21 +177,20 @@
 //config:	delete, undo and substitution commands.
 
 //applet:IF_VI(APPLET(vi, BB_DIR_BIN, BB_SUID_DROP))
+//applet:IF_VI(APPLET_ODDNAME(vim, vi, BB_DIR_USR_BIN, BB_SUID_DROP, vim))
 
 //kbuild:lib-$(CONFIG_VI) += vi.o
 
 //usage:#define vi_trivial_usage
-//usage:       IF_FEATURE_VI_COLON("[-c CMD] ")IF_FEATURE_VI_READONLY("[-R] ")"[-H] [FILE]..."
+//usage:       "[OPTIONS] [FILE]..."
 //usage:#define vi_full_usage "\n\n"
 //usage:       "Edit FILE\n"
-//usage:	IF_FEATURE_VI_COLON(
 //usage:     "\n	-c CMD	Initial command to run ($EXINIT and ~/.exrc also available)"
-//usage:	)
-//usage:	IF_FEATURE_VI_READONLY(
 //usage:     "\n	-R	Read-only"
-//usage:	)
-//usage:     "\n	-H	List available features"
-// note: non-standard, "vim -H" is Hebrew mode (bidi support)
+//usage:     "\n	-H	Short help regarding available features"
+//usage:
+//usage:#define vim_trivial_usage vi_trivial_usage
+//usage:#define vim_full_usage vi_full_usage
 
 #include "libbb.h"
 // Should be after libbb.h: on some systems regex.h needs sys/types.h:
