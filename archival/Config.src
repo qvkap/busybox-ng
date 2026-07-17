@@ -13,6 +13,10 @@ config FEATURE_SEAMLESS_ZSTD
 	bool "Make tar, rpm, modprobe etc understand .zst data"
 	default y
 
+config FEATURE_SEAMLESS_LZ4
+	bool "Make tar, rpm, modprobe etc understand .lz4 data"
+	default y
+
 config FEATURE_SEAMLESS_LZMA
 	bool "Make tar, rpm, modprobe etc understand .lzma data"
 	default y

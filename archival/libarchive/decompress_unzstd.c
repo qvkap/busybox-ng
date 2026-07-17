@@ -1,104 +1,94 @@
 /* vi: set sw=4 ts=4: */
-/*
- * Zstandard decompression for busybox
- *
- * Copyright (C) 2024 busybox-ng contributors
- *
- * Licensed under GPLv2 or later, see file LICENSE in this source tree.
- */
 #include "libbb.h"
 #include "bb_archive.h"
 
-/*
- * Zstd frame format:
- *   Magic number: 0xFD2FB528 (4 bytes, little-endian)
- *   Frame header (variable size)
- *   Data blocks
- *   Optional checksum (xxhash32)
- *
- * We use the external 'zstd' command for actual decompression,
- * reading/writing via pipes. This is the simplest and most
- * maintainable approach — the zstd format is complex and the
- * reference library is large (~100KB compiled).
- */
+/* Forward declare ZSTD types since we compile zstd_declib.c separately */
+typedef struct ZSTD_DStream_s ZSTD_DStream;
+typedef struct {
+    const void* src;
+    size_t size;
+    size_t pos;
+} ZSTD_inBuffer;
+typedef struct {
+    void*  dst;
+    size_t size;
+    size_t pos;
+} ZSTD_outBuffer;
+
+ZSTD_DStream* ZSTD_createDStream(void);
+size_t ZSTD_freeDStream(ZSTD_DStream* zds);
+size_t ZSTD_initDStream(ZSTD_DStream* zds);
+size_t ZSTD_decompressStream(ZSTD_DStream* zds, ZSTD_outBuffer* output, ZSTD_inBuffer* input);
+unsigned ZSTD_isError(size_t code);
+const char* ZSTD_getErrorName(size_t code);
+size_t ZSTD_DStreamInSize(void);
+size_t ZSTD_DStreamOutSize(void);
 
 IF_DESKTOP(long long) int FAST_FUNC
 unpack_zstd_stream(transformer_state_t *xstate)
 {
-	IF_DESKTOP(long long) int status = 0;
-	unsigned char magic_buf[4];
-
-	if (!xstate->signature_skipped) {
-		if (full_read(xstate->src_fd, magic_buf, 4) != 4) {
-			bb_simple_error_msg("short read");
-			return -1;
-		}
-		/* Verify zstd magic: 0xFD2FB528 little-endian */
-		if (magic_buf[0] != 0x28
-		 || magic_buf[1] != 0xB5
-		 || magic_buf[2] != 0x2F
-		 || magic_buf[3] != 0xFD
-		) {
-			bb_simple_error_msg("invalid zstd magic");
-			return -1;
-		}
-		xstate->signature_skipped = 4;
+	ZSTD_DStream* dctx = ZSTD_createDStream();
+	if (!dctx) {
+		bb_simple_error_msg("zstd alloc failed");
+		return -1;
 	}
 
-	/*
-	 * Seek back so that the external tool sees the full stream
-	 * including the magic bytes.
-	 */
+	ZSTD_initDStream(dctx);
+
+	ZSTD_inBuffer input = { NULL, 0, 0 };
+	ZSTD_outBuffer output = { NULL, 0, 0 };
+
+	size_t in_size = ZSTD_DStreamInSize();
+	size_t out_size = ZSTD_DStreamOutSize();
+	char *in_buf = xmalloc(in_size);
+	char *out_buf = xmalloc(out_size);
+
+	output.dst = out_buf;
+	output.size = out_size;
+
+	IF_DESKTOP(long long) int total_out = 0;
+
 	if (xstate->signature_skipped) {
-		xlseek(xstate->src_fd, -(off_t)xstate->signature_skipped, SEEK_CUR);
+		memcpy(in_buf, &xstate->magic, xstate->signature_skipped);
+		input.src = in_buf;
+		input.size = xstate->signature_skipped;
+		input.pos = 0;
 		xstate->signature_skipped = 0;
 	}
 
-	{
-		struct fd_pair fd_pipe;
-		int pid;
-
-		xpiped_pair(fd_pipe);
-		pid = BB_MMU ? xfork() : xvfork();
-		if (pid == 0) {
-			/* Child: exec zstd -d */
-			char *argv[4];
-
-			close(fd_pipe.rd);
-			xmove_fd(xstate->src_fd, STDIN_FILENO);
-			xmove_fd(fd_pipe.wr, STDOUT_FILENO);
-			argv[0] = (char *)"zstd";
-			argv[1] = (char *)"-dc";
-			argv[2] = (char *)"-";
-			argv[3] = NULL;
-			BB_EXECVP_or_die(argv);
+	while (1) {
+		if (input.pos == input.size) {
+			ssize_t n = safe_read(xstate->src_fd, in_buf, in_size);
+			if (n < 0) {
+				bb_simple_error_msg("zstd read error");
+				total_out = -1;
+				break;
+			}
+			if (n == 0) break;
+			input.src = in_buf;
+			input.size = n;
+			input.pos = 0;
 		}
 
-		/* Parent */
-		close(fd_pipe.wr);
-		{
-			char buf[4096];
-			ssize_t n;
-			while ((n = safe_read(fd_pipe.rd, buf, sizeof(buf))) > 0) {
-				if (transformer_write(xstate, buf, n) != n) {
-					status = -1;
-					break;
-				}
-				status += n;
-			}
+		output.pos = 0;
+		size_t ret = ZSTD_decompressStream(dctx, &output, &input);
+		if (ZSTD_isError(ret)) {
+			bb_error_msg("zstd error: %s", ZSTD_getErrorName(ret));
+			total_out = -1;
+			break;
 		}
-		close(fd_pipe.rd);
 
-		/* Reap child */
-		{
-			int child_status;
-			safe_waitpid(pid, &child_status, 0);
-			if (WIFEXITED(child_status) && WEXITSTATUS(child_status) != 0) {
-				bb_simple_error_msg("zstd decompression failed");
-				return -1;
+		if (output.pos > 0) {
+			if (transformer_write(xstate, output.dst, output.pos) != (ssize_t)output.pos) {
+				total_out = -1;
+				break;
 			}
+			total_out += output.pos;
 		}
 	}
 
-	return status;
+	free(in_buf);
+	free(out_buf);
+	ZSTD_freeDStream(dctx);
+	return total_out;
 }

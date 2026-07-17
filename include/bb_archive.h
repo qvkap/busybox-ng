@@ -20,6 +20,9 @@ enum {
 	/* .zst signature: 0x28, 0xb5, 0x2f, 0xfd */
 	ZSTD_MAGIC1 = 256 * 0x28 + 0xB5,
 	ZSTD_MAGIC2 = 256 * 0x2F + 0xFD,
+	/* .lz4 signature: 0x04, 0x22, 0x4D, 0x18 */
+	LZ4_MAGIC1 = 256 * 0x04 + 0x22,
+	LZ4_MAGIC2 = 256 * 0x4D + 0x18,
 #else
 	COMPRESS_MAGIC = 0x9d1f,
 	GZIP_MAGIC  = 0x8b1f,
@@ -29,6 +32,8 @@ enum {
 	XZ_MAGIC1a  = 0xfd + ('7' + ('z' + 'X' * 256) * 256) * 256,
 	ZSTD_MAGIC1 = 0x28 + 0xB5 * 256,
 	ZSTD_MAGIC2 = 0x2F + 0xFD * 256,
+	LZ4_MAGIC1 = 0x04 + 0x22 * 256,
+	LZ4_MAGIC2 = 0x4D + 0x18 * 256,
 	XZ_MAGIC2a  = 'Z' + 0 * 256,
 #endif
 };
@@ -261,6 +266,7 @@ IF_DESKTOP(long long) int unpack_bz2_stream(transformer_state_t *xstate) FAST_FU
 IF_DESKTOP(long long) int unpack_lzma_stream(transformer_state_t *xstate) FAST_FUNC;
 IF_DESKTOP(long long) int unpack_xz_stream(transformer_state_t *xstate) FAST_FUNC;
 IF_DESKTOP(long long) int unpack_zstd_stream(transformer_state_t *xstate) FAST_FUNC;
+IF_DESKTOP(long long) int unpack_lz4_stream(transformer_state_t *xstate) FAST_FUNC;
 
 char* append_ext(char *filename, const char *expected_ext) FAST_FUNC;
 int bbunpack(char **argv,

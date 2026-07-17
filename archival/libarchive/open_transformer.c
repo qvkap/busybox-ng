@@ -215,6 +215,19 @@ static transformer_state_t *setup_transformer_on_fd(int fd, int die_if_not_compr
 			goto found_magic;
 		}
 	}
+	if (ENABLE_FEATURE_SEAMLESS_LZ4
+	 && xstate->magic.b16[0] == LZ4_MAGIC1
+	) {
+		uint16_t v16;
+		xstate->signature_skipped = 4;
+		xread(fd, &xstate->magic.b16[1], 2);
+		move_from_unaligned16(v16, &xstate->magic.b16[1]);
+		if (v16 == LZ4_MAGIC2) {
+			xstate->xformer = unpack_lz4_stream;
+			USE_FOR_NOMMU(xstate->xformer_prog = "unlz4";)
+			goto found_magic;
+		}
+	}
 
 	/* No known magic seen */
 	if (die_if_not_compressed)
@@ -222,6 +235,7 @@ static transformer_state_t *setup_transformer_on_fd(int fd, int die_if_not_compr
 			IF_FEATURE_SEAMLESS_BZ2("/bzip2")
 			IF_FEATURE_SEAMLESS_XZ("/xz")
 			IF_FEATURE_SEAMLESS_ZSTD("/zstd")
+			IF_FEATURE_SEAMLESS_LZ4("/lz4")
 			" magic");
 
 	/* Some callers expect this function to "consume" fd
