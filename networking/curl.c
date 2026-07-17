@@ -100,7 +100,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 			eargv[3] = host_port;
 			eargv[4] = NULL;
 			execvp(bb_busybox_exec_path, eargv);
-			bb_perror_msg_and_die("can't execute '%s'", bb_busybox_exec_path);
+			bb_simple_perror_msg_and_die("can't execute busybox ssl_client");
 		}
 		close(sp[1]);
 		fd = sp[0];
@@ -118,7 +118,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 
 	fp = fdopen(fd, "r+");
 	if (!fp)
-		bb_perror_msg_and_die("fdopen");
+		bb_simple_perror_msg_and_die("fdopen");
 
 	if (data && strcmp(method, "GET") == 0)
 		method = (char *)"POST";
@@ -147,6 +147,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 	if (!line) {
 		bb_simple_error_msg_and_die("no response from server");
 	}
+	free(line);
 	
 	/* Skip headers */
 	while ((line = xmalloc_fgetline(fp)) != NULL) {
@@ -168,7 +169,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 		int n;
 		while ((n = fread(buf, 1, sizeof(buf), fp)) > 0) {
 			if (full_write(out_fd, buf, n) != n) {
-				bb_perror_msg_and_die("write error");
+				bb_simple_perror_msg_and_die("write error");
 			}
 		}
 	}

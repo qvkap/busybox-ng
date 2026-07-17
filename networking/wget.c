@@ -197,6 +197,7 @@ static int w2_download(const char *url, const char *outfile,
 	off_t content_len = -1;
 	off_t resume_from = 0;
 	char *current_url = xstrdup(url);
+	char *allocated_outfile = NULL;
 #if ENABLE_TLS
 	int no_check = !!(opts & OPT_NO_CHECK_CERT);
 #else
@@ -218,21 +219,22 @@ static int w2_download(const char *url, const char *outfile,
 		goto out_free;
 
 	/* Determine output filename */
-	if (!outfile) {
+	if (!outfile && !allocated_outfile) {
 		const char *fname = bb_basename(u.path);
 		if (!fname || !*fname || strcmp(fname, "/") == 0)
 			fname = "index.html";
 		if (prefix)
-			outfile = xasprintf("%s/%s", prefix, fname);
+			allocated_outfile = xasprintf("%s/%s", prefix, fname);
 		else
-			outfile = xstrdup(fname);
+			allocated_outfile = xstrdup(fname);
 	}
+	const char *actual_outfile = allocated_outfile ? allocated_outfile : outfile;
 
 	/* Resume? */
 	resume_from = 0;
-	if (do_continue && strcmp(outfile, "-") != 0) {
+	if (do_continue && strcmp(actual_outfile, "-") != 0) {
 		struct stat st;
-		if (stat(outfile, &st) == 0)
+		if (stat(actual_outfile, &st) == 0)
 			resume_from = st.st_size;
 	}
 
@@ -294,7 +296,7 @@ static int w2_download(const char *url, const char *outfile,
 	    status == 307 || status == 308) {
 		fclose(fp); fp = NULL;
 		free(u.alloc); u.alloc = NULL;
-		outfile = NULL; /* recalculate from new URL */
+		free(allocated_outfile); allocated_outfile = NULL;
 		redir_count++;
 		goto redirect;
 	}
@@ -305,14 +307,14 @@ static int w2_download(const char *url, const char *outfile,
 	}
 
 	/* Open output */
-	if (strcmp(outfile, "-") == 0) {
+	if (strcmp(actual_outfile, "-") == 0) {
 		out_fd = STDOUT_FILENO;
 	} else {
 		int flags = O_WRONLY | O_CREAT;
 		flags |= (resume_from > 0) ? O_APPEND : O_TRUNC;
-		out_fd = xopen(outfile, flags);
+		out_fd = xopen(actual_outfile, flags);
 		if (!quiet)
-			fprintf(stderr, "Saving to: '%s'\n", outfile);
+			fprintf(stderr, "Saving to: '%s'\n", actual_outfile);
 	}
 
 	/* Read body */
@@ -370,6 +372,7 @@ static int w2_download(const char *url, const char *outfile,
 	free(u.alloc);
  out:
 	free(current_url);
+	free(allocated_outfile);
 	return ret;
 }
 
