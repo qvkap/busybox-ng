@@ -21,6 +21,7 @@ lib-$(CONFIG_FTPGET) += ftpgetput.o
 lib-$(CONFIG_FTPPUT) += ftpgetput.o
 lib-$(CONFIG_HOSTNAME) += hostname.o
 lib-$(CONFIG_DNSDOMAINNAME) += hostname.o
+lib-$(CONFIG_FEATURE_HTTP2) += http2.o
 lib-$(CONFIG_HTTPD) += httpd.o
 lib-$(CONFIG_IFCONFIG) += ifconfig.o interface.o
 lib-$(CONFIG_IFENSLAVE) += ifenslave.o interface.o

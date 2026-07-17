@@ -1612,6 +1612,16 @@ static void send_client_hello_and_alloc_hsd(tls_state_t *tls, const char *sni)
 // wolfssl library sends this option, RFC 7627 (closes a security weakness, some servers may require it. TODO?):
 //   0017 0000 - extended master secret
 	};
+	/* ALPN extension (RFC 7301): advertise h2 and http/1.1 */
+	static const uint8_t alpn_extension[] = {
+		0x00,0x10, /* extension_type: ALPN */
+		0x00,0x0e, /* extension data length: 14 */
+		0x00,0x0c, /* ALPN protocol list length: 12 */
+		0x02,      /* protocol length: 2 */
+		'h','2',   /* "h2" */
+		0x08,      /* protocol length: 8 */
+		'h','t','t','p','/','1','.','1', /* "http/1.1" */
+	};
 	struct client_hello *record;
 	uint8_t *ptr;
 	int len;
@@ -1620,6 +1630,7 @@ static void send_client_hello_and_alloc_hsd(tls_state_t *tls, const char *sni)
 
 	ext_len = 0;
 	ext_len += sizeof(extensions);
+	ext_len += sizeof(alpn_extension);
 	if (sni_len)
 		ext_len += 9 + sni_len;
 
@@ -1653,6 +1664,8 @@ static void send_client_hello_and_alloc_hsd(tls_state_t *tls, const char *sni)
 		ptr = mempcpy(&ptr[9], sni, sni_len);
 	}
 	memcpy(ptr, extensions, sizeof(extensions));
+	ptr += sizeof(extensions);
+	memcpy(ptr, alpn_extension, sizeof(alpn_extension));
 
 	tls->hsd = xzalloc(sizeof(*tls->hsd));
 	/* HANDSHAKE HASH: ^^^ + len if need to save saved_client_hello */
@@ -1731,6 +1744,40 @@ static void get_server_hello(tls_state_t *tls)
 	set_cipher_parameters(tls, cipherid);
 	dbg("server chose cipher %04x", tls->cipher_id);
 	dbg("key_size:%u MAC_size:%u IV_size:%u", tls->key_size, tls->MAC_size, tls->IV_size);
+
+	/* Parse extensions in ServerHello to find ALPN response */
+	{
+		/* cipherid points to the 2-byte cipher, comprtype follows it */
+		uint8_t *ext_start = cipherid + 3; /* skip cipherid(2) + comprtype(1) */
+		uint8_t *data_end = tls->inbuf + RECHDR_LEN + len;
+		if (ext_start + 2 <= data_end) {
+			unsigned ext_total = 0x100 * ext_start[0] + ext_start[1];
+			uint8_t *ep = ext_start + 2;
+			uint8_t *ext_end = ep + ext_total;
+			if (ext_end > data_end)
+				ext_end = data_end;
+			while (ep + 4 <= ext_end) {
+				unsigned etype = 0x100 * ep[0] + ep[1];
+				unsigned elen = 0x100 * ep[2] + ep[3];
+				ep += 4;
+				if (ep + elen > ext_end)
+					break;
+				if (etype == 0x0010 /* ALPN */) {
+					/* ALPN response: 2 bytes list len, then 1 byte proto len + proto */
+					if (elen >= 4) {
+						unsigned proto_len = ep[2];
+						if (proto_len == 2 && ep[3] == 'h' && ep[4] == '2') {
+							tls->alpn_result = 1; /* h2 */
+							dbg("ALPN: server selected h2");
+						} else {
+							dbg("ALPN: server selected http/1.1");
+						}
+					}
+				}
+				ep += elen;
+			}
+		}
+	}
 
 	/* Handshake hash eventually destined to FINISHED record
 	 * is sha256 regardless of cipher

@@ -198,6 +198,11 @@ config DNSDOMAINNAME
 	default y
 	help
 	Alias to "hostname -d".
+config FEATURE_HTTP2
+	bool "HTTP/2 protocol support"
+	default y
+	help
+	Enable HTTP/2 protocol support for curl and wget.
 config HTTPD
 	bool "httpd (32 kb)"
 	default y

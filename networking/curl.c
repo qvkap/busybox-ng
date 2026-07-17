@@ -32,6 +32,9 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 	char *data = NULL;
 	char *outfile = (char *)"-";
 	llist_t *headers = NULL;
+	char *colon;
+	int chunked = 0;
+	int out_fd;
 	unsigned opt;
 	char *url;
 	int fd;
@@ -44,7 +47,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 	char *path;
 	char *scheme;
 
-	opt = getopt32(argv, "X:H:*d:o:s", &method, &headers, &data, &outfile);
+	getopt32(argv, "X:H:*d:o:s", &method, &headers, &data, &outfile);
 	argv += optind;
 
 	if (!argv[0])
@@ -74,7 +77,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 	is_https = (strcasecmp(scheme, "https") == 0);
 	port = is_https ? 443 : 80;
 
-	char *colon = strrchr(host, ':');
+	colon = strrchr(host, ':');
 	if (colon) {
 		*colon = '\0';
 		port = atoi(colon + 1);
@@ -148,17 +151,20 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 		bb_simple_error_msg_and_die("no response from server");
 	}
 	free(line);
-	
-	/* Skip headers */
+	/* Read headers */
 	while ((line = xmalloc_fgetline(fp)) != NULL) {
 		if (line[0] == '\0' || (line[0] == '\r' && line[1] == '\0')) {
 			free(line);
 			break;
 		}
+		if (strncasecmp(line, "Transfer-Encoding:", 18) == 0 &&
+		    strstr(line + 18, "chunked")) {
+			chunked = 1;
+		}
 		free(line);
 	}
 
-	int out_fd = STDOUT_FILENO;
+	out_fd = STDOUT_FILENO;
 	if (strcmp(outfile, "-") != 0) {
 		out_fd = xopen(outfile, O_WRONLY | O_CREAT | O_TRUNC);
 	}
@@ -166,12 +172,38 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 	/* Read body */
 	{
 		char buf[4096];
-		int n;
-		while ((n = fread(buf, 1, sizeof(buf), fp)) > 0) {
-			if (full_write(out_fd, buf, n) != n) {
-				bb_simple_perror_msg_and_die("write error");
+		if (chunked) {
+			while (1) {
+				char *sz_line;
+				size_t chunk_sz;
+				char *crlf;
+
+				sz_line = xmalloc_fgetline(fp);
+				if (!sz_line) break;
+				chunk_sz = strtoul(sz_line, NULL, 16);
+				free(sz_line);
+				if (chunk_sz == 0) break;
+				while (chunk_sz > 0) {
+					size_t to_read = chunk_sz < sizeof(buf) ? chunk_sz : sizeof(buf);
+					size_t got = fread(buf, 1, to_read, fp);
+					if (got == 0) goto body_done;
+					if (full_write(out_fd, buf, got) != got)
+						bb_simple_perror_msg_and_die("write error");
+					chunk_sz -= got;
+				}
+				crlf = xmalloc_fgetline(fp);
+				free(crlf);
+			}
+		} else {
+			int n;
+			while ((n = fread(buf, 1, sizeof(buf), fp)) > 0) {
+				if (full_write(out_fd, buf, n) != n) {
+					bb_simple_perror_msg_and_die("write error");
+				}
 			}
 		}
+body_done:
+		;
 	}
 
 	fclose(fp);

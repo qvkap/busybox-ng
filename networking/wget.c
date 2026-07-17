@@ -45,6 +45,9 @@
 //usage:     "\n	--no-check-certificate  Don't verify TLS certificate"
 
 #include "libbb.h"
+#if ENABLE_FEATURE_HTTP2
+#include "http2.h"
+#endif
 #include <sys/wait.h>
 #define W2_USER_AGENT  "Wget/busybox"
 #define W2_BUF_SIZE    (32 * 1024)
@@ -100,8 +103,12 @@ static int w2_parse_url(const char *url, struct w2_url *u)
 	u->host = s;
 	/* find path */
 	p = strchr(s, '/');
-	u->path = p ? p : (char*)"/";
-	if (p) *p = '\0';
+	if (p) {
+		u->path = xstrdup(p); /* Keep the leading slash */
+		*p = '\0';
+	} else {
+		u->path = xstrdup("/");
+	}
 
 	/* port in host? */
 	p = strchr(u->host, ':');
@@ -138,15 +145,16 @@ static FILE *w2_connect(struct w2_url *u, int no_check_cert UNUSED_PARAM)
 		pid = xfork();
 		if (pid == 0) {
 			/* child: runs TLS, connects to host_port, proxies to sp[1] */
-			char *argv[5];
+			char *argv[6];
 			close(sp[0]);
 			xmove_fd(sp[1], 0);
 			xdup2(0, 1);
 			argv[0] = (char*)"ssl_client";
-			argv[1] = (char*)"-n";
-			argv[2] = servername;
-			argv[3] = host_port;
-			argv[4] = NULL;
+			argv[1] = (char*)"-A";
+			argv[2] = (char*)"-n";
+			argv[3] = servername;
+			argv[4] = host_port;
+			argv[5] = NULL;
 			BB_EXECVP_or_die(argv);
 		}
 		close(sp[1]);
@@ -198,6 +206,11 @@ static int w2_download(const char *url, const char *outfile,
 	off_t resume_from = 0;
 	char *current_url = xstrdup(url);
 	char *allocated_outfile = NULL;
+	const char *actual_outfile = NULL;
+	int is_h2 = 0;
+#if ENABLE_FEATURE_HTTP2
+	h2_state_t h2;
+#endif
 #if ENABLE_TLS
 	int no_check = !!(opts & OPT_NO_CHECK_CERT);
 #else
@@ -218,6 +231,15 @@ static int w2_download(const char *url, const char *outfile,
 	if (!fp)
 		goto out_free;
 
+#if ENABLE_FEATURE_HTTP2
+	if (strcasecmp(u.scheme, "https") == 0) {
+		char alpn[3];
+		if (read(fileno(fp), alpn, 3) == 3 && alpn[0] == 'h' && alpn[1] == '2') {
+			is_h2 = 1;
+		}
+	}
+#endif
+
 	/* Determine output filename */
 	if (!outfile && !allocated_outfile) {
 		const char *fname = bb_basename(u.path);
@@ -228,7 +250,7 @@ static int w2_download(const char *url, const char *outfile,
 		else
 			allocated_outfile = xstrdup(fname);
 	}
-	const char *actual_outfile = allocated_outfile ? allocated_outfile : outfile;
+	actual_outfile = allocated_outfile ? allocated_outfile : outfile;
 
 	/* Resume? */
 	resume_from = 0;
@@ -238,12 +260,28 @@ static int w2_download(const char *url, const char *outfile,
 			resume_from = st.st_size;
 	}
 
-	/* Send request */
-	fprintf(fp, "GET %s HTTP/1.1\r\n"
-	            "Host: %s\r\n"
-	            "User-Agent: %s\r\n"
-	            "Connection: close\r\n"
-	            "Accept: */*\r\n",
+#if ENABLE_FEATURE_HTTP2
+	if (is_h2) {
+		h2_init(&h2, fileno(fp));
+		if (h2_send_request(&h2, "GET", u.host, u.path, agent ? agent : W2_USER_AGENT) != 0) {
+			bb_error_msg("h2_send_request failed");
+			h2_close(&h2);
+			goto out_close;
+		}
+		status = h2.status_code;
+		content_len = h2.content_length;
+		if (!quiet)
+			fprintf(stderr, "HTTP/2 %d\n", status);
+		chunked = 0; /* H2 doesn't use chunked transfer encoding */
+	} else
+#endif
+	{
+		/* Send HTTP/1.1 request */
+		fprintf(fp, "GET %s HTTP/1.1\r\n"
+		            "Host: %s\r\n"
+		            "User-Agent: %s\r\n"
+		            "Connection: close\r\n"
+		            "Accept: */*\r\n",
 	        u.path, u.host,
 	        agent ? agent : W2_USER_AGENT);
 	if (resume_from > 0)
@@ -290,6 +328,7 @@ static int w2_download(const char *url, const char *outfile,
 		}
 		free(line);
 	}
+	}
 
 	/* Handle redirects */
 	if (status == 301 || status == 302 || status == 303 ||
@@ -322,6 +361,16 @@ static int w2_download(const char *url, const char *outfile,
 		char *buf = xmalloc(W2_BUF_SIZE);
 		off_t total = 0;
 
+#if ENABLE_FEATURE_HTTP2
+		if (is_h2) {
+			ssize_t n;
+			while ((n = h2_read_body(&h2, buf, W2_BUF_SIZE)) > 0) {
+				full_write(out_fd, buf, n);
+				total += n;
+			}
+			h2_close(&h2);
+		} else
+#endif
 		if (chunked) {
 			/* Chunked transfer encoding */
 			while (1) {
@@ -370,6 +419,7 @@ static int w2_download(const char *url, const char *outfile,
 	if (out_fd >= 0 && out_fd != STDOUT_FILENO) close(out_fd);
  out_free:
 	free(u.alloc);
+	free(u.path);
  out:
 	free(current_url);
 	free(allocated_outfile);

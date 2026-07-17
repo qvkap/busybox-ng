@@ -32,13 +32,14 @@ int ssl_client_main(int argc UNUSED_PARAM, char **argv)
 		OPT_r = (1 << 1),
 		OPT_n = (1 << 2),
 		OPT_e = (1 << 3),
+		OPT_A = (1 << 4),
 	};
 
 	// INIT_G();
 	tls = new_tls_state();
 
 	/* "+": stop on first non-option */
-	opt = getopt32(argv, "^+" "s:+r:+n:e" "\0"
+	opt = getopt32(argv, "^+" "s:+r:+n:eA" "\0"
 		"e--s:e--r:s--e:r--e", &tls->ofd, &tls->ifd, &sni
 	);
 	argv += optind;
@@ -99,6 +100,14 @@ int ssl_client_main(int argc UNUSED_PARAM, char **argv)
 	}
 
 	tls_handshake(tls, sni);
+
+	/* If -A flag was given, report the negotiated ALPN protocol */
+	if (opt & OPT_A) {
+		if (tls->alpn_result == 1)
+			full_write(STDOUT_FILENO, "h2\n", 3);
+		else
+			full_write(STDOUT_FILENO, "h1\n", 3);
+	}
 
 	exit_if_stdin_closed = (opt & OPT_s) ? TLSLOOP_EXIT_ON_LOCAL_EOF : 0;
 	tls_run_copy_loop(tls, /*flags*/ exit_if_stdin_closed);
