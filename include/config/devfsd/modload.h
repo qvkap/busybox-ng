@@ -1,0 +1,1 @@
+#define CONFIG_DEVFSD_MODLOAD 1

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. ./testing.sh
+
+testing "wget2 (not found error)" \
+	"wget2 2>&1 | grep -q 'external wget2 not found' && echo YES || echo NO" \
+	"YES\n" "" ""
+
+testing "wget2 exit code on error" \
+	"wget2 2>/dev/null; echo \$?" \
+	"1\n" "" ""
+
+exit $FAILCOUNT

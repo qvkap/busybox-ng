@@ -1,0 +1,39 @@
+#!/bin/sh
+
+. ./testing.sh
+
+# Test insmod error handling with non-existent file
+testing "insmod non-existent" \
+	"insmod non_existent_module.ko 2>&1" \
+	"insmod: can't insert 'non_existent_module.ko': No such file or directory\n" "" ""
+
+# Test insmod error handling with invalid ELF (non-compressed)
+testing "insmod invalid ELF" \
+	"insmod /dev/null 2>&1 | grep -q -E 'invalid module format|Operation not permitted|short read' && echo YES || echo NO" \
+	"YES\n" "" ""
+
+# Test insmod with gzip-compressed invalid ELF
+echo "not an ELF file" > dummy.ko
+/usr/bin/gzip -f dummy.ko
+testing "insmod gzip compressed invalid ELF" \
+	"insmod dummy.ko.gz 2>&1 | grep -q -E 'invalid module format|Operation not permitted' && echo YES || echo NO" \
+	"YES\n" "" ""
+rm -f dummy.ko.gz
+
+# Test insmod with xz-compressed invalid ELF
+echo "not an ELF file" > dummy.ko
+/usr/bin/xz -f dummy.ko
+testing "insmod xz compressed invalid ELF" \
+	"insmod dummy.ko.xz 2>&1 | grep -q -E 'invalid module format|Operation not permitted' && echo YES || echo NO" \
+	"YES\n" "" ""
+rm -f dummy.ko.xz
+
+# Test insmod with zstd-compressed invalid ELF
+echo "not an ELF file" > dummy.ko
+/usr/bin/zstd -q -f dummy.ko -o dummy.ko.zst
+testing "insmod zstd compressed invalid ELF" \
+	"insmod dummy.ko.zst 2>&1 | grep -q -E 'invalid module format|Operation not permitted' && echo YES || echo NO" \
+	"YES\n" "" ""
+rm -f dummy.ko.zst dummy.ko
+
+exit $FAILCOUNT

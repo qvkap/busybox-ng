@@ -1,0 +1,13 @@
+busybox
+busybox_unstripped
+busybox_unstripped.map
+busybox_unstripped.out
+*.o
+*.a
+*.cmd
+*.su
+.*.tmp
+.config.old
+.indent.pro
+runtest-tempdir-links
+.tmp_versions

@@ -1,0 +1,1 @@
+#define CONFIG_TFTP_DEBUG 1

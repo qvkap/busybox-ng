@@ -1,0 +1,1 @@
+#define CONFIG_WARN_SIMPLE_MSG 1

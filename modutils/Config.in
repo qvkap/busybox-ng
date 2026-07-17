@@ -1,0 +1,11 @@
+# DO NOT EDIT. This file is generated from Config.src
+menu "Linux Module Utilities"
+
+config KMOD_WRAPPER
+	bool "kmod wrapper (replaces internal modutils)"
+	default y
+	help
+	Replaces internal modprobe/insmod/etc with wrappers
+	that execute the external full-featured kmod binary.
+
+endmenu

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+. ./testing.sh
+
+# Prepare compressed file using system zstd
+echo "hello zstd world" > testfile
+zstd -q -f testfile -o testfile.zst
+
+testing "unzstd -c" \
+	"unzstd -c testfile.zst" \
+	"hello zstd world\n" "" ""
+
+rm -f testfile
+testing "unzstd decompress file" \
+	"unzstd testfile.zst && cat testfile" \
+	"hello zstd world\n" "" ""
+
+# zstdcat test
+echo "hello zstd world" > testfile
+zstd -q -f testfile -o testfile.zst
+testing "zstdcat" \
+	"zstdcat testfile.zst" \
+	"hello zstd world\n" "" ""
+
+# clean up
+rm -f testfile testfile.zst
+
+exit $FAILCOUNT

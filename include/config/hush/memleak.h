@@ -1,0 +1,1 @@
+#define CONFIG_HUSH_MEMLEAK 1

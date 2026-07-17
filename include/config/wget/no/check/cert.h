@@ -1,0 +1,1 @@
+#undef CONFIG_WGET_NO_CHECK_CERT
