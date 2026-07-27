@@ -682,15 +682,35 @@ static void install_links(const char *busybox, int use_symbolic_links,
 		lf = symlink;
 
 	for (i = 0; i < ARRAY_SIZE(applet_main); i++) {
-		fpc = concat_path_file(
-				custom_install_dir ? custom_install_dir : install_dir[APPLET_INSTALL_LOC(i)],
-				appname);
-		// debug: bb_error_msg("%slinking %s to busybox",
-		//		use_symbolic_links ? "sym" : "", fpc);
-		rc = lf(busybox, fpc);
+		const char *destdir = custom_install_dir ? custom_install_dir : install_dir[APPLET_INSTALL_LOC(i)];
+		fpc = concat_path_file(destdir, appname);
+
+		const char *target = busybox;
+		char *rel_target = NULL;
+		if (use_symbolic_links && busybox[0] == '/' && destdir[0] == '/') {
+			int dest_depth = 0;
+			const char *p = destdir;
+			while (*p) {
+				if (*p == '/' && p[1] != '\0' && p[1] != '/') dest_depth++;
+				p++;
+			}
+			if (dest_depth > 0) {
+				char *up = xzalloc(dest_depth * 3 + 1);
+				int j;
+				for (j = 0; j < dest_depth; j++) strcat(up, "../");
+				rel_target = xasprintf("%s%s", up, busybox + 1);
+				free(up);
+				target = rel_target;
+			} else {
+				target = busybox + 1;
+			}
+		}
+
+		rc = lf(target, fpc);
 		if (rc != 0 && errno != EEXIST) {
 			bb_simple_perror_msg(fpc);
 		}
+		free(rel_target);
 		free(fpc);
 		while (*appname++ != '\0')
 			continue;
