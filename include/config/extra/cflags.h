@@ -1,1 +1,1 @@
-#define CONFIG_EXTRA_CFLAGS ""
+#define CONFIG_EXTRA_CFLAGS "-Wno-unused-result -Wno-format-truncation -Wno-format-overflow -Wno-discarded-qualifiers -Wno-missing-prototypes -Wno-missing-declarations -Wno-maybe-uninitialized -Wno-uninitialized"

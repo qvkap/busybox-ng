@@ -2,7 +2,7 @@
  * Automatically generated C config: don't edit
  * Busybox version: 1.38.0
  */
-#define AUTOCONF_TIMESTAMP "2026-07-27 20:04:42 MSK"
+#define AUTOCONF_TIMESTAMP "2026-07-27 22:06:52 MSK"
 
 #define CONFIG_HAVE_DOT_CONFIG 1
 #define ENABLE_HAVE_DOT_CONFIG 1
@@ -284,7 +284,7 @@
 # define IF_SYSROOT(...) __VA_ARGS__
 #endif
 #define IF_NOT_SYSROOT(...)
-#define CONFIG_EXTRA_CFLAGS ""
+#define CONFIG_EXTRA_CFLAGS "-Wno-unused-result -Wno-format-truncation -Wno-format-overflow -Wno-discarded-qualifiers -Wno-missing-prototypes -Wno-missing-declarations -Wno-maybe-uninitialized -Wno-uninitialized"
 #define ENABLE_EXTRA_CFLAGS 1
 #ifdef MAKE_SUID
 # define IF_EXTRA_CFLAGS(...) __VA_ARGS__ "CONFIG_EXTRA_CFLAGS"

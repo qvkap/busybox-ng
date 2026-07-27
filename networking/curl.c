@@ -35,7 +35,6 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 	char *colon;
 	int chunked = 0;
 	int out_fd;
-	unsigned opt;
 	char *url;
 	int fd;
 	FILE *fp;

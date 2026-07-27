@@ -682,27 +682,29 @@ static void install_links(const char *busybox, int use_symbolic_links,
 		lf = symlink;
 
 	for (i = 0; i < ARRAY_SIZE(applet_main); i++) {
-		const char *destdir = custom_install_dir ? custom_install_dir : install_dir[APPLET_INSTALL_LOC(i)];
+		int loc = APPLET_INSTALL_LOC(i);
+		const char *destdir = custom_install_dir ? custom_install_dir : install_dir[loc];
+		const char *target = busybox;
+
 		fpc = concat_path_file(destdir, appname);
 
-		const char *target = busybox;
-		char *rel_target = NULL;
-		if (use_symbolic_links && busybox[0] == '/' && destdir[0] == '/') {
-			int dest_depth = 0;
-			const char *p = destdir;
-			while (*p) {
-				if (*p == '/' && p[1] != '\0' && p[1] != '/') dest_depth++;
-				p++;
-			}
-			if (dest_depth > 0) {
-				char *up = xzalloc(dest_depth * 3 + 1);
-				int j;
-				for (j = 0; j < dest_depth; j++) strcat(up, "../");
-				rel_target = xasprintf("%s%s", up, busybox + 1);
-				free(up);
-				target = rel_target;
-			} else {
-				target = busybox + 1;
+		if (use_symbolic_links) {
+			switch (loc) {
+			case 0: /* / */
+				target = "bin/busybox";
+				break;
+			case 1: /* /bin */
+				target = "busybox";
+				break;
+			case 2: /* /sbin */
+				target = "../bin/busybox";
+				break;
+			case 3: /* /usr/bin */
+			case 4: /* /usr/sbin */
+				target = "../../bin/busybox";
+				break;
+			default:
+				target = busybox;
 			}
 		}
 
@@ -710,7 +712,6 @@ static void install_links(const char *busybox, int use_symbolic_links,
 		if (rc != 0 && errno != EEXIST) {
 			bb_simple_perror_msg(fpc);
 		}
-		free(rel_target);
 		free(fpc);
 		while (*appname++ != '\0')
 			continue;

@@ -262,6 +262,6 @@ ssize_t h2_read_body(h2_state_t *h2, void *buf, size_t bufsize) {
 	return -1;
 }
 
-void h2_close(h2_state_t *h2) {
+void h2_close(h2_state_t *h2 UNUSED_PARAM) {
 	/* no-op */
 }

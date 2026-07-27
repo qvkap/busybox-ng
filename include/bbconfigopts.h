@@ -49,7 +49,7 @@ static const char bbconfig_config[] ALIGN1 =
 "# CONFIG_FEATURE_SHARED_BUSYBOX is not set\n"
 "CONFIG_CROSS_COMPILER_PREFIX=\"\"\n"
 "CONFIG_SYSROOT=\"\"\n"
-"CONFIG_EXTRA_CFLAGS=\"\"\n"
+"CONFIG_EXTRA_CFLAGS=\"-Wno-unused-result -Wno-format-truncation -Wno-format-overflow -Wno-discarded-qualifiers -Wno-missing-prototypes -Wno-missing-declarations -Wno-maybe-uninitialized -Wno-uninitialized\"\n"
 "CONFIG_EXTRA_LDFLAGS=\"\"\n"
 "CONFIG_EXTRA_LDLIBS=\"\"\n"
 "# CONFIG_USE_PORTABLE_CODE is not set\n"

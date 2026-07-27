@@ -27,6 +27,14 @@ size_t ZSTD_DStreamOutSize(void);
 IF_DESKTOP(long long) int FAST_FUNC
 unpack_zstd_stream(transformer_state_t *xstate)
 {
+	ZSTD_inBuffer input;
+	ZSTD_outBuffer output;
+	size_t in_size;
+	size_t out_size;
+	char *in_buf;
+	char *out_buf;
+	IF_DESKTOP(long long) int total_out = 0;
+
 	ZSTD_DStream* dctx = ZSTD_createDStream();
 	if (!dctx) {
 		bb_simple_error_msg("zstd alloc failed");
@@ -35,18 +43,21 @@ unpack_zstd_stream(transformer_state_t *xstate)
 
 	ZSTD_initDStream(dctx);
 
-	ZSTD_inBuffer input = { NULL, 0, 0 };
-	ZSTD_outBuffer output = { NULL, 0, 0 };
+	input.src = NULL;
+	input.size = 0;
+	input.pos = 0;
 
-	size_t in_size = ZSTD_DStreamInSize();
-	size_t out_size = ZSTD_DStreamOutSize();
-	char *in_buf = xmalloc(in_size);
-	char *out_buf = xmalloc(out_size);
+	output.dst = NULL;
+	output.size = 0;
+	output.pos = 0;
+
+	in_size = ZSTD_DStreamInSize();
+	out_size = ZSTD_DStreamOutSize();
+	in_buf = xmalloc(in_size);
+	out_buf = xmalloc(out_size);
 
 	output.dst = out_buf;
 	output.size = out_size;
-
-	IF_DESKTOP(long long) int total_out = 0;
 
 	if (xstate->signature_skipped) {
 		memcpy(in_buf, &xstate->magic, xstate->signature_skipped);
@@ -57,6 +68,7 @@ unpack_zstd_stream(transformer_state_t *xstate)
 	}
 
 	while (1) {
+		size_t ret;
 		if (input.pos == input.size) {
 			ssize_t n = safe_read(xstate->src_fd, in_buf, in_size);
 			if (n < 0) {
@@ -71,7 +83,7 @@ unpack_zstd_stream(transformer_state_t *xstate)
 		}
 
 		output.pos = 0;
-		size_t ret = ZSTD_decompressStream(dctx, &output, &input);
+		ret = ZSTD_decompressStream(dctx, &output, &input);
 		if (ZSTD_isError(ret)) {
 			bb_error_msg("zstd error: %s", ZSTD_getErrorName(ret));
 			total_out = -1;

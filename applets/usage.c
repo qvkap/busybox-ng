@@ -49,7 +49,7 @@ int main(void)
 		num_messages, sizeof(usage_array[0]),
 		compare_func);
 	for (i = 0; i < num_messages; i++)
-		write(STDOUT_FILENO, usage_array[i].usage, strlen(usage_array[i].usage) + 1);
+		if (write(STDOUT_FILENO, usage_array[i].usage, strlen(usage_array[i].usage) + 1)) {}
 
 	return 0;
 }

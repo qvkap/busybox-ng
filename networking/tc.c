@@ -176,6 +176,7 @@ static int get_tc_classid(uint32_t *h, const char *str)
 	return 0;
 }
 
+#if 0
 static void print_rate(char *buf, int len, uint32_t rate)
 {
 	double tmp = (double)rate*8;
@@ -196,6 +197,7 @@ static void print_rate(char *buf, int len, uint32_t rate)
 			snprintf(buf, len, "%.0fbit",  tmp);
 	}
 }
+#endif
 
 #if 0
 /* This is "pfifo_fast".  */

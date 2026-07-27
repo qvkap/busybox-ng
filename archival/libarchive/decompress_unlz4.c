@@ -15,16 +15,16 @@ IF_DESKTOP(long long) int FAST_FUNC
 unpack_lz4_stream(transformer_state_t *xstate)
 {
 	LZ4F_dctx* dctx;
-	if (LZ4F_isError(LZ4F_createDecompressionContext(&dctx, 100))) {
-		bb_simple_error_msg("lz4 alloc failed");
-		return -1;
-	}
-
 	char in_buf[4096];
 	char out_buf[4096];
 	size_t in_pos = 0;
 	size_t in_size = 0;
 	IF_DESKTOP(long long) int total_out = 0;
+
+	if (LZ4F_isError(LZ4F_createDecompressionContext(&dctx, 100))) {
+		bb_simple_error_msg("lz4 alloc failed");
+		return -1;
+	}
 
 	if (xstate->signature_skipped) {
 		memcpy(in_buf, &xstate->magic, xstate->signature_skipped);
@@ -33,6 +33,8 @@ unpack_lz4_stream(transformer_state_t *xstate)
 	}
 
 	while (1) {
+		size_t src_len, dst_len, ret;
+
 		if (in_pos == in_size) {
 			ssize_t n = safe_read(xstate->src_fd, in_buf, sizeof(in_buf));
 			if (n < 0) {
@@ -45,9 +47,9 @@ unpack_lz4_stream(transformer_state_t *xstate)
 			in_pos = 0;
 		}
 
-		size_t src_len = in_size - in_pos;
-		size_t dst_len = sizeof(out_buf);
-		size_t ret = LZ4F_decompress(dctx, out_buf, &dst_len, in_buf + in_pos, &src_len, NULL);
+		src_len = in_size - in_pos;
+		dst_len = sizeof(out_buf);
+		ret = LZ4F_decompress(dctx, out_buf, &dst_len, in_buf + in_pos, &src_len, NULL);
 
 		if (LZ4F_isError(ret)) {
 			bb_error_msg("lz4 error: %s", LZ4F_getErrorName(ret));
