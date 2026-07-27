@@ -983,6 +983,8 @@ typedef struct tls_state {
 	struct tls_aes aes_decrypt;
 	uint8_t H[16]; //used by AES_GCM
 
+	smallint alpn_result; /* 0 = http/1.1, 1 = h2 */
+
 #if ENABLE_SSL_SERVER // || ENABLE_FEATURE_HTTPD_SSL
 	/* For ECDHE: server's ephemeral EC private key */
 	//uint8_t ecc_priv_key32[32];
