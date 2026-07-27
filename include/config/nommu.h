@@ -1,1 +1,1 @@
-#undef CONFIG_NOMMU
+#define CONFIG_NOMMU 1

@@ -1,1 +1,1 @@
-#define CONFIG_NETCAT 1
+#undef CONFIG_NETCAT

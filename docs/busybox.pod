@@ -81,57 +81,55 @@ been enabled, more detailed usage information will also be available.
 
 Currently available applets include:
 
-C<[>, C<[[>, L<C<acpid>|/"acpid">, L<C<add-shell>|/"add-shell">, L<C<addgroup>|/"addgroup">, L<C<adduser>|/"adduser">, L<C<adjtimex>|/"adjtimex">, L<C<ar>|/"ar">, L<C<arch>|/"arch">, L<C<arp>|/"arp">,
-L<C<arping>|/"arping">, C<ascii>, L<C<awk>|/"awk">, L<C<base32>|/"base32">, L<C<base64>|/"base64">, L<C<basename>|/"basename">, L<C<bbconfig>|/"bbconfig">, L<C<bc>|/"bc">, L<C<beep>|/"beep">,
-L<C<blkdiscard>|/"blkdiscard">, L<C<blkid>|/"blkid">, L<C<blockdev>|/"blockdev">, L<C<bootchartd>|/"bootchartd">, L<C<brctl>|/"brctl">, L<C<bunzip2>|/"bunzip2">, C<busybox>,
-L<C<bzcat>|/"bzcat">, L<C<bzip2>|/"bzip2">, L<C<cal>|/"cal">, L<C<cat>|/"cat">, L<C<chat>|/"chat">, L<C<chattr>|/"chattr">, L<C<chgrp>|/"chgrp">, L<C<chmod>|/"chmod">, L<C<chown>|/"chown">, L<C<chpasswd>|/"chpasswd">,
-L<C<chpst>|/"chpst">, L<C<chroot>|/"chroot">, L<C<chrt>|/"chrt">, L<C<chvt>|/"chvt">, L<C<cksum>|/"cksum">, L<C<clear>|/"clear">, L<C<cmp>|/"cmp">, L<C<comm>|/"comm">, L<C<conspy>|/"conspy">, L<C<cp>|/"cp">,
-L<C<cpio>|/"cpio">, L<C<crc32>|/"crc32">, L<C<crond>|/"crond">, L<C<crontab>|/"crontab">, L<C<cryptpw>|/"cryptpw">, L<C<cttyhack>|/"cttyhack">, L<C<curl>|/"curl">, L<C<cut>|/"cut">, L<C<date>|/"date">, L<C<dc>|/"dc">,
-L<C<dd>|/"dd">, L<C<deallocvt>|/"deallocvt">, L<C<delgroup>|/"delgroup">, L<C<deluser>|/"deluser">, L<C<depmod>|/"depmod">, L<C<devfsd>|/"devfsd">, L<C<devmem>|/"devmem">, L<C<df>|/"df">,
-L<C<dhcprelay>|/"dhcprelay">, L<C<diff>|/"diff">, L<C<dirname>|/"dirname">, L<C<dmesg>|/"dmesg">, L<C<dnsd>|/"dnsd">, C<dnsdomainname>, L<C<dos2unix>|/"dos2unix">, L<C<du>|/"du">,
-L<C<dumpkmap>|/"dumpkmap">, L<C<dumpleases>|/"dumpleases">, L<C<echo>|/"echo">, L<C<ed>|/"ed">, C<egrep>, L<C<eject>|/"eject">, L<C<env>|/"env">, L<C<envdir>|/"envdir">,
-L<C<envuidgid>|/"envuidgid">, L<C<ether-wake>|/"ether-wake">, L<C<expand>|/"expand">, L<C<expr>|/"expr">, L<C<factor>|/"factor">, L<C<fallocate>|/"fallocate">, C<false>,
-L<C<fatattr>|/"fatattr">, L<C<fbset>|/"fbset">, L<C<fbsplash>|/"fbsplash">, L<C<fdflush>|/"fdflush">, L<C<fdformat>|/"fdformat">, L<C<fdisk>|/"fdisk">, L<C<fgconsole>|/"fgconsole">,
-C<fgrep>, L<C<find>|/"find">, L<C<findfs>|/"findfs">, L<C<flash_eraseall>|/"flash_eraseall">, L<C<flash_lock>|/"flash_lock">, L<C<flash_unlock>|/"flash_unlock">,
-L<C<flashcp>|/"flashcp">, L<C<flock>|/"flock">, L<C<fold>|/"fold">, L<C<free>|/"free">, L<C<freeramdisk>|/"freeramdisk">, L<C<fsck>|/"fsck">, L<C<fsck.minix>|/"fsck.minix">, L<C<fsfreeze>|/"fsfreeze">,
-L<C<fstrim>|/"fstrim">, L<C<fsync>|/"fsync">, L<C<ftpd>|/"ftpd">, L<C<ftpget>|/"ftpget">, L<C<ftpput>|/"ftpput">, L<C<fuser>|/"fuser">, L<C<getfattr>|/"getfattr">, L<C<getopt>|/"getopt">, L<C<getty>|/"getty">,
-L<C<grep>|/"grep">, L<C<groups>|/"groups">, L<C<gunzip>|/"gunzip">, L<C<gzip>|/"gzip">, L<C<halt>|/"halt">, L<C<hd>|/"hd">, L<C<hdparm>|/"hdparm">, L<C<head>|/"head">, L<C<hexdump>|/"hexdump">,
-L<C<hexedit>|/"hexedit">, L<C<hostid>|/"hostid">, L<C<hostname>|/"hostname">, L<C<httpd>|/"httpd">, L<C<hush>|/"hush">, L<C<hwclock>|/"hwclock">, L<C<i2cdetect>|/"i2cdetect">, L<C<i2cdump>|/"i2cdump">,
-L<C<i2cget>|/"i2cget">, L<C<i2cset>|/"i2cset">, L<C<i2ctransfer>|/"i2ctransfer">, L<C<id>|/"id">, L<C<ifconfig>|/"ifconfig">, L<C<ifdown>|/"ifdown">, L<C<ifenslave>|/"ifenslave">,
-L<C<ifplugd>|/"ifplugd">, L<C<ifup>|/"ifup">, L<C<inetd>|/"inetd">, L<C<init>|/"init">, L<C<inotifyd>|/"inotifyd">, L<C<insmod>|/"insmod">, L<C<install>|/"install">, L<C<ionice>|/"ionice">,
-L<C<iostat>|/"iostat">, L<C<ip>|/"ip">, L<C<ipaddr>|/"ipaddr">, L<C<ipcalc>|/"ipcalc">, L<C<ipcrm>|/"ipcrm">, L<C<ipcs>|/"ipcs">, L<C<iplink>|/"iplink">, L<C<ipneigh>|/"ipneigh">, L<C<iproute>|/"iproute">,
-L<C<iprule>|/"iprule">, L<C<iptunnel>|/"iptunnel">, L<C<kbd_mode>|/"kbd_mode">, L<C<kill>|/"kill">, L<C<killall>|/"killall">, L<C<killall5>|/"killall5">, L<C<klogd>|/"klogd">, L<C<kmod>|/"kmod">,
-L<C<last>|/"last">, L<C<less>|/"less">, L<C<link>|/"link">, C<linux32>, C<linux64>, C<linuxrc>, L<C<ln>|/"ln">, L<C<loadfont>|/"loadfont">, L<C<loadkmap>|/"loadkmap">,
-L<C<logger>|/"logger">, L<C<login>|/"login">, L<C<logname>|/"logname">, L<C<logread>|/"logread">, L<C<losetup>|/"losetup">, L<C<lpd>|/"lpd">, L<C<lpq>|/"lpq">, L<C<lpr>|/"lpr">, L<C<ls>|/"ls">, L<C<lsattr>|/"lsattr">,
-L<C<lsblk>|/"lsblk">, L<C<lsmod>|/"lsmod">, L<C<lsof>|/"lsof">, L<C<lspci>|/"lspci">, C<lsscsi>, C<lsusb>, L<C<lzcat>|/"lzcat">, L<C<lzma>|/"lzma">, L<C<makedevs>|/"makedevs">,
-L<C<makemime>|/"makemime">, L<C<man>|/"man">, L<C<md5sum>|/"md5sum">, L<C<mdev>|/"mdev">, L<C<mesg>|/"mesg">, L<C<microcom>|/"microcom">, L<C<mim>|/"mim">, L<C<minips>|/"minips">, L<C<mkdir>|/"mkdir">,
-L<C<mkdosfs>|/"mkdosfs">, L<C<mke2fs>|/"mke2fs">, L<C<mkfifo>|/"mkfifo">, L<C<mkfs.ext2>|/"mkfs.ext2">, L<C<mkfs.minix>|/"mkfs.minix">, L<C<mkfs.reiser>|/"mkfs.reiser">,
-L<C<mkfs.vfat>|/"mkfs.vfat">, L<C<mknod>|/"mknod">, L<C<mkpasswd>|/"mkpasswd">, L<C<mkswap>|/"mkswap">, L<C<mktemp>|/"mktemp">, L<C<modinfo>|/"modinfo">, L<C<modprobe>|/"modprobe">, L<C<more>|/"more">,
-L<C<mount>|/"mount">, L<C<mountpoint>|/"mountpoint">, L<C<mpstat>|/"mpstat">, L<C<mt>|/"mt">, L<C<mv>|/"mv">, L<C<nameif>|/"nameif">, L<C<nanddump>|/"nanddump">, L<C<nandwrite>|/"nandwrite">,
-L<C<nbd-client>|/"nbd-client">, L<C<nc>|/"nc">, L<C<netcat>|/"netcat">, L<C<netstat>|/"netstat">, L<C<nice>|/"nice">, L<C<nl>|/"nl">, L<C<nmeter>|/"nmeter">, L<C<nohup>|/"nohup">, L<C<nologin>|/"nologin">,
-L<C<nproc>|/"nproc">, L<C<nsenter>|/"nsenter">, L<C<nslookup>|/"nslookup">, L<C<ntpd>|/"ntpd">, L<C<nuke>|/"nuke">, L<C<od>|/"od">, L<C<openvt>|/"openvt">, L<C<partprobe>|/"partprobe">, L<C<passwd>|/"passwd">,
-L<C<paste>|/"paste">, L<C<patch>|/"patch">, L<C<pgrep>|/"pgrep">, L<C<pidof>|/"pidof">, L<C<ping>|/"ping">, L<C<ping6>|/"ping6">, C<pipe_progress>, L<C<pivot_root>|/"pivot_root">,
-L<C<pkill>|/"pkill">, L<C<pmap>|/"pmap">, L<C<popmaildir>|/"popmaildir">, L<C<poweroff>|/"poweroff">, L<C<powertop>|/"powertop">, L<C<printenv>|/"printenv">, L<C<printf>|/"printf">, L<C<ps>|/"ps">,
-L<C<pscan>|/"pscan">, L<C<pstree>|/"pstree">, L<C<pwd>|/"pwd">, L<C<pwdx>|/"pwdx">, L<C<rdate>|/"rdate">, L<C<readahead>|/"readahead">, L<C<readlink>|/"readlink">, L<C<readprofile>|/"readprofile">,
-L<C<realpath>|/"realpath">, L<C<reboot>|/"reboot">, L<C<reformime>|/"reformime">, L<C<remove-shell>|/"remove-shell">, L<C<renice>|/"renice">, L<C<reset>|/"reset">, L<C<resize>|/"resize">,
-L<C<resume>|/"resume">, L<C<rev>|/"rev">, L<C<rfkill>|/"rfkill">, L<C<rm>|/"rm">, L<C<rmdir>|/"rmdir">, L<C<rmmod>|/"rmmod">, L<C<route>|/"route">, L<C<rtcwake>|/"rtcwake">, L<C<run-init>|/"run-init">,
-L<C<run-parts>|/"run-parts">, L<C<runlevel>|/"runlevel">, L<C<runsv>|/"runsv">, L<C<runsvdir>|/"runsvdir">, L<C<script>|/"script">, L<C<scriptreplay>|/"scriptreplay">, L<C<sed>|/"sed">,
-L<C<seedrng>|/"seedrng">, L<C<sendmail>|/"sendmail">, L<C<seq>|/"seq">, L<C<setarch>|/"setarch">, L<C<setconsole>|/"setconsole">, L<C<setfattr>|/"setfattr">, L<C<setfont>|/"setfont">,
-L<C<setkeycodes>|/"setkeycodes">, L<C<setlogcons>|/"setlogcons">, L<C<setpriv>|/"setpriv">, L<C<setserial>|/"setserial">, L<C<setsid>|/"setsid">, L<C<setuidgid>|/"setuidgid">, L<C<sh>|/"sh">,
-L<C<sha1sum>|/"sha1sum">, L<C<sha256sum>|/"sha256sum">, L<C<sha384sum>|/"sha384sum">, L<C<sha3sum>|/"sha3sum">, L<C<sha512sum>|/"sha512sum">, L<C<showkey>|/"showkey">, L<C<shred>|/"shred">,
-L<C<shuf>|/"shuf">, L<C<sleep>|/"sleep">, L<C<smemcap>|/"smemcap">, L<C<softlimit>|/"softlimit">, L<C<sort>|/"sort">, L<C<split>|/"split">, L<C<ssl_client>|/"ssl_client">,
-L<C<ssl_server>|/"ssl_server">, L<C<start-stop-daemon>|/"start-stop-daemon">, L<C<stat>|/"stat">, L<C<strings>|/"strings">, L<C<stty>|/"stty">, L<C<su>|/"su">, L<C<sulogin>|/"sulogin">,
-L<C<sum>|/"sum">, L<C<sv>|/"sv">, L<C<svc>|/"svc">, L<C<svlogd>|/"svlogd">, L<C<svok>|/"svok">, L<C<swapoff>|/"swapoff">, L<C<swapon>|/"swapon">, L<C<switch_root>|/"switch_root">, L<C<sync>|/"sync">,
-L<C<sysctl>|/"sysctl">, L<C<syslogd>|/"syslogd">, L<C<tac>|/"tac">, L<C<tail>|/"tail">, L<C<tar>|/"tar">, L<C<taskset>|/"taskset">, L<C<tcpsvd>|/"tcpsvd">, L<C<tee>|/"tee">, L<C<telnet>|/"telnet">,
-L<C<telnetd>|/"telnetd">, C<test>, L<C<tftp>|/"tftp">, L<C<tftpd>|/"tftpd">, L<C<time>|/"time">, L<C<timeout>|/"timeout">, L<C<top>|/"top">, L<C<touch>|/"touch">, L<C<tr>|/"tr">,
-L<C<traceroute>|/"traceroute">, L<C<traceroute6>|/"traceroute6">, C<tree>, C<true>, L<C<truncate>|/"truncate">, L<C<ts>|/"ts">, L<C<tsort>|/"tsort">, L<C<tty>|/"tty">,
-L<C<ttysize>|/"ttysize">, L<C<tunctl>|/"tunctl">, L<C<tune2fs>|/"tune2fs">, L<C<ubiattach>|/"ubiattach">, L<C<ubidetach>|/"ubidetach">, L<C<ubimkvol>|/"ubimkvol">, L<C<ubirename>|/"ubirename">,
-L<C<ubirmvol>|/"ubirmvol">, L<C<ubirsvol>|/"ubirsvol">, L<C<ubiupdatevol>|/"ubiupdatevol">, L<C<udhcpc>|/"udhcpc">, L<C<udhcpc6>|/"udhcpc6">, L<C<udhcpd>|/"udhcpd">, L<C<udpsvd>|/"udpsvd">,
-L<C<uevent>|/"uevent">, L<C<umount>|/"umount">, L<C<uname>|/"uname">, L<C<uncompress>|/"uncompress">, L<C<unexpand>|/"unexpand">, L<C<uniq>|/"uniq">, L<C<unit>|/"unit">, L<C<unix2dos>|/"unix2dos">,
-L<C<unlink>|/"unlink">, L<C<unxz>|/"unxz">, L<C<unzip>|/"unzip">, L<C<unzstd>|/"unzstd">, L<C<uptime>|/"uptime">, L<C<users>|/"users">, L<C<usleep>|/"usleep">, L<C<uudecode>|/"uudecode">,
-L<C<uuencode>|/"uuencode">, L<C<uuidgen>|/"uuidgen">, L<C<vconfig>|/"vconfig">, L<C<vi>|/"vi">, L<C<vlock>|/"vlock">, L<C<vmstat>|/"vmstat">, L<C<volname>|/"volname">, L<C<w>|/"w">, L<C<wall>|/"wall">,
-L<C<watch>|/"watch">, L<C<watchdog>|/"watchdog">, L<C<wc>|/"wc">, L<C<wget>|/"wget">, L<C<which>|/"which">, L<C<who>|/"who">, L<C<whoami>|/"whoami">, L<C<whois>|/"whois">, L<C<xargs>|/"xargs">, L<C<xxd>|/"xxd">,
-L<C<xz>|/"xz">, L<C<yes>|/"yes">, L<C<zcip>|/"zcip">
+C<[>, C<[[>, L<C<acpid>|/"acpid">, L<C<add-shell>|/"add-shell">, L<C<addgroup>|/"addgroup">, L<C<adduser>|/"adduser">, L<C<adjtimex>|/"adjtimex">, L<C<arch>|/"arch">, L<C<arp>|/"arp">,
+L<C<arping>|/"arping">, C<ascii>, L<C<awk>|/"awk">, L<C<base32>|/"base32">, L<C<base64>|/"base64">, L<C<basename>|/"basename">, L<C<bc>|/"bc">, L<C<beep>|/"beep">, L<C<blkdiscard>|/"blkdiscard">,
+L<C<blkid>|/"blkid">, L<C<blockdev>|/"blockdev">, L<C<bootchartd>|/"bootchartd">, L<C<brctl>|/"brctl">, L<C<bunzip2>|/"bunzip2">, L<C<bzcat>|/"bzcat">, L<C<bzip2>|/"bzip2">, L<C<cal>|/"cal">, L<C<cat>|/"cat">,
+L<C<chat>|/"chat">, L<C<chattr>|/"chattr">, L<C<chgrp>|/"chgrp">, L<C<chmod>|/"chmod">, L<C<chown>|/"chown">, L<C<chpasswd>|/"chpasswd">, L<C<chpst>|/"chpst">, L<C<chroot>|/"chroot">, L<C<chrt>|/"chrt">,
+L<C<chvt>|/"chvt">, L<C<cksum>|/"cksum">, L<C<clear>|/"clear">, L<C<cmp>|/"cmp">, L<C<comm>|/"comm">, L<C<conspy>|/"conspy">, L<C<cp>|/"cp">, L<C<cpio>|/"cpio">, L<C<crc32>|/"crc32">, L<C<crond>|/"crond">,
+L<C<crontab>|/"crontab">, L<C<cryptpw>|/"cryptpw">, L<C<cttyhack>|/"cttyhack">, L<C<curl>|/"curl">, L<C<cut>|/"cut">, L<C<date>|/"date">, L<C<dc>|/"dc">, L<C<dd>|/"dd">, L<C<deallocvt>|/"deallocvt">,
+L<C<delgroup>|/"delgroup">, L<C<deluser>|/"deluser">, L<C<depmod>|/"depmod">, L<C<devmem>|/"devmem">, L<C<df>|/"df">, L<C<dhcprelay>|/"dhcprelay">, L<C<diff>|/"diff">, L<C<dirname>|/"dirname">,
+L<C<dmesg>|/"dmesg">, L<C<dnsd>|/"dnsd">, C<dnsdomainname>, L<C<dos2unix>|/"dos2unix">, L<C<dpkg>|/"dpkg">, L<C<dpkg-deb>|/"dpkg-deb">, L<C<du>|/"du">, L<C<dumpkmap>|/"dumpkmap">,
+L<C<dumpleases>|/"dumpleases">, L<C<echo>|/"echo">, L<C<ed>|/"ed">, C<egrep>, L<C<eject>|/"eject">, L<C<env>|/"env">, L<C<envdir>|/"envdir">, L<C<envuidgid>|/"envuidgid">,
+L<C<ether-wake>|/"ether-wake">, L<C<expand>|/"expand">, L<C<expr>|/"expr">, L<C<factor>|/"factor">, L<C<fallocate>|/"fallocate">, C<false>, L<C<fatattr>|/"fatattr">, L<C<fbset>|/"fbset">,
+L<C<fbsplash>|/"fbsplash">, L<C<fdflush>|/"fdflush">, L<C<fdformat>|/"fdformat">, L<C<fdisk>|/"fdisk">, L<C<fgconsole>|/"fgconsole">, C<fgrep>, L<C<find>|/"find">, L<C<findfs>|/"findfs">,
+L<C<flock>|/"flock">, L<C<fold>|/"fold">, L<C<free>|/"free">, L<C<freeramdisk>|/"freeramdisk">, L<C<fsck>|/"fsck">, L<C<fsck.minix>|/"fsck.minix">, L<C<fsfreeze>|/"fsfreeze">, L<C<fstrim>|/"fstrim">,
+L<C<fsync>|/"fsync">, L<C<ftpd>|/"ftpd">, L<C<ftpget>|/"ftpget">, L<C<ftpput>|/"ftpput">, L<C<fuser>|/"fuser">, L<C<getfattr>|/"getfattr">, L<C<getopt>|/"getopt">, L<C<getty>|/"getty">, L<C<grep>|/"grep">,
+L<C<groups>|/"groups">, L<C<gunzip>|/"gunzip">, L<C<gzip>|/"gzip">, L<C<halt>|/"halt">, L<C<hd>|/"hd">, L<C<hdparm>|/"hdparm">, L<C<head>|/"head">, L<C<hexdump>|/"hexdump">, L<C<hexedit>|/"hexedit">,
+L<C<hostid>|/"hostid">, L<C<hostname>|/"hostname">, L<C<httpd>|/"httpd">, L<C<hush>|/"hush">, L<C<hwclock>|/"hwclock">, L<C<i2cdetect>|/"i2cdetect">, L<C<i2cdump>|/"i2cdump">, L<C<i2cget>|/"i2cget">,
+L<C<i2cset>|/"i2cset">, L<C<i2ctransfer>|/"i2ctransfer">, L<C<id>|/"id">, L<C<ifconfig>|/"ifconfig">, L<C<ifdown>|/"ifdown">, L<C<ifenslave>|/"ifenslave">, L<C<ifplugd>|/"ifplugd">, L<C<ifup>|/"ifup">,
+L<C<inetd>|/"inetd">, L<C<init>|/"init">, L<C<insmod>|/"insmod">, L<C<install>|/"install">, L<C<ionice>|/"ionice">, L<C<iostat>|/"iostat">, L<C<ip>|/"ip">, L<C<ipaddr>|/"ipaddr">, L<C<ipcalc>|/"ipcalc">,
+L<C<ipcrm>|/"ipcrm">, L<C<ipcs>|/"ipcs">, L<C<iplink>|/"iplink">, L<C<ipneigh>|/"ipneigh">, L<C<iproute>|/"iproute">, L<C<iprule>|/"iprule">, L<C<iptunnel>|/"iptunnel">, L<C<kbd_mode>|/"kbd_mode">,
+L<C<kill>|/"kill">, L<C<killall>|/"killall">, L<C<killall5>|/"killall5">, L<C<klogd>|/"klogd">, L<C<kmod>|/"kmod">, L<C<last>|/"last">, L<C<less>|/"less">, L<C<link>|/"link">, C<linux32>,
+C<linux64>, C<linuxrc>, L<C<ln>|/"ln">, L<C<loadfont>|/"loadfont">, L<C<loadkmap>|/"loadkmap">, L<C<logger>|/"logger">, L<C<login>|/"login">, L<C<logname>|/"logname">,
+L<C<logread>|/"logread">, L<C<losetup>|/"losetup">, L<C<lpd>|/"lpd">, L<C<lpq>|/"lpq">, L<C<lpr>|/"lpr">, L<C<ls>|/"ls">, L<C<lsattr>|/"lsattr">, L<C<lsblk>|/"lsblk">, L<C<lsmod>|/"lsmod">, L<C<lsof>|/"lsof">,
+L<C<lspci>|/"lspci">, C<lsscsi>, C<lsusb>, L<C<lzcat>|/"lzcat">, L<C<lzma>|/"lzma">, L<C<lzop>|/"lzop">, L<C<makedevs>|/"makedevs">, L<C<makemime>|/"makemime">, L<C<man>|/"man">,
+L<C<md5sum>|/"md5sum">, L<C<mdev>|/"mdev">, L<C<mesg>|/"mesg">, L<C<microcom>|/"microcom">, L<C<mim>|/"mim">, L<C<mkdir>|/"mkdir">, L<C<mkdosfs>|/"mkdosfs">, L<C<mke2fs>|/"mke2fs">, L<C<mkfifo>|/"mkfifo">,
+L<C<mkfs.ext2>|/"mkfs.ext2">, L<C<mkfs.minix>|/"mkfs.minix">, L<C<mkfs.vfat>|/"mkfs.vfat">, L<C<mknod>|/"mknod">, L<C<mkpasswd>|/"mkpasswd">, L<C<mkswap>|/"mkswap">, L<C<mktemp>|/"mktemp">,
+L<C<modinfo>|/"modinfo">, L<C<modprobe>|/"modprobe">, L<C<more>|/"more">, L<C<mount>|/"mount">, L<C<mountpoint>|/"mountpoint">, L<C<mpstat>|/"mpstat">, L<C<mt>|/"mt">, L<C<mv>|/"mv">, L<C<nameif>|/"nameif">,
+L<C<nanddump>|/"nanddump">, L<C<nandwrite>|/"nandwrite">, L<C<nbd-client>|/"nbd-client">, L<C<nc>|/"nc">, L<C<netstat>|/"netstat">, L<C<nice>|/"nice">, L<C<nl>|/"nl">, L<C<nmeter>|/"nmeter">,
+L<C<nohup>|/"nohup">, L<C<nologin>|/"nologin">, L<C<nproc>|/"nproc">, L<C<nsenter>|/"nsenter">, L<C<nslookup>|/"nslookup">, L<C<ntpd>|/"ntpd">, L<C<od>|/"od">, L<C<openvt>|/"openvt">,
+L<C<partprobe>|/"partprobe">, L<C<passwd>|/"passwd">, L<C<paste>|/"paste">, L<C<patch>|/"patch">, L<C<pgrep>|/"pgrep">, L<C<pidof>|/"pidof">, L<C<ping>|/"ping">, L<C<ping6>|/"ping6">,
+C<pipe_progress>, L<C<pivot_root>|/"pivot_root">, L<C<pkill>|/"pkill">, L<C<pmap>|/"pmap">, L<C<popmaildir>|/"popmaildir">, L<C<poweroff>|/"poweroff">,
+L<C<powertop>|/"powertop">, L<C<printenv>|/"printenv">, L<C<printf>|/"printf">, L<C<ps>|/"ps">, L<C<pscan>|/"pscan">, L<C<pstree>|/"pstree">, L<C<pwd>|/"pwd">, L<C<pwdx>|/"pwdx">, L<C<rdate>|/"rdate">,
+L<C<readahead>|/"readahead">, L<C<readlink>|/"readlink">, L<C<readprofile>|/"readprofile">, L<C<realpath>|/"realpath">, L<C<reboot>|/"reboot">, L<C<reformime>|/"reformime">,
+L<C<remove-shell>|/"remove-shell">, L<C<renice>|/"renice">, L<C<reset>|/"reset">, L<C<resize>|/"resize">, L<C<resume>|/"resume">, L<C<rev>|/"rev">, L<C<rm>|/"rm">, L<C<rmdir>|/"rmdir">, L<C<rmmod>|/"rmmod">,
+L<C<route>|/"route">, L<C<rpm>|/"rpm">, L<C<rpm2cpio>|/"rpm2cpio">, L<C<rtcwake>|/"rtcwake">, L<C<run-init>|/"run-init">, L<C<run-parts>|/"run-parts">, L<C<runlevel>|/"runlevel">, L<C<runsv>|/"runsv">,
+L<C<runsvdir>|/"runsvdir">, L<C<script>|/"script">, L<C<scriptreplay>|/"scriptreplay">, L<C<sed>|/"sed">, L<C<seedrng>|/"seedrng">, L<C<sendmail>|/"sendmail">, L<C<seq>|/"seq">,
+L<C<setarch>|/"setarch">, L<C<setconsole>|/"setconsole">, L<C<setfattr>|/"setfattr">, L<C<setfont>|/"setfont">, L<C<setkeycodes>|/"setkeycodes">, L<C<setlogcons>|/"setlogcons">,
+L<C<setpriv>|/"setpriv">, L<C<setserial>|/"setserial">, L<C<setsid>|/"setsid">, L<C<setuidgid>|/"setuidgid">, L<C<sh>|/"sh">, L<C<sha1sum>|/"sha1sum">, L<C<sha256sum>|/"sha256sum">,
+L<C<sha384sum>|/"sha384sum">, L<C<sha3sum>|/"sha3sum">, L<C<sha512sum>|/"sha512sum">, L<C<showkey>|/"showkey">, L<C<shred>|/"shred">, L<C<shuf>|/"shuf">, L<C<sleep>|/"sleep">, L<C<smemcap>|/"smemcap">,
+L<C<softlimit>|/"softlimit">, L<C<sort>|/"sort">, L<C<split>|/"split">, L<C<ssl_client>|/"ssl_client">, L<C<ssl_server>|/"ssl_server">, L<C<start-stop-daemon>|/"start-stop-daemon">,
+L<C<stat>|/"stat">, L<C<strings>|/"strings">, L<C<stty>|/"stty">, L<C<su>|/"su">, L<C<sulogin>|/"sulogin">, L<C<sum>|/"sum">, L<C<sv>|/"sv">, L<C<svc>|/"svc">, L<C<svlogd>|/"svlogd">, L<C<svok>|/"svok">,
+L<C<swapoff>|/"swapoff">, L<C<swapon>|/"swapon">, L<C<switch_root>|/"switch_root">, L<C<sync>|/"sync">, L<C<sysctl>|/"sysctl">, L<C<syslogd>|/"syslogd">, L<C<tac>|/"tac">, L<C<tail>|/"tail">, L<C<tar>|/"tar">,
+L<C<taskset>|/"taskset">, L<C<tc>|/"tc">, L<C<tcpsvd>|/"tcpsvd">, L<C<tee>|/"tee">, L<C<telnet>|/"telnet">, L<C<telnetd>|/"telnetd">, C<test>, L<C<tftp>|/"tftp">, L<C<tftpd>|/"tftpd">, L<C<time>|/"time">,
+L<C<timeout>|/"timeout">, L<C<top>|/"top">, L<C<touch>|/"touch">, L<C<tr>|/"tr">, L<C<traceroute>|/"traceroute">, L<C<traceroute6>|/"traceroute6">, C<tree>, C<true>,
+L<C<truncate>|/"truncate">, L<C<ts>|/"ts">, L<C<tsort>|/"tsort">, L<C<tty>|/"tty">, L<C<ttysize>|/"ttysize">, L<C<tunctl>|/"tunctl">, L<C<ubiattach>|/"ubiattach">, L<C<ubidetach>|/"ubidetach">,
+L<C<ubimkvol>|/"ubimkvol">, L<C<ubirename>|/"ubirename">, L<C<ubirmvol>|/"ubirmvol">, L<C<ubirsvol>|/"ubirsvol">, L<C<ubiupdatevol>|/"ubiupdatevol">, L<C<udhcpc>|/"udhcpc">,
+L<C<udhcpc6>|/"udhcpc6">, L<C<udhcpd>|/"udhcpd">, L<C<udpsvd>|/"udpsvd">, L<C<uevent>|/"uevent">, L<C<umount>|/"umount">, L<C<uname>|/"uname">, L<C<unexpand>|/"unexpand">, L<C<uniq>|/"uniq">,
+L<C<unix2dos>|/"unix2dos">, L<C<unlink>|/"unlink">, L<C<unlzma>|/"unlzma">, L<C<unxz>|/"unxz">, L<C<unzip>|/"unzip">, L<C<unzstd>|/"unzstd">, L<C<uptime>|/"uptime">, L<C<users>|/"users">,
+L<C<usleep>|/"usleep">, L<C<uudecode>|/"uudecode">, L<C<uuencode>|/"uuencode">, L<C<uuidgen>|/"uuidgen">, L<C<vconfig>|/"vconfig">, L<C<vi>|/"vi">, L<C<vim>|/"vim">, L<C<vlock>|/"vlock">,
+L<C<vmstat>|/"vmstat">, L<C<volname>|/"volname">, L<C<w>|/"w">, L<C<wall>|/"wall">, L<C<watch>|/"watch">, L<C<watchdog>|/"watchdog">, L<C<wc>|/"wc">, L<C<wget>|/"wget">, L<C<which>|/"which">, L<C<who>|/"who">,
+L<C<whoami>|/"whoami">, L<C<whois>|/"whois">, L<C<xargs>|/"xargs">, L<C<xxd>|/"xxd">, L<C<xz>|/"xz">, L<C<xzcat>|/"xzcat">, L<C<yes>|/"yes">, L<C<zcat>|/"zcat">, L<C<zcip>|/"zcip">, L<C<zstdcat>|/"zstdcat">
 
 =head1 COMMAND DESCRIPTIONS
 
@@ -195,19 +193,6 @@ Read or set kernel time variables. See adjtimex(2)
 	-t TICK	Microseconds per tick, usually 10000
 		(positive -t or -f values make clock run faster)
 	-p TCONST
-
-=head2 ar
-
-ar x|p|t|r [-ov] ARCHIVE [FILE]...
-
-Extract or list FILEs from an ar archive, or create it
-
-	x	Extract
-	p	Extract to stdout
-	t	List
-	r	Create
-	-o	Restore mtime
-	-v	Verbose
 
 =head2 arch
 
@@ -289,12 +274,6 @@ Strip directory path and SUFFIX from FILE
 
 	-a		All arguments are FILEs
 	-s SUFFIX	Remove SUFFIX (implies -a)
-
-=head2 bbconfig
-
-bbconfig 
-
-Print the config file used by busybox build
 
 =head2 bc
 
@@ -864,20 +843,6 @@ depmod
 
 Wrapper to external kmod
 
-=head2 devfsd
-
-devfsd mntpnt [-v][-fg][-np]
-
-Manage devfs permissions and old device name symlinks
-
-	mntpnt	The mount point where devfs is mounted
-	-v	Print the protocol version numbers for devfsd
-		and the kernel-side protocol version and exit
-	-fg	Run in foreground
-	-np	Exit after parsing the configuration file
-		and processing synthetic REGISTER events,
-		don't poll for events
-
 =head2 devmem
 
 devmem ADDRESS [WIDTH [VALUE]]
@@ -977,6 +942,34 @@ When no file is given, use stdin/stdout.
 
 	-u	dos2unix
 	-d	unix2dos
+
+=head2 dpkg
+
+dpkg [-ilCPru] [-F OPT] PACKAGE
+
+Install, remove and manage Debian packages
+
+	-i,--install	Install the package
+	-l,--list	List of installed packages
+	--configure	Configure an unpackaged package
+	-P,--purge	Purge all files of a package
+	-r,--remove	Remove all but the configuration files for a package
+	--unpack	Unpack a package, but don't configure it
+	--force-depends	Ignore dependency problems
+	--force-confnew	Overwrite existing config files when installing
+	--force-confold	Keep old config files when installing
+
+=head2 dpkg-deb
+
+dpkg-deb [-cefxX] FILE [DIR]
+
+Perform actions on Debian packages (.deb)
+
+	-c	List files
+	-f	Print control fields
+	-e	Extract control files to DIR (default: ./DEBIAN)
+	-x	Extract files to DIR (no default)
+	-X	Verbose extract
 
 =head2 du
 
@@ -1270,37 +1263,6 @@ findfs LABEL=label | UUID=uuid
 
 Find filesystem device based on label or UUID
 
-=head2 flash_eraseall
-
-flash_eraseall [-jNq] MTD_DEVICE
-
-Erase an MTD device
-
-	-j	Format the device for jffs2
-	-N	Don't skip bad blocks
-	-q	Don't display progress messages
-
-=head2 flash_lock
-
-flash_lock MTD_DEVICE OFFSET SECTORS
-
-Lock part or all of an MTD device. If SECTORS is -1, then all sectors
-will be locked, regardless of the value of OFFSET
-
-=head2 flash_unlock
-
-flash_unlock MTD_DEVICE
-
-Unlock an MTD device
-
-=head2 flashcp
-
-flashcp [-v] FILE MTD_DEVICE
-
-Copy FILE to MTD device
-
-	-v	Verbose
-
 =head2 flock
 
 flock [-sxun] FD | { FILE [-c] PROG ARGS }
@@ -1503,7 +1465,7 @@ BAUD_RATE of 0 leaves it unchanged
 
 =head2 grep
 
-grep [-HhnlLoqvsrRiwFEz] [-m N] [-A|B|C N] { PATTERN | -e PATTERN... | -f FILE... } [FILE]...
+grep [-HhnlLoqvsrRiwFE] [-m N] [-A|B|C N] { PATTERN | -e PATTERN... | -f FILE... } [FILE]...
 
 Search for PATTERN in FILEs (or stdin)
 
@@ -1524,7 +1486,6 @@ Search for PATTERN in FILEs (or stdin)
 	-x	Match whole lines only
 	-F	PATTERN is a literal (not regexp)
 	-E	PATTERN is an extended regexp
-	-z	NUL terminated input
 	-m N	Match up to N times per file
 	-A N	Print N lines of trailing context
 	-B N	Print N lines of leading context
@@ -1551,11 +1512,10 @@ Decompress FILEs (or stdin)
 
 =head2 gzip
 
-gzip [-cfkdt123456789] [FILE]...
+gzip [-cfkdt] [FILE]...
 
 Compress FILEs (or stdin)
 
-	-1..9	Compression level
 	-d	Decompress
 	-c	Write to stdout
 	-f	Force
@@ -1714,7 +1674,7 @@ Show or set hardware clock (RTC)
 	-f DEV	Use this device (e.g. /dev/rtc2)
 	-u	Assume RTC is kept in UTC
 	-l	Assume RTC is kept in local time
-		(if neither is given, read from /var/lib/hwclock/adjtime)
+		(if neither is given, read from /etc/adjtime)
 	-s	Set system time from RTC
 	-w	Set RTC from system time
 	--systz	Set in-kernel timezone, correct system time
@@ -1923,37 +1883,6 @@ HUP: reload /etc/inittab
 TSTP: stop respawning until CONT
 QUIT: re-exec another init
 USR1/TERM/USR2/INT: run halt/reboot/poweroff/Ctrl-Alt-Del script
-
-=head2 inotifyd
-
-inotifyd PROG FILE1[:MASK]...
-
-Run PROG on filesystem changes.
-When a filesystem event matching MASK occurs on FILEn,
-PROG ACTUAL_EVENTS FILEn [SUBFILE] is run.
-If PROG is -, events are sent to stdout.
-Events:
-
-	a	File is accessed
-	c	File is modified
-	e	Metadata changed
-	w	Writable file is closed
-	0	Unwritable file is closed
-	r	File is opened
-	D	File is deleted
-	M	File is moved
-	u	Backing fs is unmounted
-	o	Event queue overflowed
-	x	File can't be watched anymore
-If watching a directory:
-
-	y	Subfile is moved into dir
-	m	Subfile is moved out of dir
-	n	Subfile is created
-	d	Subfile is deleted
-
-inotifyd waits for PROG to exit.
-When x event happens for all FILEs, inotifyd exits.
 
 =head2 insmod
 
@@ -2421,6 +2350,19 @@ Decompress FILEs (or stdin)
 	-k	Keep input files
 	-t	Test integrity
 
+=head2 lzop
+
+lzop [-cfUvd123456789CF] [FILE]...
+
+	-1..9	Compression level
+	-d	Decompress
+	-c	Write to stdout
+	-f	Force
+	-U	Delete input files
+	-v	Verbose
+	-F	Don't store or verify checksum
+	-C	Also write checksum of compressed block
+
 =head2 makedevs
 
 makedevs [-d device_table] rootdir
@@ -2529,15 +2471,6 @@ Run a script from a Makefile-like specification file
 
 	-f FILE		Spec file (default Mimfile)
 
-=head2 minips
-
-minips [-o COL1,COL2=HEADER] [-T]
-
-Show list of processes
-
-	-o COL1,COL2=HEADER	Select columns for display
-	-T			Show threads
-
 =head2 mkdir
 
 mkdir [-m MODE] [-p] DIRECTORY...
@@ -2599,15 +2532,6 @@ Make a MINIX filesystem
 	-i INODES	Number of inodes for the filesystem
 	-l FILE		Read bad blocks list from FILE
 	-v		Make version 2 filesystem
-
-=head2 mkfs.reiser
-
-mkfs.reiser [-f] [-l LABEL] BLOCKDEV [4K-BLOCKS]
-
-Make a ReiserFS V3 filesystem
-
-	-f	Force
-	-l LBL	Volume label
 
 =head2 mkfs.vfat
 
@@ -2689,9 +2613,7 @@ mount [OPTIONS] [-o OPT] DEVICE NODE
 Mount a filesystem. Filesystem autodetection requires /proc.
 
 	-a		Mount all filesystems in fstab
-	-f		Update /etc/mtab, but don't mount
-	-i		Don't run mount helper
-	-n		Don't update /etc/mtab
+	-f		Dry run
 	-v		Verbose
 	-r		Read-only mount
 	-t FSTYPE[,...]	Filesystem type(s)
@@ -2816,25 +2738,6 @@ Connect to HOST and provide network block device on BLOCKDEV
 =head2 nc
 
 nc [OPTIONS] HOST PORT  - connect
-nc [OPTIONS] -l -p PORT [HOST] [PORT]  - listen
-
-	-e PROG	Run PROG after connect (must be last)
-	-l	Listen mode, for inbound connects
-	-lk	With -e, provides persistent server
-	-p PORT	Local port
-	-s ADDR	Local address
-	-w SEC	Timeout for connects and final net reads
-	-i SEC	Delay interval for lines sent
-	-n	Don't do DNS resolution
-	-u	UDP mode
-	-b	Allow broadcasts
-	-v	Verbose
-	-o FILE	Hex dump traffic
-	-z	Zero-I/O mode (scanning)
-
-=head2 netcat
-
-netcat [OPTIONS] HOST PORT  - connect
 nc [OPTIONS] -l -p PORT [HOST] [PORT]  - listen
 
 	-e PROG	Run PROG after connect (must be last)
@@ -2987,12 +2890,6 @@ NTP client/server
 		from /etc/ntp.conf are used
 	-l	Also run as server on port 123
 	-I IFACE Bind server to IFACE, implies -l
-
-=head2 nuke
-
-nuke DIR...
-
-Remove DIRs
 
 =head2 od
 
@@ -3342,21 +3239,6 @@ rev [FILE]...
 
 Reverse lines of FILE
 
-=head2 rfkill
-
-rfkill COMMAND [INDEX|TYPE]
-
-Enable/disable wireless devices
-
-Commands:
-
-	list [INDEX|TYPE]	List current state
-	block INDEX|TYPE	Disable device
-	unblock INDEX|TYPE	Enable device
-
-	TYPE: all, wlan(wifi), bluetooth, uwb(ultrawideband),
-		wimax, wwan, gps, fm
-
 =head2 rm
 
 rm [-irf] FILE...
@@ -3393,13 +3275,34 @@ Show or edit kernel routing tables
 	-e	Display other/more information
 	-A inet[6]	Select address family
 
+=head2 rpm
+
+rpm -i PACKAGE.rpm; rpm -qp[ildc] PACKAGE.rpm
+
+Manipulate RPM packages
+
+Commands:
+
+	-i	Install package
+	-qp	Query package
+	-qpi	Show information
+	-qpl	List contents
+	-qpd	List documents
+	-qpc	List config files
+
+=head2 rpm2cpio
+
+rpm2cpio PACKAGE.rpm
+
+Output a cpio archive of the rpm file
+
 =head2 rtcwake
 
 rtcwake [-a | -l | -u] [-d DEV] [-m MODE] [-s SEC | -t TIME]
 
 Enter a system sleep state until specified wakeup time
 
-	-a	Read clock mode from /var/lib/hwclock/adjtime (default)
+	-a	Read clock mode from /etc/adjtime (default)
 	-l	Clock is set to local time
 	-u	Clock is set to UTC time
 	-d DEV	Specify the RTC device
@@ -4116,7 +4019,7 @@ With more than one FILE, precede each with a filename header.
 
 =head2 tar
 
-tar c|x|t [-ZzJjahmvokO] [-f TARFILE] [-C DIR] [-T FILE] [-X FILE] [LONGOPT]... [FILE]...
+tar c|x|t [-zJjahmvokO] [-f TARFILE] [-C DIR] [-T FILE] [-X FILE] [LONGOPT]... [FILE]...
 
 Create, extract, or list files from a tar file
 
@@ -4130,7 +4033,6 @@ Create, extract, or list files from a tar file
 	-m	Don't restore mtime
 	-o	Don't restore user:group
 	-k	Don't replace existing files
-	-Z	(De)compress using compress
 	-z	(De)compress using gzip
 	-J	(De)compress using xz
 	-j	(De)compress using bzip2
@@ -4156,6 +4058,25 @@ Set or get CPU affinity
 	-p	Operate on PID
 	-a	Operate on all threads
 	-c	Affinity is a list, not mask
+
+=head2 tc
+
+tc OBJECT CMD [dev STRING]
+
+OBJECT: qdisc|class|filter
+CMD: add|del|change|replace|show
+
+qdisc [handle QHANDLE] [root|ingress|parent CLASSID]
+	[[QDISC_KIND] [help|OPTIONS]]
+	QDISC_KIND := [p|b]fifo|tbf|prio|cbq|red|etc.
+qdisc show [dev STRING] [ingress]
+class [classid CLASSID] [root|parent CLASSID]
+	[[QDISC_KIND] [help|OPTIONS] ]
+class show [ dev STRING ] [root|parent CLASSID]
+filter [pref PRIO] [protocol PROTO]
+	[root|classid CLASSID] [handle FILTERID]
+	[[FILTER_TYPE] [help|OPTIONS]]
+filter show [dev STRING] [root|parent CLASSID]
 
 =head2 tcpsvd
 
@@ -4421,12 +4342,6 @@ Create or delete TUN/TAP interfaces
 	-g GRP	Set iface group
 	-b	Brief output
 
-=head2 tune2fs
-
-tune2fs [-c MAX_MOUNT_COUNT] [-i DAYS] [-C MOUNT_COUNT] [-L LABEL] BLOCKDEV
-
-Adjust filesystem options on ext[23] filesystems
-
 =head2 ubiattach
 
 ubiattach -m MTD_NUM [-d UBI_NUM] [-O VID_HDR_OFF] UBI_CTRL_DEV
@@ -4495,18 +4410,16 @@ Update UBI volume
 =head2 udhcpc
 
 udhcpc [-fbqvRB] [-a[MSEC]] [-t N] [-T SEC] [-A SEC|-n]
-	[-i IFACE] [-P PORT] [-s PROG] [-p PIDFILE]
+	[-i IFACE] [-s PROG] [-p PIDFILE]
 	[-oC] [-r IP] [-V VENDOR] [-F NAME] [-x OPT:VAL]... [-O OPT]...
 
 	-i IFACE	Interface to use (default eth0)
-	-P PORT		Use PORT (default 68)
 	-s PROG		Run PROG at DHCP events (default /usr/share/udhcpc/default.script)
 	-p FILE		Create pidfile
 	-B		Request broadcast replies
 	-t N		Send up to N discover packets (default 3)
 	-T SEC		Pause between packets (default 3)
 	-A SEC		Wait if lease is not obtained (default 20)
-	-b		Background if lease is not obtained
 	-n		Exit if lease is not obtained
 	-q		Exit after obtaining lease
 	-R		Release IP on exit
@@ -4534,7 +4447,7 @@ Signals:
 =head2 udhcpc6
 
 udhcpc6 [-fbqvR] [-t N] [-T SEC] [-A SEC|-n] [-i IFACE] [-s PROG]
-	[-p PIDFILE] [-P PORT] [-mldo] [-r IPv6] [-x OPT:VAL]... [-O OPT]...
+	[-p PIDFILE] [-mldo] [-r IPv6] [-x OPT:VAL]... [-O OPT]...
 
 	-i IFACE	Interface to use (default eth0)
 	-p FILE		Create pidfile
@@ -4542,13 +4455,11 @@ udhcpc6 [-fbqvR] [-t N] [-T SEC] [-A SEC|-n] [-i IFACE] [-s PROG]
 	-t N		Send up to N discover packets
 	-T SEC		Pause between packets (default 3)
 	-A SEC		Wait if lease is not obtained (default 20)
-	-b		Background if lease is not obtained
 	-n		Exit if lease is not obtained
 	-q		Exit after obtaining lease
 	-R		Release IP on exit
 	-f		Run in foreground
 	-S		Log to syslog too
-	-P PORT		Use PORT (default 546)
 	-m		Send multicast renew requests rather than unicast ones
 	-l		Send 'information request' instead of 'solicit'
 			(used for servers which do not assign IPv6 addresses)
@@ -4570,7 +4481,7 @@ Signals:
 
 =head2 udhcpd
 
-udhcpd [-fS] [-I ADDR] [-a MSEC] [-P PORT] [CONFFILE]
+udhcpd [-fS] [-I ADDR] [-a MSEC] [CONFFILE]
 
 DHCP server
 
@@ -4578,7 +4489,6 @@ DHCP server
 	-S	Log to syslog too
 	-I ADDR	Local address
 	-a MSEC	Timeout for ARP ping (default 2000)
-	-P PORT	Use PORT (default 67)
 Signals:
 
 	USR1	Update lease file
@@ -4619,12 +4529,11 @@ Typical usage (daemon for dynamic device node creation):
 
 =head2 umount
 
-umount [-rlfmda] [-t FSTYPE] FILESYSTEM|DIRECTORY
+umount [-rlfda] [-t FSTYPE] FILESYSTEM|DIRECTORY
 
 Unmount filesystems
 
-	-a	Unmount all filesystems in /etc/mtab
-	-n	Don't erase /etc/mtab entries
+	-a	Unmount all filesystems
 	-r	Remount devices read-only if mount is busy
 	-l	Lazy umount (detach filesystem)
 	-f	Force umount (i.e., unreachable NFS server)
@@ -4646,15 +4555,6 @@ Print system information
 	-v	Kernel version
 	-i	Hardware platform
 	-o	OS name
-
-=head2 uncompress
-
-uncompress [-cf] [FILE]...
-
-Decompress FILEs (or stdin)
-
-	-c	Write to stdout
-	-f	Overwrite
 
 =head2 unexpand
 
@@ -4681,12 +4581,6 @@ Discard duplicate lines
 	-s N	Skip first N chars (after any skipped fields)
 	-w N	Compare N characters in line
 
-=head2 unit
-
-unit 
-
-Run the unit-test suite
-
 =head2 unix2dos
 
 unix2dos [-ud] [FILE]
@@ -4702,6 +4596,17 @@ When no file is given, use stdin/stdout.
 unlink FILE
 
 Delete FILE by calling unlink()
+
+=head2 unlzma
+
+unlzma [-cfk] [FILE]...
+
+Decompress FILEs (or stdin)
+
+	-c	Write to stdout
+	-f	Force
+	-k	Keep input files
+	-t	Test integrity
 
 =head2 unxz
 
@@ -4796,13 +4701,23 @@ Create and remove virtual ethernet devices
 
 =head2 vi
 
-vi [-c CMD] [-R] [-H] [FILE]...
+vi [OPTIONS] [FILE]...
 
 Edit FILE
 
 	-c CMD	Initial command to run ($EXINIT and ~/.exrc also available)
 	-R	Read-only
-	-H	List available features
+	-H	Short help regarding available features
+
+=head2 vim
+
+vim [OPTIONS] [FILE]...
+
+Edit FILE
+
+	-c CMD	Initial command to run ($EXINIT and ~/.exrc also available)
+	-R	Read-only
+	-H	Short help regarding available features
 
 =head2 vlock
 
@@ -4964,11 +4879,23 @@ Decompress FILEs (or stdin)
 	-k	Keep input files
 	-t	Test integrity
 
+=head2 xzcat
+
+xzcat [FILE]...
+
+Decompress to stdout
+
 =head2 yes
 
 yes [STRING]
 
 Repeatedly print a line with STRING, or 'y'
+
+=head2 zcat
+
+zcat [FILE]...
+
+Decompress to stdout
 
 =head2 zcip
 
@@ -4987,6 +4914,12 @@ $LOGGING=syslog 	Log to syslog
 
 With no -q, runs continuously monitoring for ARP conflicts,
 exits only on I/O errors (link down etc)
+
+=head2 zstdcat
+
+zstdcat [FILE]...
+
+Decompress to stdout
 
 =head1 LIBC NSS
 

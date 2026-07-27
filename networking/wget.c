@@ -142,7 +142,7 @@ static FILE *w2_connect(struct w2_url *u, int no_check_cert UNUSED_PARAM)
 		if (socketpair(AF_UNIX, SOCK_STREAM, 0, sp) != 0)
 			bb_simple_perror_msg_and_die("socketpair");
 		fflush_all();
-		pid = xfork();
+		pid = xvfork();
 		if (pid == 0) {
 			/* child: runs TLS, connects to host_port, proxies to sp[1] */
 			char *argv[6];

@@ -1,1 +1,1 @@
-#undef CONFIG_ZSTDCAT
+#define CONFIG_ZSTDCAT 1

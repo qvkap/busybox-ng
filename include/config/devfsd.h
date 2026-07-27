@@ -1,1 +1,1 @@
-#define CONFIG_DEVFSD 1
+#undef CONFIG_DEVFSD

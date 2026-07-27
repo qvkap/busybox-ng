@@ -1,1 +1,1 @@
-#define CONFIG_NUKE 1
+#undef CONFIG_NUKE

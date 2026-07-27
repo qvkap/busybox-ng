@@ -2288,17 +2288,17 @@
        "bar\n" \
 
 #define vi_trivial_usage \
-       IF_FEATURE_VI_COLON("[-c CMD] ")IF_FEATURE_VI_READONLY("[-R] ")"[-H] [FILE]..." \
+       "[OPTIONS] [FILE]..." \
 
 #define vi_full_usage "\n\n" \
        "Edit FILE\n" \
-	IF_FEATURE_VI_COLON( \
      "\n	-c CMD	Initial command to run ($EXINIT and ~/.exrc also available)" \
-	) \
-	IF_FEATURE_VI_READONLY( \
      "\n	-R	Read-only" \
-	) \
-     "\n	-H	List available features" \
+     "\n	-H	Short help regarding available features" \
+
+#define vim_trivial_usage vi_trivial_usage \
+
+#define vim_full_usage vi_full_usage \
 
 #define find_trivial_usage \
        "[-HL] [PATH]... [OPTIONS] [ACTIONS]" \

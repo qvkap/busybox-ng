@@ -76,54 +76,53 @@ COMMON OPTIONS
 COMMANDS
     Currently available applets include:
 
-    [, [[, acpid, add-shell, addgroup, adduser, adjtimex, ar, arch, arp,
-    arping, ascii, awk, base32, base64, basename, bbconfig, bc, beep,
-    blkdiscard, blkid, blockdev, bootchartd, brctl, bunzip2, busybox, bzcat,
-    bzip2, cal, cat, chat, chattr, chgrp, chmod, chown, chpasswd, chpst,
-    chroot, chrt, chvt, cksum, clear, cmp, comm, conspy, cp, cpio, crc32,
-    crond, crontab, cryptpw, cttyhack, curl, cut, date, dc, dd, deallocvt,
-    delgroup, deluser, depmod, devfsd, devmem, df, dhcprelay, diff, dirname,
-    dmesg, dnsd, dnsdomainname, dos2unix, du, dumpkmap, dumpleases, echo,
-    ed, egrep, eject, env, envdir, envuidgid, ether-wake, expand, expr,
-    factor, fallocate, false, fatattr, fbset, fbsplash, fdflush, fdformat,
-    fdisk, fgconsole, fgrep, find, findfs, flash_eraseall, flash_lock,
-    flash_unlock, flashcp, flock, fold, free, freeramdisk, fsck, fsck.minix,
-    fsfreeze, fstrim, fsync, ftpd, ftpget, ftpput, fuser, getfattr, getopt,
-    getty, grep, groups, gunzip, gzip, halt, hd, hdparm, head, hexdump,
-    hexedit, hostid, hostname, httpd, hush, hwclock, i2cdetect, i2cdump,
-    i2cget, i2cset, i2ctransfer, id, ifconfig, ifdown, ifenslave, ifplugd,
-    ifup, inetd, init, inotifyd, insmod, install, ionice, iostat, ip,
-    ipaddr, ipcalc, ipcrm, ipcs, iplink, ipneigh, iproute, iprule, iptunnel,
-    kbd_mode, kill, killall, killall5, klogd, kmod, last, less, link,
-    linux32, linux64, linuxrc, ln, loadfont, loadkmap, logger, login,
+    [, [[, acpid, add-shell, addgroup, adduser, adjtimex, arch, arp, arping,
+    ascii, awk, base32, base64, basename, bc, beep, blkdiscard, blkid,
+    blockdev, bootchartd, brctl, bunzip2, bzcat, bzip2, cal, cat, chat,
+    chattr, chgrp, chmod, chown, chpasswd, chpst, chroot, chrt, chvt, cksum,
+    clear, cmp, comm, conspy, cp, cpio, crc32, crond, crontab, cryptpw,
+    cttyhack, curl, cut, date, dc, dd, deallocvt, delgroup, deluser, depmod,
+    devmem, df, dhcprelay, diff, dirname, dmesg, dnsd, dnsdomainname,
+    dos2unix, dpkg, dpkg-deb, du, dumpkmap, dumpleases, echo, ed, egrep,
+    eject, env, envdir, envuidgid, ether-wake, expand, expr, factor,
+    fallocate, false, fatattr, fbset, fbsplash, fdflush, fdformat, fdisk,
+    fgconsole, fgrep, find, findfs, flock, fold, free, freeramdisk, fsck,
+    fsck.minix, fsfreeze, fstrim, fsync, ftpd, ftpget, ftpput, fuser,
+    getfattr, getopt, getty, grep, groups, gunzip, gzip, halt, hd, hdparm,
+    head, hexdump, hexedit, hostid, hostname, httpd, hush, hwclock,
+    i2cdetect, i2cdump, i2cget, i2cset, i2ctransfer, id, ifconfig, ifdown,
+    ifenslave, ifplugd, ifup, inetd, init, insmod, install, ionice, iostat,
+    ip, ipaddr, ipcalc, ipcrm, ipcs, iplink, ipneigh, iproute, iprule,
+    iptunnel, kbd_mode, kill, killall, killall5, klogd, kmod, last, less,
+    link, linux32, linux64, linuxrc, ln, loadfont, loadkmap, logger, login,
     logname, logread, losetup, lpd, lpq, lpr, ls, lsattr, lsblk, lsmod,
-    lsof, lspci, lsscsi, lsusb, lzcat, lzma, makedevs, makemime, man,
-    md5sum, mdev, mesg, microcom, mim, minips, mkdir, mkdosfs, mke2fs,
-    mkfifo, mkfs.ext2, mkfs.minix, mkfs.reiser, mkfs.vfat, mknod, mkpasswd,
-    mkswap, mktemp, modinfo, modprobe, more, mount, mountpoint, mpstat, mt,
-    mv, nameif, nanddump, nandwrite, nbd-client, nc, netcat, netstat, nice,
-    nl, nmeter, nohup, nologin, nproc, nsenter, nslookup, ntpd, nuke, od,
-    openvt, partprobe, passwd, paste, patch, pgrep, pidof, ping, ping6,
-    pipe_progress, pivot_root, pkill, pmap, popmaildir, poweroff, powertop,
-    printenv, printf, ps, pscan, pstree, pwd, pwdx, rdate, readahead,
-    readlink, readprofile, realpath, reboot, reformime, remove-shell,
-    renice, reset, resize, resume, rev, rfkill, rm, rmdir, rmmod, route,
-    rtcwake, run-init, run-parts, runlevel, runsv, runsvdir, script,
-    scriptreplay, sed, seedrng, sendmail, seq, setarch, setconsole,
-    setfattr, setfont, setkeycodes, setlogcons, setpriv, setserial, setsid,
-    setuidgid, sh, sha1sum, sha256sum, sha384sum, sha3sum, sha512sum,
-    showkey, shred, shuf, sleep, smemcap, softlimit, sort, split,
-    ssl_client, ssl_server, start-stop-daemon, stat, strings, stty, su,
-    sulogin, sum, sv, svc, svlogd, svok, swapoff, swapon, switch_root, sync,
-    sysctl, syslogd, tac, tail, tar, taskset, tcpsvd, tee, telnet, telnetd,
-    test, tftp, tftpd, time, timeout, top, touch, tr, traceroute,
-    traceroute6, tree, true, truncate, ts, tsort, tty, ttysize, tunctl,
-    tune2fs, ubiattach, ubidetach, ubimkvol, ubirename, ubirmvol, ubirsvol,
-    ubiupdatevol, udhcpc, udhcpc6, udhcpd, udpsvd, uevent, umount, uname,
-    uncompress, unexpand, uniq, unit, unix2dos, unlink, unxz, unzip, unzstd,
-    uptime, users, usleep, uudecode, uuencode, uuidgen, vconfig, vi, vlock,
-    vmstat, volname, w, wall, watch, watchdog, wc, wget, which, who, whoami,
-    whois, xargs, xxd, xz, yes, zcip
+    lsof, lspci, lsscsi, lsusb, lzcat, lzma, lzop, makedevs, makemime, man,
+    md5sum, mdev, mesg, microcom, mim, mkdir, mkdosfs, mke2fs, mkfifo,
+    mkfs.ext2, mkfs.minix, mkfs.vfat, mknod, mkpasswd, mkswap, mktemp,
+    modinfo, modprobe, more, mount, mountpoint, mpstat, mt, mv, nameif,
+    nanddump, nandwrite, nbd-client, nc, netstat, nice, nl, nmeter, nohup,
+    nologin, nproc, nsenter, nslookup, ntpd, od, openvt, partprobe, passwd,
+    paste, patch, pgrep, pidof, ping, ping6, pipe_progress, pivot_root,
+    pkill, pmap, popmaildir, poweroff, powertop, printenv, printf, ps,
+    pscan, pstree, pwd, pwdx, rdate, readahead, readlink, readprofile,
+    realpath, reboot, reformime, remove-shell, renice, reset, resize,
+    resume, rev, rm, rmdir, rmmod, route, rpm, rpm2cpio, rtcwake, run-init,
+    run-parts, runlevel, runsv, runsvdir, script, scriptreplay, sed,
+    seedrng, sendmail, seq, setarch, setconsole, setfattr, setfont,
+    setkeycodes, setlogcons, setpriv, setserial, setsid, setuidgid, sh,
+    sha1sum, sha256sum, sha384sum, sha3sum, sha512sum, showkey, shred, shuf,
+    sleep, smemcap, softlimit, sort, split, ssl_client, ssl_server,
+    start-stop-daemon, stat, strings, stty, su, sulogin, sum, sv, svc,
+    svlogd, svok, swapoff, swapon, switch_root, sync, sysctl, syslogd, tac,
+    tail, tar, taskset, tc, tcpsvd, tee, telnet, telnetd, test, tftp, tftpd,
+    time, timeout, top, touch, tr, traceroute, traceroute6, tree, true,
+    truncate, ts, tsort, tty, ttysize, tunctl, ubiattach, ubidetach,
+    ubimkvol, ubirename, ubirmvol, ubirsvol, ubiupdatevol, udhcpc, udhcpc6,
+    udhcpd, udpsvd, uevent, umount, uname, unexpand, uniq, unix2dos, unlink,
+    unlzma, unxz, unzip, unzstd, uptime, users, usleep, uudecode, uuencode,
+    uuidgen, vconfig, vi, vim, vlock, vmstat, volname, w, wall, watch,
+    watchdog, wc, wget, which, who, whoami, whois, xargs, xxd, xz, xzcat,
+    yes, zcat, zcip, zstdcat
 
 COMMAND DESCRIPTIONS
   acpid
@@ -182,18 +181,6 @@ COMMAND DESCRIPTIONS
             -t TICK Microseconds per tick, usually 10000
                     (positive -t or -f values make clock run faster)
             -p TCONST
-
-  ar
-    ar x|p|t|r [-ov] ARCHIVE [FILE]...
-
-    Extract or list FILEs from an ar archive, or create it
-
-            x       Extract
-            p       Extract to stdout
-            t       List
-            r       Create
-            -o      Restore mtime
-            -v      Verbose
 
   arch
     arch
@@ -266,11 +253,6 @@ COMMAND DESCRIPTIONS
 
             -a              All arguments are FILEs
             -s SUFFIX       Remove SUFFIX (implies -a)
-
-  bbconfig
-    bbconfig
-
-    Print the config file used by busybox build
 
   bc
     bc [-sqlw] [FILE]...
@@ -791,19 +773,6 @@ COMMAND DESCRIPTIONS
 
     Wrapper to external kmod
 
-  devfsd
-    devfsd mntpnt [-v][-fg][-np]
-
-    Manage devfs permissions and old device name symlinks
-
-            mntpnt  The mount point where devfs is mounted
-            -v      Print the protocol version numbers for devfsd
-                    and the kernel-side protocol version and exit
-            -fg     Run in foreground
-            -np     Exit after parsing the configuration file
-                    and processing synthetic REGISTER events,
-                    don't poll for events
-
   devmem
     devmem ADDRESS [WIDTH [VALUE]]
 
@@ -895,6 +864,32 @@ COMMAND DESCRIPTIONS
 
             -u      dos2unix
             -d      unix2dos
+
+  dpkg
+    dpkg [-ilCPru] [-F OPT] PACKAGE
+
+    Install, remove and manage Debian packages
+
+            -i,--install    Install the package
+            -l,--list       List of installed packages
+            --configure     Configure an unpackaged package
+            -P,--purge      Purge all files of a package
+            -r,--remove     Remove all but the configuration files for a package
+            --unpack        Unpack a package, but don't configure it
+            --force-depends Ignore dependency problems
+            --force-confnew Overwrite existing config files when installing
+            --force-confold Keep old config files when installing
+
+  dpkg-deb
+    dpkg-deb [-cefxX] FILE [DIR]
+
+    Perform actions on Debian packages (.deb)
+
+            -c      List files
+            -f      Print control fields
+            -e      Extract control files to DIR (default: ./DEBIAN)
+            -x      Extract files to DIR (no default)
+            -X      Verbose extract
 
   du
     du [-aHLdclsxhmk] [FILE]...
@@ -1165,33 +1160,6 @@ COMMAND DESCRIPTIONS
 
     Find filesystem device based on label or UUID
 
-  flash_eraseall
-    flash_eraseall [-jNq] MTD_DEVICE
-
-    Erase an MTD device
-
-            -j      Format the device for jffs2
-            -N      Don't skip bad blocks
-            -q      Don't display progress messages
-
-  flash_lock
-    flash_lock MTD_DEVICE OFFSET SECTORS
-
-    Lock part or all of an MTD device. If SECTORS is -1, then all sectors
-    will be locked, regardless of the value of OFFSET
-
-  flash_unlock
-    flash_unlock MTD_DEVICE
-
-    Unlock an MTD device
-
-  flashcp
-    flashcp [-v] FILE MTD_DEVICE
-
-    Copy FILE to MTD device
-
-            -v      Verbose
-
   flock
     flock [-sxun] FD | { FILE [-c] PROG ARGS }
 
@@ -1364,8 +1332,8 @@ COMMAND DESCRIPTIONS
     BAUD_RATE of 0 leaves it unchanged
 
   grep
-    grep [-HhnlLoqvsrRiwFEz] [-m N] [-A|B|C N] { PATTERN | -e PATTERN... |
-    -f FILE... } [FILE]...
+    grep [-HhnlLoqvsrRiwFE] [-m N] [-A|B|C N] { PATTERN | -e PATTERN... | -f
+    FILE... } [FILE]...
 
     Search for PATTERN in FILEs (or stdin)
 
@@ -1386,7 +1354,6 @@ COMMAND DESCRIPTIONS
             -x      Match whole lines only
             -F      PATTERN is a literal (not regexp)
             -E      PATTERN is an extended regexp
-            -z      NUL terminated input
             -m N    Match up to N times per file
             -A N    Print N lines of trailing context
             -B N    Print N lines of leading context
@@ -1410,11 +1377,10 @@ COMMAND DESCRIPTIONS
             -t      Test integrity
 
   gzip
-    gzip [-cfkdt123456789] [FILE]...
+    gzip [-cfkdt] [FILE]...
 
     Compress FILEs (or stdin)
 
-            -1..9   Compression level
             -d      Decompress
             -c      Write to stdout
             -f      Force
@@ -1563,7 +1529,7 @@ COMMAND DESCRIPTIONS
             -f DEV  Use this device (e.g. /dev/rtc2)
             -u      Assume RTC is kept in UTC
             -l      Assume RTC is kept in local time
-                    (if neither is given, read from /var/lib/hwclock/adjtime)
+                    (if neither is given, read from /etc/adjtime)
             -s      Set system time from RTC
             -w      Set RTC from system time
             --systz Set in-kernel timezone, correct system time
@@ -1757,34 +1723,6 @@ COMMAND DESCRIPTIONS
     HUP: reload /etc/inittab TSTP: stop respawning until CONT QUIT: re-exec
     another init USR1/TERM/USR2/INT: run halt/reboot/poweroff/Ctrl-Alt-Del
     script
-
-  inotifyd
-    inotifyd PROG FILE1[:MASK]...
-
-    Run PROG on filesystem changes. When a filesystem event matching MASK
-    occurs on FILEn, PROG ACTUAL_EVENTS FILEn [SUBFILE] is run. If PROG is
-    -, events are sent to stdout. Events:
-
-            a       File is accessed
-            c       File is modified
-            e       Metadata changed
-            w       Writable file is closed
-            0       Unwritable file is closed
-            r       File is opened
-            D       File is deleted
-            M       File is moved
-            u       Backing fs is unmounted
-            o       Event queue overflowed
-            x       File can't be watched anymore
-    If watching a directory:
-
-            y       Subfile is moved into dir
-            m       Subfile is moved out of dir
-            n       Subfile is created
-            d       Subfile is deleted
-
-    inotifyd waits for PROG to exit. When x event happens for all FILEs,
-    inotifyd exits.
 
   insmod
     insmod FILE [ARGS]
@@ -2195,6 +2133,18 @@ COMMAND DESCRIPTIONS
             -k      Keep input files
             -t      Test integrity
 
+  lzop
+    lzop [-cfUvd123456789CF] [FILE]...
+
+            -1..9   Compression level
+            -d      Decompress
+            -c      Write to stdout
+            -f      Force
+            -U      Delete input files
+            -v      Verbose
+            -F      Don't store or verify checksum
+            -C      Also write checksum of compressed block
+
   makedevs
     makedevs [-d device_table] rootdir
 
@@ -2289,14 +2239,6 @@ COMMAND DESCRIPTIONS
 
             -f FILE         Spec file (default Mimfile)
 
-  minips
-    minips [-o COL1,COL2=HEADER] [-T]
-
-    Show list of processes
-
-            -o COL1,COL2=HEADER     Select columns for display
-            -T                      Show threads
-
   mkdir
     mkdir [-m MODE] [-p] DIRECTORY...
 
@@ -2354,14 +2296,6 @@ COMMAND DESCRIPTIONS
             -i INODES       Number of inodes for the filesystem
             -l FILE         Read bad blocks list from FILE
             -v              Make version 2 filesystem
-
-  mkfs.reiser
-    mkfs.reiser [-f] [-l LABEL] BLOCKDEV [4K-BLOCKS]
-
-    Make a ReiserFS V3 filesystem
-
-            -f      Force
-            -l LBL  Volume label
 
   mkfs.vfat
     mkfs.vfat [-v] [-n LABEL] BLOCKDEV [KBYTES]
@@ -2434,9 +2368,7 @@ COMMAND DESCRIPTIONS
     Mount a filesystem. Filesystem autodetection requires /proc.
 
             -a              Mount all filesystems in fstab
-            -f              Update /etc/mtab, but don't mount
-            -i              Don't run mount helper
-            -n              Don't update /etc/mtab
+            -f              Dry run
             -v              Verbose
             -r              Read-only mount
             -t FSTYPE[,...] Filesystem type(s)
@@ -2552,24 +2484,6 @@ COMMAND DESCRIPTIONS
   nc
     nc [OPTIONS] HOST PORT - connect nc [OPTIONS] -l -p PORT [HOST] [PORT] -
     listen
-
-            -e PROG Run PROG after connect (must be last)
-            -l      Listen mode, for inbound connects
-            -lk     With -e, provides persistent server
-            -p PORT Local port
-            -s ADDR Local address
-            -w SEC  Timeout for connects and final net reads
-            -i SEC  Delay interval for lines sent
-            -n      Don't do DNS resolution
-            -u      UDP mode
-            -b      Allow broadcasts
-            -v      Verbose
-            -o FILE Hex dump traffic
-            -z      Zero-I/O mode (scanning)
-
-  netcat
-    netcat [OPTIONS] HOST PORT - connect nc [OPTIONS] -l -p PORT [HOST]
-    [PORT] - listen
 
             -e PROG Run PROG after connect (must be last)
             -l      Listen mode, for inbound connects
@@ -2711,11 +2625,6 @@ COMMAND DESCRIPTIONS
                     from /etc/ntp.conf are used
             -l      Also run as server on port 123
             -I IFACE Bind server to IFACE, implies -l
-
-  nuke
-    nuke DIR...
-
-    Remove DIRs
 
   od
     od [-abcdfhilovxs] [-t TYPE] [-A RADIX] [-N SIZE] [-j SKIP] [-S MINSTR]
@@ -3029,20 +2938,6 @@ COMMAND DESCRIPTIONS
 
     Reverse lines of FILE
 
-  rfkill
-    rfkill COMMAND [INDEX|TYPE]
-
-    Enable/disable wireless devices
-
-    Commands:
-
-            list [INDEX|TYPE]       List current state
-            block INDEX|TYPE        Disable device
-            unblock INDEX|TYPE      Enable device
-
-            TYPE: all, wlan(wifi), bluetooth, uwb(ultrawideband),
-                    wimax, wwan, gps, fm
-
   rm
     rm [-irf] FILE...
 
@@ -3075,12 +2970,31 @@ COMMAND DESCRIPTIONS
             -e      Display other/more information
             -A inet[6]      Select address family
 
+  rpm
+    rpm -i PACKAGE.rpm; rpm -qp[ildc] PACKAGE.rpm
+
+    Manipulate RPM packages
+
+    Commands:
+
+            -i      Install package
+            -qp     Query package
+            -qpi    Show information
+            -qpl    List contents
+            -qpd    List documents
+            -qpc    List config files
+
+  rpm2cpio
+    rpm2cpio PACKAGE.rpm
+
+    Output a cpio archive of the rpm file
+
   rtcwake
     rtcwake [-a | -l | -u] [-d DEV] [-m MODE] [-s SEC | -t TIME]
 
     Enter a system sleep state until specified wakeup time
 
-            -a      Read clock mode from /var/lib/hwclock/adjtime (default)
+            -a      Read clock mode from /etc/adjtime (default)
             -l      Clock is set to local time
             -u      Clock is set to UTC time
             -d DEV  Specify the RTC device
@@ -3734,7 +3648,7 @@ COMMAND DESCRIPTIONS
             -s SECONDS      Wait SECONDS between reads with -f
 
   tar
-    tar c|x|t [-ZzJjahmvokO] [-f TARFILE] [-C DIR] [-T FILE] [-X FILE]
+    tar c|x|t [-zJjahmvokO] [-f TARFILE] [-C DIR] [-T FILE] [-X FILE]
     [LONGOPT]... [FILE]...
 
     Create, extract, or list files from a tar file
@@ -3749,7 +3663,6 @@ COMMAND DESCRIPTIONS
             -m      Don't restore mtime
             -o      Don't restore user:group
             -k      Don't replace existing files
-            -Z      (De)compress using compress
             -z      (De)compress using gzip
             -J      (De)compress using xz
             -j      (De)compress using bzip2
@@ -3774,6 +3687,19 @@ COMMAND DESCRIPTIONS
             -p      Operate on PID
             -a      Operate on all threads
             -c      Affinity is a list, not mask
+
+  tc
+    tc OBJECT CMD [dev STRING]
+
+    OBJECT: qdisc|class|filter CMD: add|del|change|replace|show
+
+    qdisc [handle QHANDLE] [root|ingress|parent CLASSID] [[QDISC_KIND]
+    [help|OPTIONS]] QDISC_KIND := [p|b]fifo|tbf|prio|cbq|red|etc. qdisc show
+    [dev STRING] [ingress] class [classid CLASSID] [root|parent CLASSID]
+    [[QDISC_KIND] [help|OPTIONS] ] class show [ dev STRING ] [root|parent
+    CLASSID] filter [pref PRIO] [protocol PROTO] [root|classid CLASSID]
+    [handle FILTERID] [[FILTER_TYPE] [help|OPTIONS]] filter show [dev
+    STRING] [root|parent CLASSID]
 
   tcpsvd
     tcpsvd [-hEv] [-c N] [-C N[:MSG]] [-b N] [-u USER] [-l NAME] IP PORT
@@ -4012,12 +3938,6 @@ COMMAND DESCRIPTIONS
             -g GRP  Set iface group
             -b      Brief output
 
-  tune2fs
-    tune2fs [-c MAX_MOUNT_COUNT] [-i DAYS] [-C MOUNT_COUNT] [-L LABEL]
-    BLOCKDEV
-
-    Adjust filesystem options on ext[23] filesystems
-
   ubiattach
     ubiattach -m MTD_NUM [-d UBI_NUM] [-O VID_HDR_OFF] UBI_CTRL_DEV
 
@@ -4077,19 +3997,17 @@ COMMAND DESCRIPTIONS
             -s SIZE Size in bytes to resize to
 
   udhcpc
-    udhcpc [-fbqvRB] [-a[MSEC]] [-t N] [-T SEC] [-A SEC|-n] [-i IFACE] [-P
-    PORT] [-s PROG] [-p PIDFILE] [-oC] [-r IP] [-V VENDOR] [-F NAME] [-x
-    OPT:VAL]... [-O OPT]...
+    udhcpc [-fbqvRB] [-a[MSEC]] [-t N] [-T SEC] [-A SEC|-n] [-i IFACE] [-s
+    PROG] [-p PIDFILE] [-oC] [-r IP] [-V VENDOR] [-F NAME] [-x OPT:VAL]...
+    [-O OPT]...
 
             -i IFACE        Interface to use (default eth0)
-            -P PORT         Use PORT (default 68)
             -s PROG         Run PROG at DHCP events (default /usr/share/udhcpc/default.script)
             -p FILE         Create pidfile
             -B              Request broadcast replies
             -t N            Send up to N discover packets (default 3)
             -T SEC          Pause between packets (default 3)
             -A SEC          Wait if lease is not obtained (default 20)
-            -b              Background if lease is not obtained
             -n              Exit if lease is not obtained
             -q              Exit after obtaining lease
             -R              Release IP on exit
@@ -4116,7 +4034,7 @@ COMMAND DESCRIPTIONS
 
   udhcpc6
     udhcpc6 [-fbqvR] [-t N] [-T SEC] [-A SEC|-n] [-i IFACE] [-s PROG] [-p
-    PIDFILE] [-P PORT] [-mldo] [-r IPv6] [-x OPT:VAL]... [-O OPT]...
+    PIDFILE] [-mldo] [-r IPv6] [-x OPT:VAL]... [-O OPT]...
 
             -i IFACE        Interface to use (default eth0)
             -p FILE         Create pidfile
@@ -4124,13 +4042,11 @@ COMMAND DESCRIPTIONS
             -t N            Send up to N discover packets
             -T SEC          Pause between packets (default 3)
             -A SEC          Wait if lease is not obtained (default 20)
-            -b              Background if lease is not obtained
             -n              Exit if lease is not obtained
             -q              Exit after obtaining lease
             -R              Release IP on exit
             -f              Run in foreground
             -S              Log to syslog too
-            -P PORT         Use PORT (default 546)
             -m              Send multicast renew requests rather than unicast ones
             -l              Send 'information request' instead of 'solicit'
                             (used for servers which do not assign IPv6 addresses)
@@ -4151,7 +4067,7 @@ COMMAND DESCRIPTIONS
             USR2    Release lease
 
   udhcpd
-    udhcpd [-fS] [-I ADDR] [-a MSEC] [-P PORT] [CONFFILE]
+    udhcpd [-fS] [-I ADDR] [-a MSEC] [CONFFILE]
 
     DHCP server
 
@@ -4159,7 +4075,6 @@ COMMAND DESCRIPTIONS
             -S      Log to syslog too
             -I ADDR Local address
             -a MSEC Timeout for ARP ping (default 2000)
-            -P PORT Use PORT (default 67)
     Signals:
 
             USR1    Update lease file
@@ -4192,12 +4107,11 @@ COMMAND DESCRIPTIONS
     device node creation): # uevent mdev & mdev -s
 
   umount
-    umount [-rlfmda] [-t FSTYPE] FILESYSTEM|DIRECTORY
+    umount [-rlfda] [-t FSTYPE] FILESYSTEM|DIRECTORY
 
     Unmount filesystems
 
-            -a      Unmount all filesystems in /etc/mtab
-            -n      Don't erase /etc/mtab entries
+            -a      Unmount all filesystems
             -r      Remount devices read-only if mount is busy
             -l      Lazy umount (detach filesystem)
             -f      Force umount (i.e., unreachable NFS server)
@@ -4218,14 +4132,6 @@ COMMAND DESCRIPTIONS
             -v      Kernel version
             -i      Hardware platform
             -o      OS name
-
-  uncompress
-    uncompress [-cf] [FILE]...
-
-    Decompress FILEs (or stdin)
-
-            -c      Write to stdout
-            -f      Overwrite
 
   unexpand
     unexpand [-fa][-t N] [FILE]...
@@ -4250,11 +4156,6 @@ COMMAND DESCRIPTIONS
             -s N    Skip first N chars (after any skipped fields)
             -w N    Compare N characters in line
 
-  unit
-    unit
-
-    Run the unit-test suite
-
   unix2dos
     unix2dos [-ud] [FILE]
 
@@ -4268,6 +4169,16 @@ COMMAND DESCRIPTIONS
     unlink FILE
 
     Delete FILE by calling unlink()
+
+  unlzma
+    unlzma [-cfk] [FILE]...
+
+    Decompress FILEs (or stdin)
+
+            -c      Write to stdout
+            -f      Force
+            -k      Keep input files
+            -t      Test integrity
 
   unxz
     unxz [-cfk] [FILE]...
@@ -4350,13 +4261,22 @@ COMMAND DESCRIPTIONS
             set_name_type NAME_TYPE
 
   vi
-    vi [-c CMD] [-R] [-H] [FILE]...
+    vi [OPTIONS] [FILE]...
 
     Edit FILE
 
             -c CMD  Initial command to run ($EXINIT and ~/.exrc also available)
             -R      Read-only
-            -H      List available features
+            -H      Short help regarding available features
+
+  vim
+    vim [OPTIONS] [FILE]...
+
+    Edit FILE
+
+            -c CMD  Initial command to run ($EXINIT and ~/.exrc also available)
+            -R      Read-only
+            -H      Short help regarding available features
 
   vlock
     vlock [-a]
@@ -4503,10 +4423,20 @@ COMMAND DESCRIPTIONS
             -k      Keep input files
             -t      Test integrity
 
+  xzcat
+    xzcat [FILE]...
+
+    Decompress to stdout
+
   yes
     yes [STRING]
 
     Repeatedly print a line with STRING, or 'y'
+
+  zcat
+    zcat [FILE]...
+
+    Decompress to stdout
 
   zcip
     zcip [OPTIONS] IFACE SCRIPT
@@ -4523,6 +4453,11 @@ COMMAND DESCRIPTIONS
 
     With no -q, runs continuously monitoring for ARP conflicts, exits only
     on I/O errors (link down etc)
+
+  zstdcat
+    zstdcat [FILE]...
+
+    Decompress to stdout
 
 LIBC NSS
     GNU Libc (glibc) uses the Name Service Switch (NSS) to configure the

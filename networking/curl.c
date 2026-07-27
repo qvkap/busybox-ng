@@ -91,7 +91,7 @@ int curl_main(int argc UNUSED_PARAM, char **argv)
 		if (socketpair(AF_UNIX, SOCK_STREAM, 0, sp) != 0)
 			bb_simple_perror_msg_and_die("socketpair");
 		fflush_all();
-		pid = xfork();
+		pid = xvfork();
 		if (pid == 0) {
 			char *eargv[5];
 			close(sp[0]);

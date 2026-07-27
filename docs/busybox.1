@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "BUSYBOX 1"
-.TH BUSYBOX 1 2026-07-17 "version 1.38.0" busybox
+.TH BUSYBOX 1 2026-07-27 "version 1.38.0" busybox
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -144,57 +144,55 @@ been enabled, more detailed usage information will also be available.
 .IX Header "COMMANDS"
 Currently available applets include:
 .PP
-\&\f(CW\*(C`[\*(C'\fR, \f(CW\*(C`[[\*(C'\fR, \f(CW\*(C`acpid\*(C'\fR, \f(CW\*(C`add\-shell\*(C'\fR, \f(CW\*(C`addgroup\*(C'\fR, \f(CW\*(C`adduser\*(C'\fR, \f(CW\*(C`adjtimex\*(C'\fR, \f(CW\*(C`ar\*(C'\fR, \f(CW\*(C`arch\*(C'\fR, \f(CW\*(C`arp\*(C'\fR,
-\&\f(CW\*(C`arping\*(C'\fR, \f(CW\*(C`ascii\*(C'\fR, \f(CW\*(C`awk\*(C'\fR, \f(CW\*(C`base32\*(C'\fR, \f(CW\*(C`base64\*(C'\fR, \f(CW\*(C`basename\*(C'\fR, \f(CW\*(C`bbconfig\*(C'\fR, \f(CW\*(C`bc\*(C'\fR, \f(CW\*(C`beep\*(C'\fR,
-\&\f(CW\*(C`blkdiscard\*(C'\fR, \f(CW\*(C`blkid\*(C'\fR, \f(CW\*(C`blockdev\*(C'\fR, \f(CW\*(C`bootchartd\*(C'\fR, \f(CW\*(C`brctl\*(C'\fR, \f(CW\*(C`bunzip2\*(C'\fR, \f(CW\*(C`busybox\*(C'\fR,
-\&\f(CW\*(C`bzcat\*(C'\fR, \f(CW\*(C`bzip2\*(C'\fR, \f(CW\*(C`cal\*(C'\fR, \f(CW\*(C`cat\*(C'\fR, \f(CW\*(C`chat\*(C'\fR, \f(CW\*(C`chattr\*(C'\fR, \f(CW\*(C`chgrp\*(C'\fR, \f(CW\*(C`chmod\*(C'\fR, \f(CW\*(C`chown\*(C'\fR, \f(CW\*(C`chpasswd\*(C'\fR,
-\&\f(CW\*(C`chpst\*(C'\fR, \f(CW\*(C`chroot\*(C'\fR, \f(CW\*(C`chrt\*(C'\fR, \f(CW\*(C`chvt\*(C'\fR, \f(CW\*(C`cksum\*(C'\fR, \f(CW\*(C`clear\*(C'\fR, \f(CW\*(C`cmp\*(C'\fR, \f(CW\*(C`comm\*(C'\fR, \f(CW\*(C`conspy\*(C'\fR, \f(CW\*(C`cp\*(C'\fR,
-\&\f(CW\*(C`cpio\*(C'\fR, \f(CW\*(C`crc32\*(C'\fR, \f(CW\*(C`crond\*(C'\fR, \f(CW\*(C`crontab\*(C'\fR, \f(CW\*(C`cryptpw\*(C'\fR, \f(CW\*(C`cttyhack\*(C'\fR, \f(CW\*(C`curl\*(C'\fR, \f(CW\*(C`cut\*(C'\fR, \f(CW\*(C`date\*(C'\fR, \f(CW\*(C`dc\*(C'\fR,
-\&\f(CW\*(C`dd\*(C'\fR, \f(CW\*(C`deallocvt\*(C'\fR, \f(CW\*(C`delgroup\*(C'\fR, \f(CW\*(C`deluser\*(C'\fR, \f(CW\*(C`depmod\*(C'\fR, \f(CW\*(C`devfsd\*(C'\fR, \f(CW\*(C`devmem\*(C'\fR, \f(CW\*(C`df\*(C'\fR,
-\&\f(CW\*(C`dhcprelay\*(C'\fR, \f(CW\*(C`diff\*(C'\fR, \f(CW\*(C`dirname\*(C'\fR, \f(CW\*(C`dmesg\*(C'\fR, \f(CW\*(C`dnsd\*(C'\fR, \f(CW\*(C`dnsdomainname\*(C'\fR, \f(CW\*(C`dos2unix\*(C'\fR, \f(CW\*(C`du\*(C'\fR,
-\&\f(CW\*(C`dumpkmap\*(C'\fR, \f(CW\*(C`dumpleases\*(C'\fR, \f(CW\*(C`echo\*(C'\fR, \f(CW\*(C`ed\*(C'\fR, \f(CW\*(C`egrep\*(C'\fR, \f(CW\*(C`eject\*(C'\fR, \f(CW\*(C`env\*(C'\fR, \f(CW\*(C`envdir\*(C'\fR,
-\&\f(CW\*(C`envuidgid\*(C'\fR, \f(CW\*(C`ether\-wake\*(C'\fR, \f(CW\*(C`expand\*(C'\fR, \f(CW\*(C`expr\*(C'\fR, \f(CW\*(C`factor\*(C'\fR, \f(CW\*(C`fallocate\*(C'\fR, \f(CW\*(C`false\*(C'\fR,
-\&\f(CW\*(C`fatattr\*(C'\fR, \f(CW\*(C`fbset\*(C'\fR, \f(CW\*(C`fbsplash\*(C'\fR, \f(CW\*(C`fdflush\*(C'\fR, \f(CW\*(C`fdformat\*(C'\fR, \f(CW\*(C`fdisk\*(C'\fR, \f(CW\*(C`fgconsole\*(C'\fR,
-\&\f(CW\*(C`fgrep\*(C'\fR, \f(CW\*(C`find\*(C'\fR, \f(CW\*(C`findfs\*(C'\fR, \f(CW\*(C`flash_eraseall\*(C'\fR, \f(CW\*(C`flash_lock\*(C'\fR, \f(CW\*(C`flash_unlock\*(C'\fR,
-\&\f(CW\*(C`flashcp\*(C'\fR, \f(CW\*(C`flock\*(C'\fR, \f(CW\*(C`fold\*(C'\fR, \f(CW\*(C`free\*(C'\fR, \f(CW\*(C`freeramdisk\*(C'\fR, \f(CW\*(C`fsck\*(C'\fR, \f(CW\*(C`fsck.minix\*(C'\fR, \f(CW\*(C`fsfreeze\*(C'\fR,
-\&\f(CW\*(C`fstrim\*(C'\fR, \f(CW\*(C`fsync\*(C'\fR, \f(CW\*(C`ftpd\*(C'\fR, \f(CW\*(C`ftpget\*(C'\fR, \f(CW\*(C`ftpput\*(C'\fR, \f(CW\*(C`fuser\*(C'\fR, \f(CW\*(C`getfattr\*(C'\fR, \f(CW\*(C`getopt\*(C'\fR, \f(CW\*(C`getty\*(C'\fR,
-\&\f(CW\*(C`grep\*(C'\fR, \f(CW\*(C`groups\*(C'\fR, \f(CW\*(C`gunzip\*(C'\fR, \f(CW\*(C`gzip\*(C'\fR, \f(CW\*(C`halt\*(C'\fR, \f(CW\*(C`hd\*(C'\fR, \f(CW\*(C`hdparm\*(C'\fR, \f(CW\*(C`head\*(C'\fR, \f(CW\*(C`hexdump\*(C'\fR,
-\&\f(CW\*(C`hexedit\*(C'\fR, \f(CW\*(C`hostid\*(C'\fR, \f(CW\*(C`hostname\*(C'\fR, \f(CW\*(C`httpd\*(C'\fR, \f(CW\*(C`hush\*(C'\fR, \f(CW\*(C`hwclock\*(C'\fR, \f(CW\*(C`i2cdetect\*(C'\fR, \f(CW\*(C`i2cdump\*(C'\fR,
-\&\f(CW\*(C`i2cget\*(C'\fR, \f(CW\*(C`i2cset\*(C'\fR, \f(CW\*(C`i2ctransfer\*(C'\fR, \f(CW\*(C`id\*(C'\fR, \f(CW\*(C`ifconfig\*(C'\fR, \f(CW\*(C`ifdown\*(C'\fR, \f(CW\*(C`ifenslave\*(C'\fR,
-\&\f(CW\*(C`ifplugd\*(C'\fR, \f(CW\*(C`ifup\*(C'\fR, \f(CW\*(C`inetd\*(C'\fR, \f(CW\*(C`init\*(C'\fR, \f(CW\*(C`inotifyd\*(C'\fR, \f(CW\*(C`insmod\*(C'\fR, \f(CW\*(C`install\*(C'\fR, \f(CW\*(C`ionice\*(C'\fR,
-\&\f(CW\*(C`iostat\*(C'\fR, \f(CW\*(C`ip\*(C'\fR, \f(CW\*(C`ipaddr\*(C'\fR, \f(CW\*(C`ipcalc\*(C'\fR, \f(CW\*(C`ipcrm\*(C'\fR, \f(CW\*(C`ipcs\*(C'\fR, \f(CW\*(C`iplink\*(C'\fR, \f(CW\*(C`ipneigh\*(C'\fR, \f(CW\*(C`iproute\*(C'\fR,
-\&\f(CW\*(C`iprule\*(C'\fR, \f(CW\*(C`iptunnel\*(C'\fR, \f(CW\*(C`kbd_mode\*(C'\fR, \f(CW\*(C`kill\*(C'\fR, \f(CW\*(C`killall\*(C'\fR, \f(CW\*(C`killall5\*(C'\fR, \f(CW\*(C`klogd\*(C'\fR, \f(CW\*(C`kmod\*(C'\fR,
-\&\f(CW\*(C`last\*(C'\fR, \f(CW\*(C`less\*(C'\fR, \f(CW\*(C`link\*(C'\fR, \f(CW\*(C`linux32\*(C'\fR, \f(CW\*(C`linux64\*(C'\fR, \f(CW\*(C`linuxrc\*(C'\fR, \f(CW\*(C`ln\*(C'\fR, \f(CW\*(C`loadfont\*(C'\fR, \f(CW\*(C`loadkmap\*(C'\fR,
-\&\f(CW\*(C`logger\*(C'\fR, \f(CW\*(C`login\*(C'\fR, \f(CW\*(C`logname\*(C'\fR, \f(CW\*(C`logread\*(C'\fR, \f(CW\*(C`losetup\*(C'\fR, \f(CW\*(C`lpd\*(C'\fR, \f(CW\*(C`lpq\*(C'\fR, \f(CW\*(C`lpr\*(C'\fR, \f(CW\*(C`ls\*(C'\fR, \f(CW\*(C`lsattr\*(C'\fR,
-\&\f(CW\*(C`lsblk\*(C'\fR, \f(CW\*(C`lsmod\*(C'\fR, \f(CW\*(C`lsof\*(C'\fR, \f(CW\*(C`lspci\*(C'\fR, \f(CW\*(C`lsscsi\*(C'\fR, \f(CW\*(C`lsusb\*(C'\fR, \f(CW\*(C`lzcat\*(C'\fR, \f(CW\*(C`lzma\*(C'\fR, \f(CW\*(C`makedevs\*(C'\fR,
-\&\f(CW\*(C`makemime\*(C'\fR, \f(CW\*(C`man\*(C'\fR, \f(CW\*(C`md5sum\*(C'\fR, \f(CW\*(C`mdev\*(C'\fR, \f(CW\*(C`mesg\*(C'\fR, \f(CW\*(C`microcom\*(C'\fR, \f(CW\*(C`mim\*(C'\fR, \f(CW\*(C`minips\*(C'\fR, \f(CW\*(C`mkdir\*(C'\fR,
-\&\f(CW\*(C`mkdosfs\*(C'\fR, \f(CW\*(C`mke2fs\*(C'\fR, \f(CW\*(C`mkfifo\*(C'\fR, \f(CW\*(C`mkfs.ext2\*(C'\fR, \f(CW\*(C`mkfs.minix\*(C'\fR, \f(CW\*(C`mkfs.reiser\*(C'\fR,
-\&\f(CW\*(C`mkfs.vfat\*(C'\fR, \f(CW\*(C`mknod\*(C'\fR, \f(CW\*(C`mkpasswd\*(C'\fR, \f(CW\*(C`mkswap\*(C'\fR, \f(CW\*(C`mktemp\*(C'\fR, \f(CW\*(C`modinfo\*(C'\fR, \f(CW\*(C`modprobe\*(C'\fR, \f(CW\*(C`more\*(C'\fR,
-\&\f(CW\*(C`mount\*(C'\fR, \f(CW\*(C`mountpoint\*(C'\fR, \f(CW\*(C`mpstat\*(C'\fR, \f(CW\*(C`mt\*(C'\fR, \f(CW\*(C`mv\*(C'\fR, \f(CW\*(C`nameif\*(C'\fR, \f(CW\*(C`nanddump\*(C'\fR, \f(CW\*(C`nandwrite\*(C'\fR,
-\&\f(CW\*(C`nbd\-client\*(C'\fR, \f(CW\*(C`nc\*(C'\fR, \f(CW\*(C`netcat\*(C'\fR, \f(CW\*(C`netstat\*(C'\fR, \f(CW\*(C`nice\*(C'\fR, \f(CW\*(C`nl\*(C'\fR, \f(CW\*(C`nmeter\*(C'\fR, \f(CW\*(C`nohup\*(C'\fR, \f(CW\*(C`nologin\*(C'\fR,
-\&\f(CW\*(C`nproc\*(C'\fR, \f(CW\*(C`nsenter\*(C'\fR, \f(CW\*(C`nslookup\*(C'\fR, \f(CW\*(C`ntpd\*(C'\fR, \f(CW\*(C`nuke\*(C'\fR, \f(CW\*(C`od\*(C'\fR, \f(CW\*(C`openvt\*(C'\fR, \f(CW\*(C`partprobe\*(C'\fR, \f(CW\*(C`passwd\*(C'\fR,
-\&\f(CW\*(C`paste\*(C'\fR, \f(CW\*(C`patch\*(C'\fR, \f(CW\*(C`pgrep\*(C'\fR, \f(CW\*(C`pidof\*(C'\fR, \f(CW\*(C`ping\*(C'\fR, \f(CW\*(C`ping6\*(C'\fR, \f(CW\*(C`pipe_progress\*(C'\fR, \f(CW\*(C`pivot_root\*(C'\fR,
-\&\f(CW\*(C`pkill\*(C'\fR, \f(CW\*(C`pmap\*(C'\fR, \f(CW\*(C`popmaildir\*(C'\fR, \f(CW\*(C`poweroff\*(C'\fR, \f(CW\*(C`powertop\*(C'\fR, \f(CW\*(C`printenv\*(C'\fR, \f(CW\*(C`printf\*(C'\fR, \f(CW\*(C`ps\*(C'\fR,
-\&\f(CW\*(C`pscan\*(C'\fR, \f(CW\*(C`pstree\*(C'\fR, \f(CW\*(C`pwd\*(C'\fR, \f(CW\*(C`pwdx\*(C'\fR, \f(CW\*(C`rdate\*(C'\fR, \f(CW\*(C`readahead\*(C'\fR, \f(CW\*(C`readlink\*(C'\fR, \f(CW\*(C`readprofile\*(C'\fR,
-\&\f(CW\*(C`realpath\*(C'\fR, \f(CW\*(C`reboot\*(C'\fR, \f(CW\*(C`reformime\*(C'\fR, \f(CW\*(C`remove\-shell\*(C'\fR, \f(CW\*(C`renice\*(C'\fR, \f(CW\*(C`reset\*(C'\fR, \f(CW\*(C`resize\*(C'\fR,
-\&\f(CW\*(C`resume\*(C'\fR, \f(CW\*(C`rev\*(C'\fR, \f(CW\*(C`rfkill\*(C'\fR, \f(CW\*(C`rm\*(C'\fR, \f(CW\*(C`rmdir\*(C'\fR, \f(CW\*(C`rmmod\*(C'\fR, \f(CW\*(C`route\*(C'\fR, \f(CW\*(C`rtcwake\*(C'\fR, \f(CW\*(C`run\-init\*(C'\fR,
-\&\f(CW\*(C`run\-parts\*(C'\fR, \f(CW\*(C`runlevel\*(C'\fR, \f(CW\*(C`runsv\*(C'\fR, \f(CW\*(C`runsvdir\*(C'\fR, \f(CW\*(C`script\*(C'\fR, \f(CW\*(C`scriptreplay\*(C'\fR, \f(CW\*(C`sed\*(C'\fR,
-\&\f(CW\*(C`seedrng\*(C'\fR, \f(CW\*(C`sendmail\*(C'\fR, \f(CW\*(C`seq\*(C'\fR, \f(CW\*(C`setarch\*(C'\fR, \f(CW\*(C`setconsole\*(C'\fR, \f(CW\*(C`setfattr\*(C'\fR, \f(CW\*(C`setfont\*(C'\fR,
-\&\f(CW\*(C`setkeycodes\*(C'\fR, \f(CW\*(C`setlogcons\*(C'\fR, \f(CW\*(C`setpriv\*(C'\fR, \f(CW\*(C`setserial\*(C'\fR, \f(CW\*(C`setsid\*(C'\fR, \f(CW\*(C`setuidgid\*(C'\fR, \f(CW\*(C`sh\*(C'\fR,
-\&\f(CW\*(C`sha1sum\*(C'\fR, \f(CW\*(C`sha256sum\*(C'\fR, \f(CW\*(C`sha384sum\*(C'\fR, \f(CW\*(C`sha3sum\*(C'\fR, \f(CW\*(C`sha512sum\*(C'\fR, \f(CW\*(C`showkey\*(C'\fR, \f(CW\*(C`shred\*(C'\fR,
-\&\f(CW\*(C`shuf\*(C'\fR, \f(CW\*(C`sleep\*(C'\fR, \f(CW\*(C`smemcap\*(C'\fR, \f(CW\*(C`softlimit\*(C'\fR, \f(CW\*(C`sort\*(C'\fR, \f(CW\*(C`split\*(C'\fR, \f(CW\*(C`ssl_client\*(C'\fR,
-\&\f(CW\*(C`ssl_server\*(C'\fR, \f(CW\*(C`start\-stop\-daemon\*(C'\fR, \f(CW\*(C`stat\*(C'\fR, \f(CW\*(C`strings\*(C'\fR, \f(CW\*(C`stty\*(C'\fR, \f(CW\*(C`su\*(C'\fR, \f(CW\*(C`sulogin\*(C'\fR,
-\&\f(CW\*(C`sum\*(C'\fR, \f(CW\*(C`sv\*(C'\fR, \f(CW\*(C`svc\*(C'\fR, \f(CW\*(C`svlogd\*(C'\fR, \f(CW\*(C`svok\*(C'\fR, \f(CW\*(C`swapoff\*(C'\fR, \f(CW\*(C`swapon\*(C'\fR, \f(CW\*(C`switch_root\*(C'\fR, \f(CW\*(C`sync\*(C'\fR,
-\&\f(CW\*(C`sysctl\*(C'\fR, \f(CW\*(C`syslogd\*(C'\fR, \f(CW\*(C`tac\*(C'\fR, \f(CW\*(C`tail\*(C'\fR, \f(CW\*(C`tar\*(C'\fR, \f(CW\*(C`taskset\*(C'\fR, \f(CW\*(C`tcpsvd\*(C'\fR, \f(CW\*(C`tee\*(C'\fR, \f(CW\*(C`telnet\*(C'\fR,
-\&\f(CW\*(C`telnetd\*(C'\fR, \f(CW\*(C`test\*(C'\fR, \f(CW\*(C`tftp\*(C'\fR, \f(CW\*(C`tftpd\*(C'\fR, \f(CW\*(C`time\*(C'\fR, \f(CW\*(C`timeout\*(C'\fR, \f(CW\*(C`top\*(C'\fR, \f(CW\*(C`touch\*(C'\fR, \f(CW\*(C`tr\*(C'\fR,
-\&\f(CW\*(C`traceroute\*(C'\fR, \f(CW\*(C`traceroute6\*(C'\fR, \f(CW\*(C`tree\*(C'\fR, \f(CW\*(C`true\*(C'\fR, \f(CW\*(C`truncate\*(C'\fR, \f(CW\*(C`ts\*(C'\fR, \f(CW\*(C`tsort\*(C'\fR, \f(CW\*(C`tty\*(C'\fR,
-\&\f(CW\*(C`ttysize\*(C'\fR, \f(CW\*(C`tunctl\*(C'\fR, \f(CW\*(C`tune2fs\*(C'\fR, \f(CW\*(C`ubiattach\*(C'\fR, \f(CW\*(C`ubidetach\*(C'\fR, \f(CW\*(C`ubimkvol\*(C'\fR, \f(CW\*(C`ubirename\*(C'\fR,
-\&\f(CW\*(C`ubirmvol\*(C'\fR, \f(CW\*(C`ubirsvol\*(C'\fR, \f(CW\*(C`ubiupdatevol\*(C'\fR, \f(CW\*(C`udhcpc\*(C'\fR, \f(CW\*(C`udhcpc6\*(C'\fR, \f(CW\*(C`udhcpd\*(C'\fR, \f(CW\*(C`udpsvd\*(C'\fR,
-\&\f(CW\*(C`uevent\*(C'\fR, \f(CW\*(C`umount\*(C'\fR, \f(CW\*(C`uname\*(C'\fR, \f(CW\*(C`uncompress\*(C'\fR, \f(CW\*(C`unexpand\*(C'\fR, \f(CW\*(C`uniq\*(C'\fR, \f(CW\*(C`unit\*(C'\fR, \f(CW\*(C`unix2dos\*(C'\fR,
-\&\f(CW\*(C`unlink\*(C'\fR, \f(CW\*(C`unxz\*(C'\fR, \f(CW\*(C`unzip\*(C'\fR, \f(CW\*(C`unzstd\*(C'\fR, \f(CW\*(C`uptime\*(C'\fR, \f(CW\*(C`users\*(C'\fR, \f(CW\*(C`usleep\*(C'\fR, \f(CW\*(C`uudecode\*(C'\fR,
-\&\f(CW\*(C`uuencode\*(C'\fR, \f(CW\*(C`uuidgen\*(C'\fR, \f(CW\*(C`vconfig\*(C'\fR, \f(CW\*(C`vi\*(C'\fR, \f(CW\*(C`vlock\*(C'\fR, \f(CW\*(C`vmstat\*(C'\fR, \f(CW\*(C`volname\*(C'\fR, \f(CW\*(C`w\*(C'\fR, \f(CW\*(C`wall\*(C'\fR,
-\&\f(CW\*(C`watch\*(C'\fR, \f(CW\*(C`watchdog\*(C'\fR, \f(CW\*(C`wc\*(C'\fR, \f(CW\*(C`wget\*(C'\fR, \f(CW\*(C`which\*(C'\fR, \f(CW\*(C`who\*(C'\fR, \f(CW\*(C`whoami\*(C'\fR, \f(CW\*(C`whois\*(C'\fR, \f(CW\*(C`xargs\*(C'\fR, \f(CW\*(C`xxd\*(C'\fR,
-\&\f(CW\*(C`xz\*(C'\fR, \f(CW\*(C`yes\*(C'\fR, \f(CW\*(C`zcip\*(C'\fR
+\&\f(CW\*(C`[\*(C'\fR, \f(CW\*(C`[[\*(C'\fR, \f(CW\*(C`acpid\*(C'\fR, \f(CW\*(C`add\-shell\*(C'\fR, \f(CW\*(C`addgroup\*(C'\fR, \f(CW\*(C`adduser\*(C'\fR, \f(CW\*(C`adjtimex\*(C'\fR, \f(CW\*(C`arch\*(C'\fR, \f(CW\*(C`arp\*(C'\fR,
+\&\f(CW\*(C`arping\*(C'\fR, \f(CW\*(C`ascii\*(C'\fR, \f(CW\*(C`awk\*(C'\fR, \f(CW\*(C`base32\*(C'\fR, \f(CW\*(C`base64\*(C'\fR, \f(CW\*(C`basename\*(C'\fR, \f(CW\*(C`bc\*(C'\fR, \f(CW\*(C`beep\*(C'\fR, \f(CW\*(C`blkdiscard\*(C'\fR,
+\&\f(CW\*(C`blkid\*(C'\fR, \f(CW\*(C`blockdev\*(C'\fR, \f(CW\*(C`bootchartd\*(C'\fR, \f(CW\*(C`brctl\*(C'\fR, \f(CW\*(C`bunzip2\*(C'\fR, \f(CW\*(C`bzcat\*(C'\fR, \f(CW\*(C`bzip2\*(C'\fR, \f(CW\*(C`cal\*(C'\fR, \f(CW\*(C`cat\*(C'\fR,
+\&\f(CW\*(C`chat\*(C'\fR, \f(CW\*(C`chattr\*(C'\fR, \f(CW\*(C`chgrp\*(C'\fR, \f(CW\*(C`chmod\*(C'\fR, \f(CW\*(C`chown\*(C'\fR, \f(CW\*(C`chpasswd\*(C'\fR, \f(CW\*(C`chpst\*(C'\fR, \f(CW\*(C`chroot\*(C'\fR, \f(CW\*(C`chrt\*(C'\fR,
+\&\f(CW\*(C`chvt\*(C'\fR, \f(CW\*(C`cksum\*(C'\fR, \f(CW\*(C`clear\*(C'\fR, \f(CW\*(C`cmp\*(C'\fR, \f(CW\*(C`comm\*(C'\fR, \f(CW\*(C`conspy\*(C'\fR, \f(CW\*(C`cp\*(C'\fR, \f(CW\*(C`cpio\*(C'\fR, \f(CW\*(C`crc32\*(C'\fR, \f(CW\*(C`crond\*(C'\fR,
+\&\f(CW\*(C`crontab\*(C'\fR, \f(CW\*(C`cryptpw\*(C'\fR, \f(CW\*(C`cttyhack\*(C'\fR, \f(CW\*(C`curl\*(C'\fR, \f(CW\*(C`cut\*(C'\fR, \f(CW\*(C`date\*(C'\fR, \f(CW\*(C`dc\*(C'\fR, \f(CW\*(C`dd\*(C'\fR, \f(CW\*(C`deallocvt\*(C'\fR,
+\&\f(CW\*(C`delgroup\*(C'\fR, \f(CW\*(C`deluser\*(C'\fR, \f(CW\*(C`depmod\*(C'\fR, \f(CW\*(C`devmem\*(C'\fR, \f(CW\*(C`df\*(C'\fR, \f(CW\*(C`dhcprelay\*(C'\fR, \f(CW\*(C`diff\*(C'\fR, \f(CW\*(C`dirname\*(C'\fR,
+\&\f(CW\*(C`dmesg\*(C'\fR, \f(CW\*(C`dnsd\*(C'\fR, \f(CW\*(C`dnsdomainname\*(C'\fR, \f(CW\*(C`dos2unix\*(C'\fR, \f(CW\*(C`dpkg\*(C'\fR, \f(CW\*(C`dpkg\-deb\*(C'\fR, \f(CW\*(C`du\*(C'\fR, \f(CW\*(C`dumpkmap\*(C'\fR,
+\&\f(CW\*(C`dumpleases\*(C'\fR, \f(CW\*(C`echo\*(C'\fR, \f(CW\*(C`ed\*(C'\fR, \f(CW\*(C`egrep\*(C'\fR, \f(CW\*(C`eject\*(C'\fR, \f(CW\*(C`env\*(C'\fR, \f(CW\*(C`envdir\*(C'\fR, \f(CW\*(C`envuidgid\*(C'\fR,
+\&\f(CW\*(C`ether\-wake\*(C'\fR, \f(CW\*(C`expand\*(C'\fR, \f(CW\*(C`expr\*(C'\fR, \f(CW\*(C`factor\*(C'\fR, \f(CW\*(C`fallocate\*(C'\fR, \f(CW\*(C`false\*(C'\fR, \f(CW\*(C`fatattr\*(C'\fR, \f(CW\*(C`fbset\*(C'\fR,
+\&\f(CW\*(C`fbsplash\*(C'\fR, \f(CW\*(C`fdflush\*(C'\fR, \f(CW\*(C`fdformat\*(C'\fR, \f(CW\*(C`fdisk\*(C'\fR, \f(CW\*(C`fgconsole\*(C'\fR, \f(CW\*(C`fgrep\*(C'\fR, \f(CW\*(C`find\*(C'\fR, \f(CW\*(C`findfs\*(C'\fR,
+\&\f(CW\*(C`flock\*(C'\fR, \f(CW\*(C`fold\*(C'\fR, \f(CW\*(C`free\*(C'\fR, \f(CW\*(C`freeramdisk\*(C'\fR, \f(CW\*(C`fsck\*(C'\fR, \f(CW\*(C`fsck.minix\*(C'\fR, \f(CW\*(C`fsfreeze\*(C'\fR, \f(CW\*(C`fstrim\*(C'\fR,
+\&\f(CW\*(C`fsync\*(C'\fR, \f(CW\*(C`ftpd\*(C'\fR, \f(CW\*(C`ftpget\*(C'\fR, \f(CW\*(C`ftpput\*(C'\fR, \f(CW\*(C`fuser\*(C'\fR, \f(CW\*(C`getfattr\*(C'\fR, \f(CW\*(C`getopt\*(C'\fR, \f(CW\*(C`getty\*(C'\fR, \f(CW\*(C`grep\*(C'\fR,
+\&\f(CW\*(C`groups\*(C'\fR, \f(CW\*(C`gunzip\*(C'\fR, \f(CW\*(C`gzip\*(C'\fR, \f(CW\*(C`halt\*(C'\fR, \f(CW\*(C`hd\*(C'\fR, \f(CW\*(C`hdparm\*(C'\fR, \f(CW\*(C`head\*(C'\fR, \f(CW\*(C`hexdump\*(C'\fR, \f(CW\*(C`hexedit\*(C'\fR,
+\&\f(CW\*(C`hostid\*(C'\fR, \f(CW\*(C`hostname\*(C'\fR, \f(CW\*(C`httpd\*(C'\fR, \f(CW\*(C`hush\*(C'\fR, \f(CW\*(C`hwclock\*(C'\fR, \f(CW\*(C`i2cdetect\*(C'\fR, \f(CW\*(C`i2cdump\*(C'\fR, \f(CW\*(C`i2cget\*(C'\fR,
+\&\f(CW\*(C`i2cset\*(C'\fR, \f(CW\*(C`i2ctransfer\*(C'\fR, \f(CW\*(C`id\*(C'\fR, \f(CW\*(C`ifconfig\*(C'\fR, \f(CW\*(C`ifdown\*(C'\fR, \f(CW\*(C`ifenslave\*(C'\fR, \f(CW\*(C`ifplugd\*(C'\fR, \f(CW\*(C`ifup\*(C'\fR,
+\&\f(CW\*(C`inetd\*(C'\fR, \f(CW\*(C`init\*(C'\fR, \f(CW\*(C`insmod\*(C'\fR, \f(CW\*(C`install\*(C'\fR, \f(CW\*(C`ionice\*(C'\fR, \f(CW\*(C`iostat\*(C'\fR, \f(CW\*(C`ip\*(C'\fR, \f(CW\*(C`ipaddr\*(C'\fR, \f(CW\*(C`ipcalc\*(C'\fR,
+\&\f(CW\*(C`ipcrm\*(C'\fR, \f(CW\*(C`ipcs\*(C'\fR, \f(CW\*(C`iplink\*(C'\fR, \f(CW\*(C`ipneigh\*(C'\fR, \f(CW\*(C`iproute\*(C'\fR, \f(CW\*(C`iprule\*(C'\fR, \f(CW\*(C`iptunnel\*(C'\fR, \f(CW\*(C`kbd_mode\*(C'\fR,
+\&\f(CW\*(C`kill\*(C'\fR, \f(CW\*(C`killall\*(C'\fR, \f(CW\*(C`killall5\*(C'\fR, \f(CW\*(C`klogd\*(C'\fR, \f(CW\*(C`kmod\*(C'\fR, \f(CW\*(C`last\*(C'\fR, \f(CW\*(C`less\*(C'\fR, \f(CW\*(C`link\*(C'\fR, \f(CW\*(C`linux32\*(C'\fR,
+\&\f(CW\*(C`linux64\*(C'\fR, \f(CW\*(C`linuxrc\*(C'\fR, \f(CW\*(C`ln\*(C'\fR, \f(CW\*(C`loadfont\*(C'\fR, \f(CW\*(C`loadkmap\*(C'\fR, \f(CW\*(C`logger\*(C'\fR, \f(CW\*(C`login\*(C'\fR, \f(CW\*(C`logname\*(C'\fR,
+\&\f(CW\*(C`logread\*(C'\fR, \f(CW\*(C`losetup\*(C'\fR, \f(CW\*(C`lpd\*(C'\fR, \f(CW\*(C`lpq\*(C'\fR, \f(CW\*(C`lpr\*(C'\fR, \f(CW\*(C`ls\*(C'\fR, \f(CW\*(C`lsattr\*(C'\fR, \f(CW\*(C`lsblk\*(C'\fR, \f(CW\*(C`lsmod\*(C'\fR, \f(CW\*(C`lsof\*(C'\fR,
+\&\f(CW\*(C`lspci\*(C'\fR, \f(CW\*(C`lsscsi\*(C'\fR, \f(CW\*(C`lsusb\*(C'\fR, \f(CW\*(C`lzcat\*(C'\fR, \f(CW\*(C`lzma\*(C'\fR, \f(CW\*(C`lzop\*(C'\fR, \f(CW\*(C`makedevs\*(C'\fR, \f(CW\*(C`makemime\*(C'\fR, \f(CW\*(C`man\*(C'\fR,
+\&\f(CW\*(C`md5sum\*(C'\fR, \f(CW\*(C`mdev\*(C'\fR, \f(CW\*(C`mesg\*(C'\fR, \f(CW\*(C`microcom\*(C'\fR, \f(CW\*(C`mim\*(C'\fR, \f(CW\*(C`mkdir\*(C'\fR, \f(CW\*(C`mkdosfs\*(C'\fR, \f(CW\*(C`mke2fs\*(C'\fR, \f(CW\*(C`mkfifo\*(C'\fR,
+\&\f(CW\*(C`mkfs.ext2\*(C'\fR, \f(CW\*(C`mkfs.minix\*(C'\fR, \f(CW\*(C`mkfs.vfat\*(C'\fR, \f(CW\*(C`mknod\*(C'\fR, \f(CW\*(C`mkpasswd\*(C'\fR, \f(CW\*(C`mkswap\*(C'\fR, \f(CW\*(C`mktemp\*(C'\fR,
+\&\f(CW\*(C`modinfo\*(C'\fR, \f(CW\*(C`modprobe\*(C'\fR, \f(CW\*(C`more\*(C'\fR, \f(CW\*(C`mount\*(C'\fR, \f(CW\*(C`mountpoint\*(C'\fR, \f(CW\*(C`mpstat\*(C'\fR, \f(CW\*(C`mt\*(C'\fR, \f(CW\*(C`mv\*(C'\fR, \f(CW\*(C`nameif\*(C'\fR,
+\&\f(CW\*(C`nanddump\*(C'\fR, \f(CW\*(C`nandwrite\*(C'\fR, \f(CW\*(C`nbd\-client\*(C'\fR, \f(CW\*(C`nc\*(C'\fR, \f(CW\*(C`netstat\*(C'\fR, \f(CW\*(C`nice\*(C'\fR, \f(CW\*(C`nl\*(C'\fR, \f(CW\*(C`nmeter\*(C'\fR,
+\&\f(CW\*(C`nohup\*(C'\fR, \f(CW\*(C`nologin\*(C'\fR, \f(CW\*(C`nproc\*(C'\fR, \f(CW\*(C`nsenter\*(C'\fR, \f(CW\*(C`nslookup\*(C'\fR, \f(CW\*(C`ntpd\*(C'\fR, \f(CW\*(C`od\*(C'\fR, \f(CW\*(C`openvt\*(C'\fR,
+\&\f(CW\*(C`partprobe\*(C'\fR, \f(CW\*(C`passwd\*(C'\fR, \f(CW\*(C`paste\*(C'\fR, \f(CW\*(C`patch\*(C'\fR, \f(CW\*(C`pgrep\*(C'\fR, \f(CW\*(C`pidof\*(C'\fR, \f(CW\*(C`ping\*(C'\fR, \f(CW\*(C`ping6\*(C'\fR,
+\&\f(CW\*(C`pipe_progress\*(C'\fR, \f(CW\*(C`pivot_root\*(C'\fR, \f(CW\*(C`pkill\*(C'\fR, \f(CW\*(C`pmap\*(C'\fR, \f(CW\*(C`popmaildir\*(C'\fR, \f(CW\*(C`poweroff\*(C'\fR,
+\&\f(CW\*(C`powertop\*(C'\fR, \f(CW\*(C`printenv\*(C'\fR, \f(CW\*(C`printf\*(C'\fR, \f(CW\*(C`ps\*(C'\fR, \f(CW\*(C`pscan\*(C'\fR, \f(CW\*(C`pstree\*(C'\fR, \f(CW\*(C`pwd\*(C'\fR, \f(CW\*(C`pwdx\*(C'\fR, \f(CW\*(C`rdate\*(C'\fR,
+\&\f(CW\*(C`readahead\*(C'\fR, \f(CW\*(C`readlink\*(C'\fR, \f(CW\*(C`readprofile\*(C'\fR, \f(CW\*(C`realpath\*(C'\fR, \f(CW\*(C`reboot\*(C'\fR, \f(CW\*(C`reformime\*(C'\fR,
+\&\f(CW\*(C`remove\-shell\*(C'\fR, \f(CW\*(C`renice\*(C'\fR, \f(CW\*(C`reset\*(C'\fR, \f(CW\*(C`resize\*(C'\fR, \f(CW\*(C`resume\*(C'\fR, \f(CW\*(C`rev\*(C'\fR, \f(CW\*(C`rm\*(C'\fR, \f(CW\*(C`rmdir\*(C'\fR, \f(CW\*(C`rmmod\*(C'\fR,
+\&\f(CW\*(C`route\*(C'\fR, \f(CW\*(C`rpm\*(C'\fR, \f(CW\*(C`rpm2cpio\*(C'\fR, \f(CW\*(C`rtcwake\*(C'\fR, \f(CW\*(C`run\-init\*(C'\fR, \f(CW\*(C`run\-parts\*(C'\fR, \f(CW\*(C`runlevel\*(C'\fR, \f(CW\*(C`runsv\*(C'\fR,
+\&\f(CW\*(C`runsvdir\*(C'\fR, \f(CW\*(C`script\*(C'\fR, \f(CW\*(C`scriptreplay\*(C'\fR, \f(CW\*(C`sed\*(C'\fR, \f(CW\*(C`seedrng\*(C'\fR, \f(CW\*(C`sendmail\*(C'\fR, \f(CW\*(C`seq\*(C'\fR,
+\&\f(CW\*(C`setarch\*(C'\fR, \f(CW\*(C`setconsole\*(C'\fR, \f(CW\*(C`setfattr\*(C'\fR, \f(CW\*(C`setfont\*(C'\fR, \f(CW\*(C`setkeycodes\*(C'\fR, \f(CW\*(C`setlogcons\*(C'\fR,
+\&\f(CW\*(C`setpriv\*(C'\fR, \f(CW\*(C`setserial\*(C'\fR, \f(CW\*(C`setsid\*(C'\fR, \f(CW\*(C`setuidgid\*(C'\fR, \f(CW\*(C`sh\*(C'\fR, \f(CW\*(C`sha1sum\*(C'\fR, \f(CW\*(C`sha256sum\*(C'\fR,
+\&\f(CW\*(C`sha384sum\*(C'\fR, \f(CW\*(C`sha3sum\*(C'\fR, \f(CW\*(C`sha512sum\*(C'\fR, \f(CW\*(C`showkey\*(C'\fR, \f(CW\*(C`shred\*(C'\fR, \f(CW\*(C`shuf\*(C'\fR, \f(CW\*(C`sleep\*(C'\fR, \f(CW\*(C`smemcap\*(C'\fR,
+\&\f(CW\*(C`softlimit\*(C'\fR, \f(CW\*(C`sort\*(C'\fR, \f(CW\*(C`split\*(C'\fR, \f(CW\*(C`ssl_client\*(C'\fR, \f(CW\*(C`ssl_server\*(C'\fR, \f(CW\*(C`start\-stop\-daemon\*(C'\fR,
+\&\f(CW\*(C`stat\*(C'\fR, \f(CW\*(C`strings\*(C'\fR, \f(CW\*(C`stty\*(C'\fR, \f(CW\*(C`su\*(C'\fR, \f(CW\*(C`sulogin\*(C'\fR, \f(CW\*(C`sum\*(C'\fR, \f(CW\*(C`sv\*(C'\fR, \f(CW\*(C`svc\*(C'\fR, \f(CW\*(C`svlogd\*(C'\fR, \f(CW\*(C`svok\*(C'\fR,
+\&\f(CW\*(C`swapoff\*(C'\fR, \f(CW\*(C`swapon\*(C'\fR, \f(CW\*(C`switch_root\*(C'\fR, \f(CW\*(C`sync\*(C'\fR, \f(CW\*(C`sysctl\*(C'\fR, \f(CW\*(C`syslogd\*(C'\fR, \f(CW\*(C`tac\*(C'\fR, \f(CW\*(C`tail\*(C'\fR, \f(CW\*(C`tar\*(C'\fR,
+\&\f(CW\*(C`taskset\*(C'\fR, \f(CW\*(C`tc\*(C'\fR, \f(CW\*(C`tcpsvd\*(C'\fR, \f(CW\*(C`tee\*(C'\fR, \f(CW\*(C`telnet\*(C'\fR, \f(CW\*(C`telnetd\*(C'\fR, \f(CW\*(C`test\*(C'\fR, \f(CW\*(C`tftp\*(C'\fR, \f(CW\*(C`tftpd\*(C'\fR, \f(CW\*(C`time\*(C'\fR,
+\&\f(CW\*(C`timeout\*(C'\fR, \f(CW\*(C`top\*(C'\fR, \f(CW\*(C`touch\*(C'\fR, \f(CW\*(C`tr\*(C'\fR, \f(CW\*(C`traceroute\*(C'\fR, \f(CW\*(C`traceroute6\*(C'\fR, \f(CW\*(C`tree\*(C'\fR, \f(CW\*(C`true\*(C'\fR,
+\&\f(CW\*(C`truncate\*(C'\fR, \f(CW\*(C`ts\*(C'\fR, \f(CW\*(C`tsort\*(C'\fR, \f(CW\*(C`tty\*(C'\fR, \f(CW\*(C`ttysize\*(C'\fR, \f(CW\*(C`tunctl\*(C'\fR, \f(CW\*(C`ubiattach\*(C'\fR, \f(CW\*(C`ubidetach\*(C'\fR,
+\&\f(CW\*(C`ubimkvol\*(C'\fR, \f(CW\*(C`ubirename\*(C'\fR, \f(CW\*(C`ubirmvol\*(C'\fR, \f(CW\*(C`ubirsvol\*(C'\fR, \f(CW\*(C`ubiupdatevol\*(C'\fR, \f(CW\*(C`udhcpc\*(C'\fR,
+\&\f(CW\*(C`udhcpc6\*(C'\fR, \f(CW\*(C`udhcpd\*(C'\fR, \f(CW\*(C`udpsvd\*(C'\fR, \f(CW\*(C`uevent\*(C'\fR, \f(CW\*(C`umount\*(C'\fR, \f(CW\*(C`uname\*(C'\fR, \f(CW\*(C`unexpand\*(C'\fR, \f(CW\*(C`uniq\*(C'\fR,
+\&\f(CW\*(C`unix2dos\*(C'\fR, \f(CW\*(C`unlink\*(C'\fR, \f(CW\*(C`unlzma\*(C'\fR, \f(CW\*(C`unxz\*(C'\fR, \f(CW\*(C`unzip\*(C'\fR, \f(CW\*(C`unzstd\*(C'\fR, \f(CW\*(C`uptime\*(C'\fR, \f(CW\*(C`users\*(C'\fR,
+\&\f(CW\*(C`usleep\*(C'\fR, \f(CW\*(C`uudecode\*(C'\fR, \f(CW\*(C`uuencode\*(C'\fR, \f(CW\*(C`uuidgen\*(C'\fR, \f(CW\*(C`vconfig\*(C'\fR, \f(CW\*(C`vi\*(C'\fR, \f(CW\*(C`vim\*(C'\fR, \f(CW\*(C`vlock\*(C'\fR,
+\&\f(CW\*(C`vmstat\*(C'\fR, \f(CW\*(C`volname\*(C'\fR, \f(CW\*(C`w\*(C'\fR, \f(CW\*(C`wall\*(C'\fR, \f(CW\*(C`watch\*(C'\fR, \f(CW\*(C`watchdog\*(C'\fR, \f(CW\*(C`wc\*(C'\fR, \f(CW\*(C`wget\*(C'\fR, \f(CW\*(C`which\*(C'\fR, \f(CW\*(C`who\*(C'\fR,
+\&\f(CW\*(C`whoami\*(C'\fR, \f(CW\*(C`whois\*(C'\fR, \f(CW\*(C`xargs\*(C'\fR, \f(CW\*(C`xxd\*(C'\fR, \f(CW\*(C`xz\*(C'\fR, \f(CW\*(C`xzcat\*(C'\fR, \f(CW\*(C`yes\*(C'\fR, \f(CW\*(C`zcat\*(C'\fR, \f(CW\*(C`zcip\*(C'\fR, \f(CW\*(C`zstdcat\*(C'\fR
 .SH "COMMAND DESCRIPTIONS"
 .IX Header "COMMAND DESCRIPTIONS"
 .SS acpid
@@ -260,20 +258,6 @@ Read or set kernel time variables. See \fBadjtimex\fR\|(2)
 \&        \-t TICK Microseconds per tick, usually 10000
 \&                (positive \-t or \-f values make clock run faster)
 \&        \-p TCONST
-.Ve
-.SS ar
-.IX Subsection "ar"
-ar x|p|t|r [\-ov] ARCHIVE [FILE]...
-.PP
-Extract or list FILEs from an ar archive, or create it
-.PP
-.Vb 6
-\&        x       Extract
-\&        p       Extract to stdout
-\&        t       List
-\&        r       Create
-\&        \-o      Restore mtime
-\&        \-v      Verbose
 .Ve
 .SS arch
 .IX Subsection "arch"
@@ -361,11 +345,6 @@ Strip directory path and SUFFIX from FILE
 \&        \-a              All arguments are FILEs
 \&        \-s SUFFIX       Remove SUFFIX (implies \-a)
 .Ve
-.SS bbconfig
-.IX Subsection "bbconfig"
-bbconfig
-.PP
-Print the config file used by busybox build
 .SS bc
 .IX Subsection "bc"
 bc [\-sqlw] [FILE]...
@@ -951,21 +930,6 @@ Delete USER from the system
 depmod
 .PP
 Wrapper to external kmod
-.SS devfsd
-.IX Subsection "devfsd"
-devfsd mntpnt [\-v][\-fg][\-np]
-.PP
-Manage devfs permissions and old device name symlinks
-.PP
-.Vb 7
-\&        mntpnt  The mount point where devfs is mounted
-\&        \-v      Print the protocol version numbers for devfsd
-\&                and the kernel\-side protocol version and exit
-\&        \-fg     Run in foreground
-\&        \-np     Exit after parsing the configuration file
-\&                and processing synthetic REGISTER events,
-\&                don\*(Aqt poll for events
-.Ve
 .SS devmem
 .IX Subsection "devmem"
 devmem ADDRESS [WIDTH [VALUE]]
@@ -1069,6 +1033,36 @@ When no file is given, use stdin/stdout.
 .Vb 2
 \&        \-u      dos2unix
 \&        \-d      unix2dos
+.Ve
+.SS dpkg
+.IX Subsection "dpkg"
+dpkg [\-ilCPru] [\-F OPT] PACKAGE
+.PP
+Install, remove and manage Debian packages
+.PP
+.Vb 9
+\&        \-i,\-\-install    Install the package
+\&        \-l,\-\-list       List of installed packages
+\&        \-\-configure     Configure an unpackaged package
+\&        \-P,\-\-purge      Purge all files of a package
+\&        \-r,\-\-remove     Remove all but the configuration files for a package
+\&        \-\-unpack        Unpack a package, but don\*(Aqt configure it
+\&        \-\-force\-depends Ignore dependency problems
+\&        \-\-force\-confnew Overwrite existing config files when installing
+\&        \-\-force\-confold Keep old config files when installing
+.Ve
+.SS dpkg\-deb
+.IX Subsection "dpkg-deb"
+dpkg\-deb [\-cefxX] FILE [DIR]
+.PP
+Perform actions on Debian packages (.deb)
+.PP
+.Vb 5
+\&        \-c      List files
+\&        \-f      Print control fields
+\&        \-e      Extract control files to DIR (default: ./DEBIAN)
+\&        \-x      Extract files to DIR (no default)
+\&        \-X      Verbose extract
 .Ve
 .SS du
 .IX Subsection "du"
@@ -1369,37 +1363,6 @@ Actions:
 findfs LABEL=label | UUID=uuid
 .PP
 Find filesystem device based on label or UUID
-.SS flash_eraseall
-.IX Subsection "flash_eraseall"
-flash_eraseall [\-jNq] MTD_DEVICE
-.PP
-Erase an MTD device
-.PP
-.Vb 3
-\&        \-j      Format the device for jffs2
-\&        \-N      Don\*(Aqt skip bad blocks
-\&        \-q      Don\*(Aqt display progress messages
-.Ve
-.SS flash_lock
-.IX Subsection "flash_lock"
-flash_lock MTD_DEVICE OFFSET SECTORS
-.PP
-Lock part or all of an MTD device. If SECTORS is \-1, then all sectors
-will be locked, regardless of the value of OFFSET
-.SS flash_unlock
-.IX Subsection "flash_unlock"
-flash_unlock MTD_DEVICE
-.PP
-Unlock an MTD device
-.SS flashcp
-.IX Subsection "flashcp"
-flashcp [\-v] FILE MTD_DEVICE
-.PP
-Copy FILE to MTD device
-.PP
-.Vb 1
-\&        \-v      Verbose
-.Ve
 .SS flock
 .IX Subsection "flock"
 flock [\-sxun] FD | { FILE [\-c] PROG ARGS }
@@ -1610,7 +1573,7 @@ Open TTY, prompt for login name, then invoke /bin/login
 BAUD_RATE of 0 leaves it unchanged
 .SS grep
 .IX Subsection "grep"
-grep [\-HhnlLoqvsrRiwFEz] [\-m N] [\-A|B|C N] { PATTERN | \-e PATTERN... | \-f FILE... } [FILE]...
+grep [\-HhnlLoqvsrRiwFE] [\-m N] [\-A|B|C N] { PATTERN | \-e PATTERN... | \-f FILE... } [FILE]...
 .PP
 Search for PATTERN in FILEs (or stdin)
 .PP
@@ -1632,7 +1595,6 @@ Search for PATTERN in FILEs (or stdin)
 \&        \-x      Match whole lines only
 \&        \-F      PATTERN is a literal (not regexp)
 \&        \-E      PATTERN is an extended regexp
-\&        \-z      NUL terminated input
 \&        \-m N    Match up to N times per file
 \&        \-A N    Print N lines of trailing context
 \&        \-B N    Print N lines of leading context
@@ -1659,12 +1621,11 @@ Decompress FILEs (or stdin)
 .Ve
 .SS gzip
 .IX Subsection "gzip"
-gzip [\-cfkdt123456789] [FILE]...
+gzip [\-cfkdt] [FILE]...
 .PP
 Compress FILEs (or stdin)
 .PP
-.Vb 6
-\&        \-1..9   Compression level
+.Vb 5
 \&        \-d      Decompress
 \&        \-c      Write to stdout
 \&        \-f      Force
@@ -1826,7 +1787,7 @@ Show or set hardware clock (RTC)
 \&        \-f DEV  Use this device (e.g. /dev/rtc2)
 \&        \-u      Assume RTC is kept in UTC
 \&        \-l      Assume RTC is kept in local time
-\&                (if neither is given, read from /var/lib/hwclock/adjtime)
+\&                (if neither is given, read from /etc/adjtime)
 \&        \-s      Set system time from RTC
 \&        \-w      Set RTC from system time
 \&        \-\-systz Set in\-kernel timezone, correct system time
@@ -2047,38 +2008,6 @@ HUP: reload /etc/inittab
 TSTP: stop respawning until CONT
 QUIT: re\-exec another init
 USR1/TERM/USR2/INT: run halt/reboot/poweroff/Ctrl\-Alt\-Del script
-.SS inotifyd
-.IX Subsection "inotifyd"
-inotifyd PROG FILE1[:MASK]...
-.PP
-Run PROG on filesystem changes.
-When a filesystem event matching MASK occurs on FILEn,
-PROG ACTUAL_EVENTS FILEn [SUBFILE] is run.
-If PROG is \-, events are sent to stdout.
-Events:
-.PP
-.Vb 12
-\&        a       File is accessed
-\&        c       File is modified
-\&        e       Metadata changed
-\&        w       Writable file is closed
-\&        0       Unwritable file is closed
-\&        r       File is opened
-\&        D       File is deleted
-\&        M       File is moved
-\&        u       Backing fs is unmounted
-\&        o       Event queue overflowed
-\&        x       File can\*(Aqt be watched anymore
-\&If watching a directory:
-\&
-\&        y       Subfile is moved into dir
-\&        m       Subfile is moved out of dir
-\&        n       Subfile is created
-\&        d       Subfile is deleted
-.Ve
-.PP
-inotifyd waits for PROG to exit.
-When x event happens for all FILEs, inotifyd exits.
 .SS insmod
 .IX Subsection "insmod"
 insmod FILE [ARGS]
@@ -2555,6 +2484,20 @@ Decompress FILEs (or stdin)
 \&        \-k      Keep input files
 \&        \-t      Test integrity
 .Ve
+.SS lzop
+.IX Subsection "lzop"
+lzop [\-cfUvd123456789CF] [FILE]...
+.PP
+.Vb 8
+\&        \-1..9   Compression level
+\&        \-d      Decompress
+\&        \-c      Write to stdout
+\&        \-f      Force
+\&        \-U      Delete input files
+\&        \-v      Verbose
+\&        \-F      Don\*(Aqt store or verify checksum
+\&        \-C      Also write checksum of compressed block
+.Ve
 .SS makedevs
 .IX Subsection "makedevs"
 makedevs [\-d device_table] rootdir
@@ -2669,16 +2612,6 @@ Run a script from a Makefile\-like specification file
 .Vb 1
 \&        \-f FILE         Spec file (default Mimfile)
 .Ve
-.SS minips
-.IX Subsection "minips"
-minips [\-o COL1,COL2=HEADER] [\-T]
-.PP
-Show list of processes
-.PP
-.Vb 2
-\&        \-o COL1,COL2=HEADER     Select columns for display
-\&        \-T                      Show threads
-.Ve
 .SS mkdir
 .IX Subsection "mkdir"
 mkdir [\-m MODE] [\-p] DIRECTORY...
@@ -2746,16 +2679,6 @@ Make a MINIX filesystem
 \&        \-i INODES       Number of inodes for the filesystem
 \&        \-l FILE         Read bad blocks list from FILE
 \&        \-v              Make version 2 filesystem
-.Ve
-.SS mkfs.reiser
-.IX Subsection "mkfs.reiser"
-mkfs.reiser [\-f] [\-l LABEL] BLOCKDEV [4K\-BLOCKS]
-.PP
-Make a ReiserFS V3 filesystem
-.PP
-.Vb 2
-\&        \-f      Force
-\&        \-l LBL  Volume label
 .Ve
 .SS mkfs.vfat
 .IX Subsection "mkfs.vfat"
@@ -2840,9 +2763,7 @@ Mount a filesystem. Filesystem autodetection requires /proc.
 .PP
 .Vb 10
 \&        \-a              Mount all filesystems in fstab
-\&        \-f              Update /etc/mtab, but don\*(Aqt mount
-\&        \-i              Don\*(Aqt run mount helper
-\&        \-n              Don\*(Aqt update /etc/mtab
+\&        \-f              Dry run
 \&        \-v              Verbose
 \&        \-r              Read\-only mount
 \&        \-t FSTYPE[,...] Filesystem type(s)
@@ -2970,26 +2891,6 @@ Connect to HOST and provide network block device on BLOCKDEV
 .SS nc
 .IX Subsection "nc"
 nc [OPTIONS] HOST PORT  \- connect
-nc [OPTIONS] \-l \-p PORT [HOST] [PORT]  \- listen
-.PP
-.Vb 10
-\&        \-e PROG Run PROG after connect (must be last)
-\&        \-l      Listen mode, for inbound connects
-\&        \-lk     With \-e, provides persistent server
-\&        \-p PORT Local port
-\&        \-s ADDR Local address
-\&        \-w SEC  Timeout for connects and final net reads
-\&        \-i SEC  Delay interval for lines sent
-\&        \-n      Don\*(Aqt do DNS resolution
-\&        \-u      UDP mode
-\&        \-b      Allow broadcasts
-\&        \-v      Verbose
-\&        \-o FILE Hex dump traffic
-\&        \-z      Zero\-I/O mode (scanning)
-.Ve
-.SS netcat
-.IX Subsection "netcat"
-netcat [OPTIONS] HOST PORT  \- connect
 nc [OPTIONS] \-l \-p PORT [HOST] [PORT]  \- listen
 .PP
 .Vb 10
@@ -3150,11 +3051,6 @@ NTP client/server
 \&        \-l      Also run as server on port 123
 \&        \-I IFACE Bind server to IFACE, implies \-l
 .Ve
-.SS nuke
-.IX Subsection "nuke"
-nuke DIR...
-.PP
-Remove DIRs
 .SS od
 .IX Subsection "od"
 od [\-abcdfhilovxs] [\-t TYPE] [\-A RADIX] [\-N SIZE] [\-j SKIP] [\-S MINSTR] [\-w WIDTH] [FILE]...
@@ -3509,22 +3405,6 @@ Restore system state from \*(Aqsuspend\-to\-disk\*(Aq data in BLOCKDEV
 rev [FILE]...
 .PP
 Reverse lines of FILE
-.SS rfkill
-.IX Subsection "rfkill"
-rfkill COMMAND [INDEX|TYPE]
-.PP
-Enable/disable wireless devices
-.PP
-Commands:
-.PP
-.Vb 3
-\&        list [INDEX|TYPE]       List current state
-\&        block INDEX|TYPE        Disable device
-\&        unblock INDEX|TYPE      Enable device
-\&
-\&        TYPE: all, wlan(wifi), bluetooth, uwb(ultrawideband),
-\&                wimax, wwan, gps, fm
-.Ve
 .SS rm
 .IX Subsection "rm"
 rm [\-irf] FILE...
@@ -3563,6 +3443,27 @@ Show or edit kernel routing tables
 \&        \-e      Display other/more information
 \&        \-A inet[6]      Select address family
 .Ve
+.SS rpm
+.IX Subsection "rpm"
+rpm \-i PACKAGE.rpm; rpm \-qp[ildc] PACKAGE.rpm
+.PP
+Manipulate RPM packages
+.PP
+Commands:
+.PP
+.Vb 6
+\&        \-i      Install package
+\&        \-qp     Query package
+\&        \-qpi    Show information
+\&        \-qpl    List contents
+\&        \-qpd    List documents
+\&        \-qpc    List config files
+.Ve
+.SS rpm2cpio
+.IX Subsection "rpm2cpio"
+rpm2cpio PACKAGE.rpm
+.PP
+Output a cpio archive of the rpm file
 .SS rtcwake
 .IX Subsection "rtcwake"
 rtcwake [\-a | \-l | \-u] [\-d DEV] [\-m MODE] [\-s SEC | \-t TIME]
@@ -3570,7 +3471,7 @@ rtcwake [\-a | \-l | \-u] [\-d DEV] [\-m MODE] [\-s SEC | \-t TIME]
 Enter a system sleep state until specified wakeup time
 .PP
 .Vb 7
-\&        \-a      Read clock mode from /var/lib/hwclock/adjtime (default)
+\&        \-a      Read clock mode from /etc/adjtime (default)
 \&        \-l      Clock is set to local time
 \&        \-u      Clock is set to UTC time
 \&        \-d DEV  Specify the RTC device
@@ -4321,7 +4222,7 @@ With more than one FILE, precede each with a filename header.
 .Ve
 .SS tar
 .IX Subsection "tar"
-tar c|x|t [\-ZzJjahmvokO] [\-f TARFILE] [\-C DIR] [\-T FILE] [\-X FILE] [LONGOPT]... [FILE]...
+tar c|x|t [\-zJjahmvokO] [\-f TARFILE] [\-C DIR] [\-T FILE] [\-X FILE] [LONGOPT]... [FILE]...
 .PP
 Create, extract, or list files from a tar file
 .PP
@@ -4336,7 +4237,6 @@ Create, extract, or list files from a tar file
 \&        \-m      Don\*(Aqt restore mtime
 \&        \-o      Don\*(Aqt restore user:group
 \&        \-k      Don\*(Aqt replace existing files
-\&        \-Z      (De)compress using compress
 \&        \-z      (De)compress using gzip
 \&        \-J      (De)compress using xz
 \&        \-j      (De)compress using bzip2
@@ -4364,6 +4264,24 @@ Set or get CPU affinity
 \&        \-a      Operate on all threads
 \&        \-c      Affinity is a list, not mask
 .Ve
+.SS tc
+.IX Subsection "tc"
+tc OBJECT CMD [dev STRING]
+.PP
+OBJECT: qdisc|class|filter
+CMD: add|del|change|replace|show
+.PP
+qdisc [handle QHANDLE] [root|ingress|parent CLASSID]
+	[[QDISC_KIND] [help|OPTIONS]]
+	QDISC_KIND := [p|b]fifo|tbf|prio|cbq|red|etc.
+qdisc show [dev STRING] [ingress]
+class [classid CLASSID] [root|parent CLASSID]
+	[[QDISC_KIND] [help|OPTIONS] ]
+class show [ dev STRING ] [root|parent CLASSID]
+filter [pref PRIO] [protocol PROTO]
+	[root|classid CLASSID] [handle FILTERID]
+	[[FILTER_TYPE] [help|OPTIONS]]
+filter show [dev STRING] [root|parent CLASSID]
 .SS tcpsvd
 .IX Subsection "tcpsvd"
 tcpsvd [\-hEv] [\-c N] [\-C N[:MSG]] [\-b N] [\-u USER] [\-l NAME] IP PORT PROG
@@ -4640,11 +4558,6 @@ Create or delete TUN/TAP interfaces
 \&        \-g GRP  Set iface group
 \&        \-b      Brief output
 .Ve
-.SS tune2fs
-.IX Subsection "tune2fs"
-tune2fs [\-c MAX_MOUNT_COUNT] [\-i DAYS] [\-C MOUNT_COUNT] [\-L LABEL] BLOCKDEV
-.PP
-Adjust filesystem options on ext[23] filesystems
 .SS ubiattach
 .IX Subsection "ubiattach"
 ubiattach \-m MTD_NUM [\-d UBI_NUM] [\-O VID_HDR_OFF] UBI_CTRL_DEV
@@ -4718,19 +4631,17 @@ Update UBI volume
 .SS udhcpc
 .IX Subsection "udhcpc"
 udhcpc [\-fbqvRB] [\-a[MSEC]] [\-t N] [\-T SEC] [\-A SEC|\-n]
-	[\-i IFACE] [\-P PORT] [\-s PROG] [\-p PIDFILE]
+	[\-i IFACE] [\-s PROG] [\-p PIDFILE]
 	[\-oC] [\-r IP] [\-V VENDOR] [\-F NAME] [\-x OPT:VAL]... [\-O OPT]...
 .PP
 .Vb 10
 \&        \-i IFACE        Interface to use (default eth0)
-\&        \-P PORT         Use PORT (default 68)
 \&        \-s PROG         Run PROG at DHCP events (default /usr/share/udhcpc/default.script)
 \&        \-p FILE         Create pidfile
 \&        \-B              Request broadcast replies
 \&        \-t N            Send up to N discover packets (default 3)
 \&        \-T SEC          Pause between packets (default 3)
 \&        \-A SEC          Wait if lease is not obtained (default 20)
-\&        \-b              Background if lease is not obtained
 \&        \-n              Exit if lease is not obtained
 \&        \-q              Exit after obtaining lease
 \&        \-R              Release IP on exit
@@ -4758,7 +4669,7 @@ udhcpc [\-fbqvRB] [\-a[MSEC]] [\-t N] [\-T SEC] [\-A SEC|\-n]
 .SS udhcpc6
 .IX Subsection "udhcpc6"
 udhcpc6 [\-fbqvR] [\-t N] [\-T SEC] [\-A SEC|\-n] [\-i IFACE] [\-s PROG]
-	[\-p PIDFILE] [\-P PORT] [\-mldo] [\-r IPv6] [\-x OPT:VAL]... [\-O OPT]...
+	[\-p PIDFILE] [\-mldo] [\-r IPv6] [\-x OPT:VAL]... [\-O OPT]...
 .PP
 .Vb 10
 \&        \-i IFACE        Interface to use (default eth0)
@@ -4767,13 +4678,11 @@ udhcpc6 [\-fbqvR] [\-t N] [\-T SEC] [\-A SEC|\-n] [\-i IFACE] [\-s PROG]
 \&        \-t N            Send up to N discover packets
 \&        \-T SEC          Pause between packets (default 3)
 \&        \-A SEC          Wait if lease is not obtained (default 20)
-\&        \-b              Background if lease is not obtained
 \&        \-n              Exit if lease is not obtained
 \&        \-q              Exit after obtaining lease
 \&        \-R              Release IP on exit
 \&        \-f              Run in foreground
 \&        \-S              Log to syslog too
-\&        \-P PORT         Use PORT (default 546)
 \&        \-m              Send multicast renew requests rather than unicast ones
 \&        \-l              Send \*(Aqinformation request\*(Aq instead of \*(Aqsolicit\*(Aq
 \&                        (used for servers which do not assign IPv6 addresses)
@@ -4795,16 +4704,15 @@ udhcpc6 [\-fbqvR] [\-t N] [\-T SEC] [\-A SEC|\-n] [\-i IFACE] [\-s PROG]
 .Ve
 .SS udhcpd
 .IX Subsection "udhcpd"
-udhcpd [\-fS] [\-I ADDR] [\-a MSEC] [\-P PORT] [CONFFILE]
+udhcpd [\-fS] [\-I ADDR] [\-a MSEC] [CONFFILE]
 .PP
 DHCP server
 .PP
-.Vb 6
+.Vb 5
 \&        \-f      Run in foreground
 \&        \-S      Log to syslog too
 \&        \-I ADDR Local address
 \&        \-a MSEC Timeout for ARP ping (default 2000)
-\&        \-P PORT Use PORT (default 67)
 \&Signals:
 \&
 \&        USR1    Update lease file
@@ -4845,13 +4753,12 @@ Typical usage (daemon for dynamic device node creation):
 	# uevent mdev & mdev \-s
 .SS umount
 .IX Subsection "umount"
-umount [\-rlfmda] [\-t FSTYPE] FILESYSTEM|DIRECTORY
+umount [\-rlfda] [\-t FSTYPE] FILESYSTEM|DIRECTORY
 .PP
 Unmount filesystems
 .PP
-.Vb 7
-\&        \-a      Unmount all filesystems in /etc/mtab
-\&        \-n      Don\*(Aqt erase /etc/mtab entries
+.Vb 6
+\&        \-a      Unmount all filesystems
 \&        \-r      Remount devices read\-only if mount is busy
 \&        \-l      Lazy umount (detach filesystem)
 \&        \-f      Force umount (i.e., unreachable NFS server)
@@ -4874,16 +4781,6 @@ Print system information
 \&        \-v      Kernel version
 \&        \-i      Hardware platform
 \&        \-o      OS name
-.Ve
-.SS uncompress
-.IX Subsection "uncompress"
-uncompress [\-cf] [FILE]...
-.PP
-Decompress FILEs (or stdin)
-.PP
-.Vb 2
-\&        \-c      Write to stdout
-\&        \-f      Overwrite
 .Ve
 .SS unexpand
 .IX Subsection "unexpand"
@@ -4912,11 +4809,6 @@ Discard duplicate lines
 \&        \-s N    Skip first N chars (after any skipped fields)
 \&        \-w N    Compare N characters in line
 .Ve
-.SS unit
-.IX Subsection "unit"
-unit
-.PP
-Run the unit\-test suite
 .SS unix2dos
 .IX Subsection "unix2dos"
 unix2dos [\-ud] [FILE]
@@ -4933,6 +4825,18 @@ When no file is given, use stdin/stdout.
 unlink FILE
 .PP
 Delete FILE by calling \fBunlink()\fR
+.SS unlzma
+.IX Subsection "unlzma"
+unlzma [\-cfk] [FILE]...
+.PP
+Decompress FILEs (or stdin)
+.PP
+.Vb 4
+\&        \-c      Write to stdout
+\&        \-f      Force
+\&        \-k      Keep input files
+\&        \-t      Test integrity
+.Ve
 .SS unxz
 .IX Subsection "unxz"
 unxz [\-cfk] [FILE]...
@@ -5026,14 +4930,25 @@ Create and remove virtual ethernet devices
 .Ve
 .SS vi
 .IX Subsection "vi"
-vi [\-c CMD] [\-R] [\-H] [FILE]...
+vi [OPTIONS] [FILE]...
 .PP
 Edit FILE
 .PP
 .Vb 3
 \&        \-c CMD  Initial command to run ($EXINIT and ~/.exrc also available)
 \&        \-R      Read\-only
-\&        \-H      List available features
+\&        \-H      Short help regarding available features
+.Ve
+.SS vim
+.IX Subsection "vim"
+vim [OPTIONS] [FILE]...
+.PP
+Edit FILE
+.PP
+.Vb 3
+\&        \-c CMD  Initial command to run ($EXINIT and ~/.exrc also available)
+\&        \-R      Read\-only
+\&        \-H      Short help regarding available features
 .Ve
 .SS vlock
 .IX Subsection "vlock"
@@ -5203,11 +5118,21 @@ Decompress FILEs (or stdin)
 \&        \-k      Keep input files
 \&        \-t      Test integrity
 .Ve
+.SS xzcat
+.IX Subsection "xzcat"
+xzcat [FILE]...
+.PP
+Decompress to stdout
 .SS yes
 .IX Subsection "yes"
 yes [STRING]
 .PP
 Repeatedly print a line with STRING, or \*(Aqy\*(Aq
+.SS zcat
+.IX Subsection "zcat"
+zcat [FILE]...
+.PP
+Decompress to stdout
 .SS zcip
 .IX Subsection "zcip"
 zcip [OPTIONS] IFACE SCRIPT
@@ -5227,6 +5152,11 @@ Manage a ZeroConf IPv4 link\-local address
 .PP
 With no \-q, runs continuously monitoring for ARP conflicts,
 exits only on I/O errors (link down etc)
+.SS zstdcat
+.IX Subsection "zstdcat"
+zstdcat [FILE]...
+.PP
+Decompress to stdout
 .SH "LIBC NSS"
 .IX Header "LIBC NSS"
 GNU Libc (glibc) uses the Name Service Switch (NSS) to configure the behavior
