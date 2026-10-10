@@ -1,0 +1,46 @@
+#!/bin/sh
+
+. ./testing.sh
+
+test_dir="git_test_repo_$$"
+rm -rf "$test_dir"
+
+testing "git init" \
+	"git init $test_dir 2>&1" \
+	"Initialized empty Git repository in $test_dir/.git/\n" "" ""
+
+(
+	cd "$test_dir" || exit 1
+
+	testing "git hash-object" \
+		"echo 'hello busybox-ng git' > file.txt && git hash-object file.txt" \
+		"0ed7f2bc4378a45702483161f0574122b776fad1\n" "" ""
+
+	testing "git add and status" \
+		"git add file.txt && git status" \
+		"On branch main\n\nNo commits yet\n\nChanges to be committed:\n\tmodified:   file.txt\n" "" ""
+
+	testing "git commit" \
+		"git commit -m 'Initial commit' 2>&1 | grep -q 'Initial commit' && echo YES || echo NO" \
+		"YES\n" "" ""
+
+	testing "git cat-file content" \
+		"git cat-file -p 0ed7f2bc4378a45702483161f0574122b776fad1" \
+		"hello busybox-ng git\n" "" ""
+
+	testing "git cat-file type" \
+		"git cat-file -t 0ed7f2bc4378a45702483161f0574122b776fad1" \
+		"blob\n" "" ""
+
+	testing "git branch and checkout" \
+		"git branch dev && git checkout dev 2>&1 && git status" \
+		"Switched to branch 'dev'\nOn branch dev\nnothing to commit, working tree clean\n" "" ""
+
+	testing "git log" \
+		"git log 2>&1 | grep -q 'Initial commit' && echo YES || echo NO" \
+		"YES\n" "" ""
+)
+
+rm -rf "$test_dir"
+
+exit $FAILCOUNT

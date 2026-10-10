@@ -25,6 +25,7 @@ lib-$(CONFIG_FLASH_LOCK) += flash_lock_unlock.o
 lib-$(CONFIG_FLASH_UNLOCK) += flash_lock_unlock.o
 lib-$(CONFIG_FLASHCP) += flashcp.o
 lib-$(CONFIG_GETFATTR) += getfattr.o
+lib-$(CONFIG_GIT) += git.o
 lib-$(CONFIG_HDPARM) += hdparm.o
 lib-$(CONFIG_HEXEDIT) += hexedit.o
 lib-$(CONFIG_I2CGET) += i2c_tools.o
