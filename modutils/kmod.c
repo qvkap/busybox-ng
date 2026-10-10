@@ -40,16 +40,11 @@
 int kmod_main(int argc, char **argv) MAIN_EXTERNALLY_VISIBLE;
 int kmod_main(int argc UNUSED_PARAM, char **argv)
 {
-	/* 
-	 * If called as "kmod", we just pass all arguments to the external kmod.
-	 * If called as "insmod", we execute "kmod insmod ...".
-	 */
 	char *applet = applet_name;
 	const char *kmod_bin = "/bin/kmod";
 	char **new_argv;
 	int i;
 
-	/* Fallback: if /bin/kmod doesn't exist, try looking in PATH */
 	if (access(kmod_bin, X_OK) != 0) {
 		kmod_bin = "kmod";
 	}
@@ -57,7 +52,6 @@ int kmod_main(int argc UNUSED_PARAM, char **argv)
 	if (strcmp(applet, "kmod") == 0) {
 		execvp(kmod_bin, argv);
 	} else {
-		/* Allocate new argv array. External kmod expects argv[0] to be the applet name. */
 		new_argv = xmalloc(sizeof(char *) * (argc + 2));
 		new_argv[0] = applet;
 		for (i = 1; i <= argc; i++) {

@@ -170,17 +170,14 @@ int h2_send_request(h2_state_t *h2, const char *method, const char *host, const 
 	headers = xmalloc(4096);
 	p = headers;
 	
-	/* :method */
 	if (!strcmp(method, "GET")) {
 		encode_int(&p, &headers_len, 2, 0x80, 7);
 	} else {
-		encode_int(&p, &headers_len, 3, 0x80, 7); /* Assuming indexed POST */
+		encode_int(&p, &headers_len, 3, 0x80, 7);
 	}
 	
-	/* :scheme https */
 	encode_int(&p, &headers_len, 7, 0x80, 7);
 	
-	/* :path */
 	if (!strcmp(path, "/")) {
 		encode_int(&p, &headers_len, 4, 0x80, 7);
 	} else {
@@ -188,11 +185,9 @@ int h2_send_request(h2_state_t *h2, const char *method, const char *host, const 
 		encode_string(&p, &headers_len, path);
 	}
 	
-	/* :authority */
 	encode_int(&p, &headers_len, 1, 0x00, 4);
 	encode_string(&p, &headers_len, host);
 	
-	/* user-agent */
 	encode_int(&p, &headers_len, 58, 0x00, 4);
 	encode_string(&p, &headers_len, user_agent);
 	
@@ -210,7 +205,7 @@ int h2_send_request(h2_state_t *h2, const char *method, const char *host, const 
 		if (type == H2_FRAME_SETTINGS && !(flags & H2_FLAG_ACK)) {
 			h2_write_frame(h2, H2_FRAME_SETTINGS, H2_FLAG_ACK, 0, NULL, 0);
 		} else if (type == H2_FRAME_HEADERS) {
-			h2->status_code = 200; /* Minimal placeholder decoding */
+			h2->status_code = 200;
 			free(payload);
 			break;
 		} else if (type == H2_FRAME_GOAWAY) {
@@ -242,9 +237,7 @@ ssize_t h2_read_body(h2_state_t *h2, void *buf, size_t bufsize) {
 				wu[1] = (payload_len >> 16) & 0xff;
 				wu[2] = (payload_len >> 8) & 0xff;
 				wu[3] = payload_len & 0xff;
-				/* Window update for connection (stream 0) */
 				h2_write_frame(h2, H2_FRAME_WINDOW_UPDATE, 0, 0, wu, 4);
-				/* Window update for stream */
 				h2_write_frame(h2, H2_FRAME_WINDOW_UPDATE, 0, stream_id, wu, 4);
 			}
 			
@@ -253,7 +246,6 @@ ssize_t h2_read_body(h2_state_t *h2, void *buf, size_t bufsize) {
 			}
 			return to_copy;
 		}
-		/* If it's a WINDOW_UPDATE or PING, ignore or ACK it */
 		if (type == H2_FRAME_PING && !(flags & H2_FLAG_ACK)) {
 			h2_write_frame(h2, H2_FRAME_PING, H2_FLAG_ACK, 0, payload, payload_len);
 		}
@@ -263,5 +255,4 @@ ssize_t h2_read_body(h2_state_t *h2, void *buf, size_t bufsize) {
 }
 
 void h2_close(h2_state_t *h2 UNUSED_PARAM) {
-	/* no-op */
 }
