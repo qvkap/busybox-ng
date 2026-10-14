@@ -266,9 +266,15 @@ IF_DESKTOP(long long) int unpack_bz2_stream(transformer_state_t *xstate) FAST_FU
 IF_DESKTOP(long long) int unpack_lzma_stream(transformer_state_t *xstate) FAST_FUNC;
 IF_DESKTOP(long long) int unpack_xz_stream(transformer_state_t *xstate) FAST_FUNC;
 IF_DESKTOP(long long) int unpack_zstd_stream(transformer_state_t *xstate) FAST_FUNC;
+IF_DESKTOP(long long) int pack_zstd_stream(transformer_state_t *xstate) FAST_FUNC;
+IF_DESKTOP(long long) int compress_zstd_stream(transformer_state_t *xstate) FAST_FUNC;
+extern int zstd_level;
 IF_DESKTOP(long long) int unpack_lz4_stream(transformer_state_t *xstate) FAST_FUNC;
 
+
 char* append_ext(char *filename, const char *expected_ext) FAST_FUNC;
+
+
 int bbunpack(char **argv,
 		IF_DESKTOP(long long) int FAST_FUNC (*unpacker)(transformer_state_t *xstate),
 		char* FAST_FUNC (*make_new_name)(char *filename, const char *expected_ext),

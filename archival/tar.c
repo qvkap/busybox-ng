@@ -43,10 +43,18 @@
 //config:config FEATURE_TAR_AUTODETECT
 //config:	bool "Autodetect compressed tarballs"
 //config:	default y
-//config:	depends on TAR && (FEATURE_SEAMLESS_Z || FEATURE_SEAMLESS_GZ || FEATURE_SEAMLESS_BZ2 || FEATURE_SEAMLESS_LZMA || FEATURE_SEAMLESS_XZ)
+//config:	depends on TAR && (FEATURE_SEAMLESS_Z || FEATURE_SEAMLESS_GZ || FEATURE_SEAMLESS_BZ2 || FEATURE_SEAMLESS_LZMA || FEATURE_SEAMLESS_XZ || FEATURE_TAR_ZSTD || FEATURE_SEAMLESS_ZSTD)
 //config:	help
 //config:	With this option tar can automatically detect compressed
 //config:	tarballs. Currently it works only on files (not pipes etc).
+//config:
+//config:config FEATURE_TAR_ZSTD
+//config:	bool "Support for zstd compression"
+//config:	default y
+//config:	depends on TAR
+//config:	help
+//config:	Support for creating and extracting .tar.zst archives.
+
 //config:
 //config:config FEATURE_TAR_FROM
 //config:	bool "Enable -X (exclude from) and -T (include from) options"
@@ -578,6 +586,9 @@ static void NOINLINE vfork_compressor(int tar_fd, const char *gzip)
 #  define WAIT_FOR_CHILD 0
 	volatile int vfork_exec_errno = 0;
 	struct fd_pair data;
+#if BB_MMU && ENABLE_FEATURE_TAR_ZSTD
+	int child_is_forked = 0;
+#endif
 #  if WAIT_FOR_CHILD
 	struct fd_pair status;
 	xpiped_pair(status);
@@ -586,8 +597,13 @@ static void NOINLINE vfork_compressor(int tar_fd, const char *gzip)
 
 	signal(SIGPIPE, SIG_IGN); /* we only want EPIPE on errors */
 
+#if BB_MMU && ENABLE_FEATURE_TAR_ZSTD
+	if (strcmp(gzip, "zstd") == 0)
+		child_is_forked = 1;
+	if ((child_is_forked ? xfork() : xvfork()) == 0) {
+#else
 	if (xvfork() == 0) {
-		/* child */
+#endif
 		int tfd;
 		/* NB: close _first_, then move fds! */
 		close(data.wr);
@@ -614,16 +630,30 @@ static void NOINLINE vfork_compressor(int tar_fd, const char *gzip)
 		xmove_fd(data.rd, 0);
 		xmove_fd(tfd, 1);
 
+#if BB_MMU && ENABLE_FEATURE_TAR_ZSTD
+		if (strcmp(gzip, "zstd") == 0) {
+			transformer_state_t xstate;
+			init_transformer_state(&xstate);
+			xstate.src_fd = 0;
+			xstate.dst_fd = 1;
+			if (pack_zstd_stream(&xstate) < 0)
+				_exit_FAILURE();
+			_exit_SUCCESS();
+		}
+#endif
 		/* exec gzip/bzip2/... program */
 		//BB_EXECLP(gzip, gzip, "-f", (char *)0); - WRONG for "xz",
 		// if xz is an enabled applet, it'll be a version which
 		// can only decompress. We do need to execute external
 		// program, not applet.
+		if (ENABLE_FEATURE_TAR_ZSTD && strcmp(gzip, "zstd") == 0)
+			BB_EXECLP(gzip, gzip, "-f", (char *)0);
 		execlp(gzip, gzip, "-f", (char *)0);
 
 		vfork_exec_errno = errno;
 		_exit_FAILURE();
 	}
+
 
 	/* parent */
 	xmove_fd(data.wr, tar_fd);
@@ -788,7 +818,14 @@ static llist_t *append_file_list_to_list(llist_t *list)
 //usage:     "\n	--lzma	(De)compress using lzma"
 //usage:	)
 //usage:	)
+//usage:	IF_FEATURE_TAR_ZSTD(
+//usage:	IF_FEATURE_TAR_LONG_OPTIONS(
+//usage:     "\n	--zstd	(De)compress using zstd"
+//usage:	)
+//usage:	)
 //usage:     "\n	-a	(De)compress based on extension"
+//usage:     "\n	-I PROG	Filter through PROG"
+
 //usage:	IF_FEATURE_TAR_CREATE(
 //usage:     "\n	-h	Follow symlinks"
 //usage:	)
@@ -823,8 +860,10 @@ enum {
 	IF_FEATURE_TAR_FROM(     OPTBIT_EXCLUDE_FROM,)
 	IF_FEATURE_SEAMLESS_GZ(  OPTBIT_GZIP        ,)
 	IF_FEATURE_SEAMLESS_XZ(  OPTBIT_XZ          ,)
+	IF_FEATURE_TAR_ZSTD(     OPTBIT_ZSTD        ,)
 	IF_FEATURE_SEAMLESS_Z(   OPTBIT_COMPRESS    ,) // 16th bit
 	OPTBIT_AUTOCOMPRESS_BY_EXT,
+	OPTBIT_USE_COMPRESS_PROG,
 	IF_FEATURE_TAR_NOPRESERVE_TIME(OPTBIT_NOPRESERVE_TIME,)
 #if ENABLE_FEATURE_TAR_LONG_OPTIONS
 	OPTBIT_STRIP_COMPONENTS,
@@ -851,8 +890,10 @@ enum {
 	OPT_EXCLUDE_FROM = IF_FEATURE_TAR_FROM(     (1 << OPTBIT_EXCLUDE_FROM)) + 0, // X
 	OPT_GZIP         = IF_FEATURE_SEAMLESS_GZ(  (1 << OPTBIT_GZIP        )) + 0, // z
 	OPT_XZ           = IF_FEATURE_SEAMLESS_XZ(  (1 << OPTBIT_XZ          )) + 0, // J
+	OPT_ZSTD         = IF_FEATURE_TAR_ZSTD(     (1 << OPTBIT_ZSTD        )) + 0, // \xa0
 	OPT_COMPRESS     = IF_FEATURE_SEAMLESS_Z(   (1 << OPTBIT_COMPRESS    )) + 0, // Z
 	OPT_AUTOCOMPRESS_BY_EXT = 1 << OPTBIT_AUTOCOMPRESS_BY_EXT,                   // a
+	OPT_USE_COMPRESS_PROG   = 1 << OPTBIT_USE_COMPRESS_PROG,                     // I
 	OPT_NOPRESERVE_TIME  = IF_FEATURE_TAR_NOPRESERVE_TIME((1 << OPTBIT_NOPRESERVE_TIME)) + 0, // m
 	OPT_STRIP_COMPONENTS = IF_FEATURE_TAR_LONG_OPTIONS((1 << OPTBIT_STRIP_COMPONENTS)) + 0, // strip-components
 	OPT_LZMA             = IF_FEATURE_TAR_LONG_OPTIONS(IF_FEATURE_SEAMLESS_LZMA((1 << OPTBIT_LZMA))) + 0, // lzma
@@ -862,7 +903,8 @@ enum {
 	OPT_NOPRESERVE_PERM  = IF_FEATURE_TAR_LONG_OPTIONS((1 << OPTBIT_NOPRESERVE_PERM)) + 0, // no-same-permissions
 	OPT_OVERWRITE        = IF_FEATURE_TAR_LONG_OPTIONS((1 << OPTBIT_OVERWRITE      )) + 0, // overwrite
 
-	OPT_ANY_COMPRESS = (OPT_BZIP2 | OPT_LZMA | OPT_GZIP | OPT_XZ | OPT_COMPRESS),
+	OPT_ANY_COMPRESS = (OPT_BZIP2 | OPT_LZMA | OPT_GZIP | OPT_XZ | OPT_ZSTD | OPT_COMPRESS | OPT_USE_COMPRESS_PROG),
+
 };
 #if ENABLE_FEATURE_TAR_LONG_OPTIONS
 static const char tar_longopts[] ALIGN1 =
@@ -895,10 +937,14 @@ static const char tar_longopts[] ALIGN1 =
 # if ENABLE_FEATURE_SEAMLESS_XZ
 	"xz\0"                  No_argument       "J"
 # endif
+# if ENABLE_FEATURE_TAR_ZSTD
+	"zstd\0"                No_argument       "\xa0"
+# endif
 # if ENABLE_FEATURE_SEAMLESS_Z
 	"compress\0"            No_argument       "Z"
 # endif
 	"auto-compress\0"       No_argument       "a"
+	"use-compress-program\0" Required_argument "I"
 # if ENABLE_FEATURE_TAR_NOPRESERVE_TIME
 	"touch\0"               No_argument       "m"
 # endif
@@ -929,12 +975,26 @@ static const char tar_longopts[] ALIGN1 =
 # define LONGOPTS
 #endif
 
+static const char *tar_compress_prog;
+#if BB_MMU
+static IF_DESKTOP(long long) int FAST_FUNC unpack_prog_stream(transformer_state_t *xstate)
+{
+	xmove_fd(xstate->src_fd, 0);
+	xmove_fd(xstate->dst_fd, 1);
+	BB_EXECLP(tar_compress_prog, tar_compress_prog, "-d", (char *)0);
+	execlp(tar_compress_prog, tar_compress_prog, "-d", (char *)0);
+	_exit_FAILURE();
+}
+#endif
+
+
 int tar_main(int argc, char **argv) MAIN_EXTERNALLY_VISIBLE;
 int tar_main(int argc UNUSED_PARAM, char **argv)
 {
 	archive_handle_t *tar_handle;
 	char *base_dir = NULL;
 	const char *tar_filename = "-";
+	char *compress_prog = NULL;
 	unsigned opt;
 	int verboseFlag = 0;
 #if ENABLE_FEATURE_TAR_LONG_OPTIONS && ENABLE_FEATURE_TAR_FROM
@@ -997,8 +1057,10 @@ int tar_main(int argc UNUSED_PARAM, char **argv)
 		IF_FEATURE_TAR_FROM(     "T:*X:*")
 		IF_FEATURE_SEAMLESS_GZ(  "z"     )
 		IF_FEATURE_SEAMLESS_XZ(  "J"     )
+		IF_FEATURE_TAR_ZSTD(     "\xa0"  )
 		IF_FEATURE_SEAMLESS_Z(   "Z"     )
 		"a"
+		"I:"
 		IF_FEATURE_TAR_NOPRESERVE_TIME("m")
 		IF_FEATURE_TAR_LONG_OPTIONS("\xf8:") // --strip-components
 		"\0"
@@ -1017,6 +1079,7 @@ int tar_main(int argc UNUSED_PARAM, char **argv)
 		, &tar_filename // -f filename
 		IF_FEATURE_TAR_FROM(, &(tar_handle->accept)) // T
 		IF_FEATURE_TAR_FROM(, &(tar_handle->reject)) // X
+		, &compress_prog // -I PROG
 #if ENABLE_FEATURE_TAR_LONG_OPTIONS
 		, &tar_handle->tar__strip_components // --strip-components
 #endif
@@ -1173,10 +1236,8 @@ int tar_main(int argc UNUSED_PARAM, char **argv)
 				bb_perror_msg_and_die("can't open '%s'", tar_filename);
 		} else {
 			tar_handle->src_fd = xopen(tar_filename, flags);
-#if ENABLE_FEATURE_TAR_CREATE
-			if ((OPT_GZIP | OPT_BZIP2 | OPT_XZ | OPT_LZMA) != 0 /* at least one is config-enabled */
-			 && (opt & OPT_AUTOCOMPRESS_BY_EXT)
-			 && flags != O_RDONLY
+			if ((opt & OPT_AUTOCOMPRESS_BY_EXT)
+			 && !(opt & OPT_ANY_COMPRESS)
 			) {
 				if (OPT_GZIP != 0 && is_suffixed_with(tar_filename, "gz"))
 					opt |= OPT_GZIP;
@@ -1186,8 +1247,17 @@ int tar_main(int argc UNUSED_PARAM, char **argv)
 					opt |= OPT_XZ;
 				if (OPT_LZMA != 0 && is_suffixed_with(tar_filename, "lzma"))
 					opt |= OPT_LZMA;
+				if (OPT_ZSTD != 0 && (is_suffixed_with(tar_filename, "zst") || is_suffixed_with(tar_filename, "zstd")))
+					opt |= OPT_ZSTD;
 			}
-#endif
+			if (ENABLE_FEATURE_TAR_AUTODETECT
+			 && flags == O_RDONLY
+			 && !(opt & OPT_ANY_COMPRESS)
+			 && (is_suffixed_with(tar_filename, ".zst") || is_suffixed_with(tar_filename, ".zstd"))
+			) {
+				opt |= OPT_ZSTD;
+			}
+
 		}
 	}
 
@@ -1210,6 +1280,10 @@ int tar_main(int argc UNUSED_PARAM, char **argv)
 			zipMode = "lzma";
 		if (opt & OPT_XZ)
 			zipMode = "xz";
+		if (opt & OPT_ZSTD)
+			zipMode = "zstd";
+		if (opt & OPT_USE_COMPRESS_PROG)
+			zipMode = compress_prog;
 # endif
 		tbInfo = xzalloc(sizeof(*tbInfo));
 		tbInfo->tarFd = tar_handle->src_fd;
@@ -1249,6 +1323,20 @@ int tar_main(int argc UNUSED_PARAM, char **argv)
 		if (opt & OPT_XZ) {
 			USE_FOR_MMU(IF_FEATURE_SEAMLESS_XZ(xformer = unpack_xz_stream;))
 			USE_FOR_NOMMU(xformer_prog = "unxz";)
+		}
+		if (opt & OPT_ZSTD) {
+			USE_FOR_MMU(xformer = unpack_zstd_stream;)
+			USE_FOR_NOMMU(xformer_prog = "unzstd";)
+		}
+		if (opt & OPT_USE_COMPRESS_PROG) {
+			if (strcmp(compress_prog, "zstd") == 0) {
+				USE_FOR_MMU(xformer = unpack_zstd_stream;)
+				USE_FOR_NOMMU(xformer_prog = "unzstd";)
+			} else {
+				tar_compress_prog = compress_prog;
+				USE_FOR_MMU(xformer = unpack_prog_stream;)
+				USE_FOR_NOMMU(xformer_prog = compress_prog;)
+			}
 		}
 
 		fork_transformer_with_sig(tar_handle->src_fd, xformer, xformer_prog);
