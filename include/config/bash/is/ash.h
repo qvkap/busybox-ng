@@ -1,1 +1,1 @@
-#undef CONFIG_BASH_IS_ASH
+#define CONFIG_BASH_IS_ASH 1

@@ -1,1 +1,1 @@
-#undef CONFIG_SHELL_ASH
+#define CONFIG_SHELL_ASH 1

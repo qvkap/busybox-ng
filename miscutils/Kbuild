@@ -34,6 +34,7 @@ lib-$(CONFIG_I2CDUMP) += i2c_tools.o
 lib-$(CONFIG_I2CDETECT) += i2c_tools.o
 lib-$(CONFIG_I2CTRANSFER) += i2c_tools.o
 lib-$(CONFIG_INOTIFYD) += inotifyd.o
+lib-$(CONFIG_JQ) += jq.o
 lib-$(CONFIG_LESS) += less.o
 lib-$(CONFIG_LSSCSI) += lsscsi.o
 lib-$(CONFIG_MAKEDEVS) += makedevs.o

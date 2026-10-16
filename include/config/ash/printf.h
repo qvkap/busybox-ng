@@ -1,1 +1,1 @@
-#undef CONFIG_ASH_PRINTF
+#define CONFIG_ASH_PRINTF 1

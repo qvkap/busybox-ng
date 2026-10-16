@@ -390,7 +390,13 @@
      "\n	--lzma	(De)compress using lzma" \
 	) \
 	) \
+	IF_FEATURE_TAR_ZSTD( \
+	IF_FEATURE_TAR_LONG_OPTIONS( \
+     "\n	--zstd	(De)compress using zstd" \
+	) \
+	) \
      "\n	-a	(De)compress based on extension" \
+     "\n	-I PROG	Filter through PROG" \
 	IF_FEATURE_TAR_CREATE( \
      "\n	-h	Follow symlinks" \
 	) \
@@ -431,6 +437,26 @@
      "\n	-K	Do not clear SUID bit" \
      "\n	-x FILE	Exclude FILEs" \
      "\n	-d DIR	Extract into DIR" \
+
+#define zstd_trivial_usage \
+       "[-cfkvdq] [-1..19] [FILE]..." \
+
+#define zstd_full_usage "\n\n" \
+       "Compress or decompress FILEs (or stdin) using Zstandard\n" \
+     "\n	-d		Decompress" \
+     "\n	-c		Write to stdout" \
+     "\n	-f		Force overwrite" \
+     "\n	-k		Keep original file" \
+     "\n	-t		Test integrity" \
+     "\n	-v		Verbose" \
+     "\n	-q		Quiet" \
+     "\n	-1..-19		Compression level (default 3)" \
+     "\n	-T N		Number of threads (ignored)" \
+     "\n	--fast[=N]	Use fast compression (level 1)" \
+     "\n	--best		Use best compression (level 19)" \
+     "\n	--check		Verify checksum" \
+     "\n	--no-check	Skip checksum" \
+     "\n	--rm		Remove source file" \
 
 #define chvt_trivial_usage \
        "N" \
@@ -3158,6 +3184,32 @@
      "\n	-d		Dump all attributes" \
      "\n	-n ATTR		Get attribute ATTR" \
 
+#define git_trivial_usage \
+       "COMMAND [ARGS]" \
+
+#define git_full_usage "\n\n" \
+       "Minimal Git revision control\n" \
+       "\nCommands:" \
+       "\n\tinit [DIR]          Initialize repository" \
+       "\n\tclone URL [DIR]     Clone repository" \
+       "\n\tstatus              Show working tree status" \
+       "\n\tadd FILE...         Add files to index" \
+       "\n\tcommit -m MSG       Record changes" \
+       "\n\tdiff [FILE...]      Show unstaged changes" \
+       "\n\tlog [-n N]          Show commit log" \
+       "\n\tbranch [NAME]       List or create branches" \
+       "\n\tcheckout BRANCH     Switch branches" \
+       "\n\tmerge BRANCH        Merge branch (fast-forward)" \
+       "\n\tpull [REMOTE]       Fetch and merge" \
+       "\n\tfetch [REMOTE]      Download objects" \
+       "\n\tremote SUBCMD       Manage remotes" \
+       "\n\tstash [push|pop]    Stash changes" \
+       "\n\ttag [NAME]          List or create tags" \
+       "\n\treset [--hard] REF  Reset HEAD" \
+       "\n\tshow [OBJ]          Show object" \
+       "\n\thash-object [-w] F  Compute SHA1" \
+       "\n\tcat-file -p|-t|-s OBJ  Show object" \
+
 #define hdparm_trivial_usage \
        "[OPTIONS] [DEVICE]" \
 
@@ -3325,6 +3377,25 @@
      "\n" \
      "\ninotifyd waits for PROG to exit." \
      "\nWhen x event happens for all FILEs, inotifyd exits." \
+
+#define jq_trivial_usage \
+       "[-crnRse] [-f FILE] [--arg K V] FILTER [FILE...]" \
+
+#define jq_full_usage "\n\n" \
+       "JSON processor\n" \
+     "\n\t-c\tCompact output" \
+     "\n\t-r\tRaw string output" \
+     "\n\t-n\tNull input" \
+     "\n\t-R\tRaw input (lines as strings)" \
+     "\n\t-s\tSlurp into array" \
+     "\n\t-e\tExit status based on last value" \
+     "\n\t-a\tASCII output" \
+     "\n\t-S\tSort keys" \
+     "\n\t-f FILE\tRead filter from file" \
+     "\n\t--arg NAME VAL\tBind $NAME to string VAL" \
+     "\n\t--argjson NAME JSON\tBind $NAME to parsed JSON" \
+     "\n\t--tab\tUse tab indentation" \
+     "\n\t--indent N\tUse N-space indentation" \
 
 #define less_trivial_usage \
        "[-EF" IF_FEATURE_LESS_REGEXP("I")IF_FEATURE_LESS_FLAGS("Mm") \
@@ -4466,6 +4537,42 @@
      "\n	-n	Don't resolve names" \
      "\n	-e	Display other/more information" \
      "\n	-A inet" IF_FEATURE_IPV6("[6]") "	Select address family" \
+
+#define ss_trivial_usage \
+       "[-nraeloepismbEZz460tuwxdS] [-N NSNAME] [-f FAMILY] [-A QUERY] [-D FILE] [-F FILE]" \
+
+#define ss_full_usage "\n\n" \
+       "Display socket statistics\n" \
+     "\n	-h, --help		Show this help" \
+     "\n	-V, --version		Show version" \
+     "\n	-n, --numeric		Don't resolve service names" \
+     "\n	-r, --resolve		Resolve host names" \
+     "\n	-a, --all		Display all sockets" \
+     "\n	-l, --listening		Display listening sockets" \
+     "\n	-o, --options		Show timer information" \
+     "\n	-e, --extended		Show detailed socket information" \
+     "\n	-m, --memory		Show socket memory usage" \
+     "\n	-p, --processes		Show process using socket" \
+     "\n	-i, --info		Show internal TCP information" \
+     "\n	-s, --summary		Show socket usage summary" \
+     "\n	-b, --bpf		Show BPF information" \
+     "\n	-E, --events		Display events" \
+     "\n	-Z, --context		Display security context" \
+     "\n	-z, --contexts		Display security contexts" \
+     "\n	-N, --net NSNAME	Switch network namespace" \
+     "\n	-4, --ipv4		Display only IP version 4 sockets" \
+     "\n	-6, --ipv6		Display only IP version 6 sockets" \
+     "\n	-0, --packet		Display PACKET sockets" \
+     "\n	-t, --tcp		Display only TCP sockets" \
+     "\n	-u, --udp		Display only UDP sockets" \
+     "\n	-d, --dccp		Display only DCCP sockets" \
+     "\n	-w, --raw		Display only RAW sockets" \
+     "\n	-x, --unix		Display only Unix domain sockets" \
+     "\n	-S, --sctp		Display only SCTP sockets" \
+     "\n	-f, --family=FAMILY	Display sockets of type FAMILY" \
+     "\n	-A, --query=QUERY	Display sockets of type QUERY" \
+     "\n	-D, --diag=FILE		Dump raw socket info to FILE" \
+     "\n	-F, --filter=FILE	Read filter from FILE" \
 
 #define ssl_client_trivial_usage \
        "[-n SNI] { -s FD [-r FD] | HOST | -e PROG ARGS }" \
@@ -5676,6 +5783,49 @@
 #define findfs_example_usage \
        "$ findfs LABEL=MyDevice" \
 
+#define findmnt_trivial_usage \
+       "[OPTIONS] [DEVICE|MOUNTPOINT]" \
+
+#define findmnt_full_usage "\n\n" \
+       "Find a (mounted) filesystem\n" \
+     "\n	-s, --fstab          Search in /etc/fstab" \
+     "\n	-m, --mtab           Search in /proc/mounts" \
+     "\n	-k, --kernel         Search in /proc/self/mountinfo (default)" \
+     "\n	-c, --canonicalize   Canonicalize printed paths" \
+     "\n	-C, --nocanonicalize Don't canonicalize when comparing paths" \
+     "\n	-D, --df             Imitate df(1) output" \
+     "\n	-d, --direction DIR  Direction of search: forward/backward" \
+     "\n	-e, --evaluate       Convert tags (LABEL/UUID) to device names" \
+     "\n	-F, --tab-file PATH  Alternative file for -s, -m or -k" \
+     "\n	-f, --first-only     Print first matching filesystem only" \
+     "\n	-i, --invert         Invert sense of matching" \
+     "\n	-J, --json           Use JSON output format" \
+     "\n	-l, --list           Use list output format" \
+     "\n	-n, --noheadings     Don't print column headings" \
+     "\n	-u, --notruncate     Don't truncate text in columns" \
+     "\n	-O, --options LIST   Limit filesystems by mount options" \
+     "\n	-o, --output LIST    Output columns" \
+     "\n	-P, --pairs          Use key=\"value\" output format" \
+     "\n	-p, --poll[=LIST]    Monitor filesystem events" \
+     "\n	-r, --raw            Use raw output format" \
+     "\n	-a, --ascii          Use ASCII characters for tree formatting" \
+     "\n	-t, --types LIST     Limit filesystems by FS type" \
+     "\n	-R, --submounts      Print submounts for selected filesystems" \
+     "\n	-S, --source SRC     Explicitly define mount source" \
+     "\n	-T, --target PATH    Explicitly define target path" \
+     "\n	-M, --mountpoint DIR Explicitly define mountpoint directory" \
+     "\n	-w, --timeout MSEC   Upper limit on time for --poll" \
+     "\n	-x, --verify         Verify mount table content" \
+     "\n	-b, --bytes          Print sizes in bytes" \
+     "\n	-U, --uniq           Ignore duplicate targets" \
+     "\n	-N, --task PID       Use /proc/PID/mountinfo" \
+     "\n	-v, --nofsroot       Don't print [/dir] for bind mounts" \
+     "\n	-A, --all            Disable built-in filters" \
+     "\n	-V, --version        Display version" \
+     "\n	-h, --help           Display help" \
+     "\n	--verbose            Print more details" \
+     "\n	--shadowed           Print filesystems over-shadowed by another" \
+
 #define flock_trivial_usage \
        "[-sxun] FD | { FILE [-c] PROG ARGS }" \
 
@@ -5907,10 +6057,28 @@
        "not yet supported. losetup -f will show the first free loop device\n\n" \
 
 #define lsblk_trivial_usage \
-       "[BLOCKDEV]..." \
+       "[OPTIONS] [BLOCKDEV]..." \
 
 #define lsblk_full_usage "\n\n" \
-       "List block devices" \
+       "List information about block devices\n" \
+     "\n	-a, --all		Print all devices" \
+     "\n	-b, --bytes		Print SIZE in bytes" \
+     "\n	-d, --nodeps		Don't print partitions/holders" \
+     "\n	-f, --fs		Output filesystem info" \
+     "\n	-i, --ascii		Use ASCII characters only" \
+     "\n	-J, --json		Use JSON output format" \
+     "\n	-l, --list		Use list format output" \
+     "\n	-m, --perms		Output info about permissions" \
+     "\n	-n, --noheadings	Don't print headings" \
+     "\n	-o, --output LIST	Output columns" \
+     "\n	-O, --output-all	Output all columns" \
+     "\n	-p, --paths		Print complete device path" \
+     "\n	-P, --pairs		Use key=\"value\" output format" \
+     "\n	-r, --raw		Use raw output format" \
+     "\n	-s, --inverse		Inverse dependencies" \
+     "\n	-t, --topology		Output info about topology" \
+     "\n	-x, --sort COL		Sort output by <column>" \
+     "\n	-z, --zoned		Print zone information" \
 
 #define lspci_trivial_usage \
        "[-mk]" \
@@ -5921,9 +6089,15 @@
      "\n	-m	Parsable output" \
      "\n	-k	Show driver" \
 
-#define lsusb_trivial_usage NOUSAGE_STR \
+#define lsusb_trivial_usage \
+       "[-v] [-t] [-s [BUS]:[DEV]] [-d VENDOR:[PRODUCT]]" \
 
-#define lsusb_full_usage "" \
+#define lsusb_full_usage "\n\n" \
+       "List USB devices\n" \
+     "\n	-v	Verbose (show device details)" \
+     "\n	-t	Show as tree (bus topology)" \
+     "\n	-s BUS:DEV	Show only device BUS/DEV (either may be omitted)" \
+     "\n	-d VID:PID	Show only devices with vendor:product ID" \
 
 #define mdev_trivial_usage \
        "[-vS] " IF_FEATURE_MDEV_DAEMON("{ ") "[-s]" IF_FEATURE_MDEV_DAEMON(" | [-df] }") \

@@ -21,6 +21,7 @@ lib-$(CONFIG_FBSET) += fbset.o
 lib-$(CONFIG_FDFORMAT) += fdformat.o
 lib-$(CONFIG_FDISK) += fdisk.o
 lib-$(CONFIG_FINDFS) += findfs.o
+lib-$(CONFIG_FINDMNT) += findmnt.o
 lib-$(CONFIG_FLOCK) += flock.o
 lib-$(CONFIG_FDFLUSH) += freeramdisk.o
 lib-$(CONFIG_FREERAMDISK) += freeramdisk.o

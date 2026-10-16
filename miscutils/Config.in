@@ -387,11 +387,9 @@ config GETFATTR
 	Get extended attributes on files
 config GIT
 	bool "git (mini version control)"
-	default y
+	default n
 	help
 	Minimal implementation of Git revision control system.
-	Supports: init, status, add, commit, log, branch, checkout,
-	hash-object, cat-file.
 config HDPARM
 	bool "hdparm (25 kb)"
 	default y
@@ -489,6 +487,11 @@ config INOTIFYD
 	help
 	Simple inotify daemon. Reports filesystem changes. Requires
 	kernel >= 2.6.13
+config JQ
+	bool "jq (JSON processor)"
+	default y
+	help
+	Lightweight JSON processor. Supports a subset of jq filters.
 config LESS
 	bool "less (16 kb)"
 	default y

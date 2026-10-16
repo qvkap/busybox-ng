@@ -868,6 +868,11 @@ config ROUTE
 	default y
 	help
 	Route displays or manipulates the kernel's IP routing tables.
+config SS
+	bool "ss (12 kb)"
+	default y
+	help
+	Socket statistics. Similar to netstat but shows more information.
 config SSL_CLIENT
 	bool "ssl_client (28 kb)"
 	default y

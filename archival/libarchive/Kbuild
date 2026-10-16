@@ -41,6 +41,8 @@ DPKG_FILES:= \
 	get_header_tar_lzma.o \
 	get_header_tar_xz.o \
 
+lib-$(CONFIG_ZSTD) += compress_zstd.o zstd_declib.o
+lib-$(CONFIG_FEATURE_TAR_ZSTD) += compress_zstd.o zstd_declib.o
 
 lib-$(CONFIG_DPKG)                      += $(DPKG_FILES)
 lib-$(CONFIG_DPKG_DEB)                  += $(DPKG_FILES)

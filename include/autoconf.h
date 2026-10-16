@@ -2,7 +2,7 @@
  * Automatically generated C config: don't edit
  * Busybox version: 1.38.0
  */
-#define AUTOCONF_TIMESTAMP "2026-07-27 22:06:52 MSK"
+#define AUTOCONF_TIMESTAMP "2026-10-16 21:40:21 MSK"
 
 #define CONFIG_HAVE_DOT_CONFIG 1
 #define ENABLE_HAVE_DOT_CONFIG 1
@@ -244,14 +244,10 @@
 #define ENABLE_PIE 0
 #define IF_PIE(...)
 #define IF_NOT_PIE(...) __VA_ARGS__
-#define CONFIG_NOMMU 1
-#define ENABLE_NOMMU 1
-#ifdef MAKE_SUID
-# define IF_NOMMU(...) __VA_ARGS__ "CONFIG_NOMMU"
-#else
-# define IF_NOMMU(...) __VA_ARGS__
-#endif
-#define IF_NOT_NOMMU(...)
+#undef CONFIG_NOMMU
+#define ENABLE_NOMMU 0
+#define IF_NOMMU(...)
+#define IF_NOT_NOMMU(...) __VA_ARGS__
 #undef CONFIG_BUILD_LIBBUSYBOX
 #define ENABLE_BUILD_LIBBUSYBOX 0
 #define IF_BUILD_LIBBUSYBOX(...)
@@ -1076,6 +1072,14 @@
 # define IF_FEATURE_TAR_AUTODETECT(...) __VA_ARGS__
 #endif
 #define IF_NOT_FEATURE_TAR_AUTODETECT(...)
+#define CONFIG_FEATURE_TAR_ZSTD 1
+#define ENABLE_FEATURE_TAR_ZSTD 1
+#ifdef MAKE_SUID
+# define IF_FEATURE_TAR_ZSTD(...) __VA_ARGS__ "CONFIG_FEATURE_TAR_ZSTD"
+#else
+# define IF_FEATURE_TAR_ZSTD(...) __VA_ARGS__
+#endif
+#define IF_NOT_FEATURE_TAR_ZSTD(...)
 #define CONFIG_FEATURE_TAR_FROM 1
 #define ENABLE_FEATURE_TAR_FROM 1
 #ifdef MAKE_SUID
@@ -1176,6 +1180,14 @@
 # define IF_FEATURE_UNZIP_XZ(...) __VA_ARGS__
 #endif
 #define IF_NOT_FEATURE_UNZIP_XZ(...)
+#define CONFIG_ZSTD 1
+#define ENABLE_ZSTD 1
+#ifdef MAKE_SUID
+# define IF_ZSTD(...) __VA_ARGS__ "CONFIG_ZSTD"
+#else
+# define IF_ZSTD(...) __VA_ARGS__
+#endif
+#define IF_NOT_ZSTD(...)
 #undef CONFIG_FEATURE_LZMA_FAST
 #define ENABLE_FEATURE_LZMA_FAST 0
 #define IF_FEATURE_LZMA_FAST(...)
@@ -3944,6 +3956,14 @@
 # define IF_FINDFS(...) __VA_ARGS__
 #endif
 #define IF_NOT_FINDFS(...)
+#define CONFIG_FINDMNT 1
+#define ENABLE_FINDMNT 1
+#ifdef MAKE_SUID
+# define IF_FINDMNT(...) __VA_ARGS__ "CONFIG_FINDMNT"
+#else
+# define IF_FINDMNT(...) __VA_ARGS__
+#endif
+#define IF_NOT_FINDMNT(...)
 #define CONFIG_FLOCK 1
 #define ENABLE_FLOCK 1
 #ifdef MAKE_SUID
@@ -5124,6 +5144,14 @@
 # define IF_GETFATTR(...) __VA_ARGS__
 #endif
 #define IF_NOT_GETFATTR(...)
+#define CONFIG_GIT 1
+#define ENABLE_GIT 1
+#ifdef MAKE_SUID
+# define IF_GIT(...) __VA_ARGS__ "CONFIG_GIT"
+#else
+# define IF_GIT(...) __VA_ARGS__
+#endif
+#define IF_NOT_GIT(...)
 #define CONFIG_HDPARM 1
 #define ENABLE_HDPARM 1
 #ifdef MAKE_SUID
@@ -5232,6 +5260,14 @@
 #define ENABLE_INOTIFYD 0
 #define IF_INOTIFYD(...)
 #define IF_NOT_INOTIFYD(...) __VA_ARGS__
+#define CONFIG_JQ 1
+#define ENABLE_JQ 1
+#ifdef MAKE_SUID
+# define IF_JQ(...) __VA_ARGS__ "CONFIG_JQ"
+#else
+# define IF_JQ(...) __VA_ARGS__
+#endif
+#define IF_NOT_JQ(...)
 #define CONFIG_LESS 1
 #define ENABLE_LESS 1
 #ifdef MAKE_SUID
@@ -6412,6 +6448,14 @@
 # define IF_ROUTE(...) __VA_ARGS__
 #endif
 #define IF_NOT_ROUTE(...)
+#define CONFIG_SS 1
+#define ENABLE_SS 1
+#ifdef MAKE_SUID
+# define IF_SS(...) __VA_ARGS__ "CONFIG_SS"
+#else
+# define IF_SS(...) __VA_ARGS__
+#endif
+#define IF_NOT_SS(...)
 #define CONFIG_SSL_CLIENT 1
 #define ENABLE_SSL_CLIENT 1
 #ifdef MAKE_SUID
@@ -7436,114 +7480,186 @@
 /*
  * Shells
  */
-#undef CONFIG_SH_IS_ASH
-#define ENABLE_SH_IS_ASH 0
-#define IF_SH_IS_ASH(...)
-#define IF_NOT_SH_IS_ASH(...) __VA_ARGS__
-#define CONFIG_SH_IS_HUSH 1
-#define ENABLE_SH_IS_HUSH 1
+#define CONFIG_SH_IS_ASH 1
+#define ENABLE_SH_IS_ASH 1
 #ifdef MAKE_SUID
-# define IF_SH_IS_HUSH(...) __VA_ARGS__ "CONFIG_SH_IS_HUSH"
+# define IF_SH_IS_ASH(...) __VA_ARGS__ "CONFIG_SH_IS_ASH"
 #else
-# define IF_SH_IS_HUSH(...) __VA_ARGS__
+# define IF_SH_IS_ASH(...) __VA_ARGS__
 #endif
-#define IF_NOT_SH_IS_HUSH(...)
+#define IF_NOT_SH_IS_ASH(...)
+#undef CONFIG_SH_IS_HUSH
+#define ENABLE_SH_IS_HUSH 0
+#define IF_SH_IS_HUSH(...)
+#define IF_NOT_SH_IS_HUSH(...) __VA_ARGS__
 #undef CONFIG_SH_IS_NONE
 #define ENABLE_SH_IS_NONE 0
 #define IF_SH_IS_NONE(...)
 #define IF_NOT_SH_IS_NONE(...) __VA_ARGS__
-#undef CONFIG_BASH_IS_ASH
-#define ENABLE_BASH_IS_ASH 0
-#define IF_BASH_IS_ASH(...)
-#define IF_NOT_BASH_IS_ASH(...) __VA_ARGS__
+#define CONFIG_BASH_IS_ASH 1
+#define ENABLE_BASH_IS_ASH 1
+#ifdef MAKE_SUID
+# define IF_BASH_IS_ASH(...) __VA_ARGS__ "CONFIG_BASH_IS_ASH"
+#else
+# define IF_BASH_IS_ASH(...) __VA_ARGS__
+#endif
+#define IF_NOT_BASH_IS_ASH(...)
 #undef CONFIG_BASH_IS_HUSH
 #define ENABLE_BASH_IS_HUSH 0
 #define IF_BASH_IS_HUSH(...)
 #define IF_NOT_BASH_IS_HUSH(...) __VA_ARGS__
-#define CONFIG_BASH_IS_NONE 1
-#define ENABLE_BASH_IS_NONE 1
+#undef CONFIG_BASH_IS_NONE
+#define ENABLE_BASH_IS_NONE 0
+#define IF_BASH_IS_NONE(...)
+#define IF_NOT_BASH_IS_NONE(...) __VA_ARGS__
+#define CONFIG_SHELL_ASH 1
+#define ENABLE_SHELL_ASH 1
 #ifdef MAKE_SUID
-# define IF_BASH_IS_NONE(...) __VA_ARGS__ "CONFIG_BASH_IS_NONE"
+# define IF_SHELL_ASH(...) __VA_ARGS__ "CONFIG_SHELL_ASH"
 #else
-# define IF_BASH_IS_NONE(...) __VA_ARGS__
+# define IF_SHELL_ASH(...) __VA_ARGS__
 #endif
-#define IF_NOT_BASH_IS_NONE(...)
-#undef CONFIG_SHELL_ASH
-#define ENABLE_SHELL_ASH 0
-#define IF_SHELL_ASH(...)
-#define IF_NOT_SHELL_ASH(...) __VA_ARGS__
-#undef CONFIG_ASH
-#define ENABLE_ASH 0
-#define IF_ASH(...)
-#define IF_NOT_ASH(...) __VA_ARGS__
-#undef CONFIG_ASH_OPTIMIZE_FOR_SIZE
-#define ENABLE_ASH_OPTIMIZE_FOR_SIZE 0
-#define IF_ASH_OPTIMIZE_FOR_SIZE(...)
-#define IF_NOT_ASH_OPTIMIZE_FOR_SIZE(...) __VA_ARGS__
-#undef CONFIG_ASH_INTERNAL_GLOB
-#define ENABLE_ASH_INTERNAL_GLOB 0
-#define IF_ASH_INTERNAL_GLOB(...)
-#define IF_NOT_ASH_INTERNAL_GLOB(...) __VA_ARGS__
-#undef CONFIG_ASH_BASH_COMPAT
-#define ENABLE_ASH_BASH_COMPAT 0
-#define IF_ASH_BASH_COMPAT(...)
-#define IF_NOT_ASH_BASH_COMPAT(...) __VA_ARGS__
+#define IF_NOT_SHELL_ASH(...)
+#define CONFIG_ASH 1
+#define ENABLE_ASH 1
+#ifdef MAKE_SUID
+# define IF_ASH(...) __VA_ARGS__ "CONFIG_ASH"
+#else
+# define IF_ASH(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH(...)
+#define CONFIG_ASH_OPTIMIZE_FOR_SIZE 1
+#define ENABLE_ASH_OPTIMIZE_FOR_SIZE 1
+#ifdef MAKE_SUID
+# define IF_ASH_OPTIMIZE_FOR_SIZE(...) __VA_ARGS__ "CONFIG_ASH_OPTIMIZE_FOR_SIZE"
+#else
+# define IF_ASH_OPTIMIZE_FOR_SIZE(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_OPTIMIZE_FOR_SIZE(...)
+#define CONFIG_ASH_INTERNAL_GLOB 1
+#define ENABLE_ASH_INTERNAL_GLOB 1
+#ifdef MAKE_SUID
+# define IF_ASH_INTERNAL_GLOB(...) __VA_ARGS__ "CONFIG_ASH_INTERNAL_GLOB"
+#else
+# define IF_ASH_INTERNAL_GLOB(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_INTERNAL_GLOB(...)
+#define CONFIG_ASH_BASH_COMPAT 1
+#define ENABLE_ASH_BASH_COMPAT 1
+#ifdef MAKE_SUID
+# define IF_ASH_BASH_COMPAT(...) __VA_ARGS__ "CONFIG_ASH_BASH_COMPAT"
+#else
+# define IF_ASH_BASH_COMPAT(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_BASH_COMPAT(...)
 #undef CONFIG_ASH_BASH_SOURCE_CURDIR
 #define ENABLE_ASH_BASH_SOURCE_CURDIR 0
 #define IF_ASH_BASH_SOURCE_CURDIR(...)
 #define IF_NOT_ASH_BASH_SOURCE_CURDIR(...) __VA_ARGS__
-#undef CONFIG_ASH_BASH_NOT_FOUND_HOOK
-#define ENABLE_ASH_BASH_NOT_FOUND_HOOK 0
-#define IF_ASH_BASH_NOT_FOUND_HOOK(...)
-#define IF_NOT_ASH_BASH_NOT_FOUND_HOOK(...) __VA_ARGS__
-#undef CONFIG_ASH_JOB_CONTROL
-#define ENABLE_ASH_JOB_CONTROL 0
-#define IF_ASH_JOB_CONTROL(...)
-#define IF_NOT_ASH_JOB_CONTROL(...) __VA_ARGS__
-#undef CONFIG_ASH_ALIAS
-#define ENABLE_ASH_ALIAS 0
-#define IF_ASH_ALIAS(...)
-#define IF_NOT_ASH_ALIAS(...) __VA_ARGS__
-#undef CONFIG_ASH_RANDOM_SUPPORT
-#define ENABLE_ASH_RANDOM_SUPPORT 0
-#define IF_ASH_RANDOM_SUPPORT(...)
-#define IF_NOT_ASH_RANDOM_SUPPORT(...) __VA_ARGS__
-#undef CONFIG_ASH_EXPAND_PRMT
-#define ENABLE_ASH_EXPAND_PRMT 0
-#define IF_ASH_EXPAND_PRMT(...)
-#define IF_NOT_ASH_EXPAND_PRMT(...) __VA_ARGS__
-#undef CONFIG_ASH_IDLE_TIMEOUT
-#define ENABLE_ASH_IDLE_TIMEOUT 0
-#define IF_ASH_IDLE_TIMEOUT(...)
-#define IF_NOT_ASH_IDLE_TIMEOUT(...) __VA_ARGS__
-#undef CONFIG_ASH_MAIL
-#define ENABLE_ASH_MAIL 0
-#define IF_ASH_MAIL(...)
-#define IF_NOT_ASH_MAIL(...) __VA_ARGS__
-#undef CONFIG_ASH_ECHO
-#define ENABLE_ASH_ECHO 0
-#define IF_ASH_ECHO(...)
-#define IF_NOT_ASH_ECHO(...) __VA_ARGS__
-#undef CONFIG_ASH_PRINTF
-#define ENABLE_ASH_PRINTF 0
-#define IF_ASH_PRINTF(...)
-#define IF_NOT_ASH_PRINTF(...) __VA_ARGS__
-#undef CONFIG_ASH_TEST
-#define ENABLE_ASH_TEST 0
-#define IF_ASH_TEST(...)
-#define IF_NOT_ASH_TEST(...) __VA_ARGS__
-#undef CONFIG_ASH_HELP
-#define ENABLE_ASH_HELP 0
-#define IF_ASH_HELP(...)
-#define IF_NOT_ASH_HELP(...) __VA_ARGS__
-#undef CONFIG_ASH_GETOPTS
-#define ENABLE_ASH_GETOPTS 0
-#define IF_ASH_GETOPTS(...)
-#define IF_NOT_ASH_GETOPTS(...) __VA_ARGS__
-#undef CONFIG_ASH_CMDCMD
-#define ENABLE_ASH_CMDCMD 0
-#define IF_ASH_CMDCMD(...)
-#define IF_NOT_ASH_CMDCMD(...) __VA_ARGS__
+#define CONFIG_ASH_BASH_NOT_FOUND_HOOK 1
+#define ENABLE_ASH_BASH_NOT_FOUND_HOOK 1
+#ifdef MAKE_SUID
+# define IF_ASH_BASH_NOT_FOUND_HOOK(...) __VA_ARGS__ "CONFIG_ASH_BASH_NOT_FOUND_HOOK"
+#else
+# define IF_ASH_BASH_NOT_FOUND_HOOK(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_BASH_NOT_FOUND_HOOK(...)
+#define CONFIG_ASH_JOB_CONTROL 1
+#define ENABLE_ASH_JOB_CONTROL 1
+#ifdef MAKE_SUID
+# define IF_ASH_JOB_CONTROL(...) __VA_ARGS__ "CONFIG_ASH_JOB_CONTROL"
+#else
+# define IF_ASH_JOB_CONTROL(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_JOB_CONTROL(...)
+#define CONFIG_ASH_ALIAS 1
+#define ENABLE_ASH_ALIAS 1
+#ifdef MAKE_SUID
+# define IF_ASH_ALIAS(...) __VA_ARGS__ "CONFIG_ASH_ALIAS"
+#else
+# define IF_ASH_ALIAS(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_ALIAS(...)
+#define CONFIG_ASH_RANDOM_SUPPORT 1
+#define ENABLE_ASH_RANDOM_SUPPORT 1
+#ifdef MAKE_SUID
+# define IF_ASH_RANDOM_SUPPORT(...) __VA_ARGS__ "CONFIG_ASH_RANDOM_SUPPORT"
+#else
+# define IF_ASH_RANDOM_SUPPORT(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_RANDOM_SUPPORT(...)
+#define CONFIG_ASH_EXPAND_PRMT 1
+#define ENABLE_ASH_EXPAND_PRMT 1
+#ifdef MAKE_SUID
+# define IF_ASH_EXPAND_PRMT(...) __VA_ARGS__ "CONFIG_ASH_EXPAND_PRMT"
+#else
+# define IF_ASH_EXPAND_PRMT(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_EXPAND_PRMT(...)
+#define CONFIG_ASH_IDLE_TIMEOUT 1
+#define ENABLE_ASH_IDLE_TIMEOUT 1
+#ifdef MAKE_SUID
+# define IF_ASH_IDLE_TIMEOUT(...) __VA_ARGS__ "CONFIG_ASH_IDLE_TIMEOUT"
+#else
+# define IF_ASH_IDLE_TIMEOUT(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_IDLE_TIMEOUT(...)
+#define CONFIG_ASH_MAIL 1
+#define ENABLE_ASH_MAIL 1
+#ifdef MAKE_SUID
+# define IF_ASH_MAIL(...) __VA_ARGS__ "CONFIG_ASH_MAIL"
+#else
+# define IF_ASH_MAIL(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_MAIL(...)
+#define CONFIG_ASH_ECHO 1
+#define ENABLE_ASH_ECHO 1
+#ifdef MAKE_SUID
+# define IF_ASH_ECHO(...) __VA_ARGS__ "CONFIG_ASH_ECHO"
+#else
+# define IF_ASH_ECHO(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_ECHO(...)
+#define CONFIG_ASH_PRINTF 1
+#define ENABLE_ASH_PRINTF 1
+#ifdef MAKE_SUID
+# define IF_ASH_PRINTF(...) __VA_ARGS__ "CONFIG_ASH_PRINTF"
+#else
+# define IF_ASH_PRINTF(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_PRINTF(...)
+#define CONFIG_ASH_TEST 1
+#define ENABLE_ASH_TEST 1
+#ifdef MAKE_SUID
+# define IF_ASH_TEST(...) __VA_ARGS__ "CONFIG_ASH_TEST"
+#else
+# define IF_ASH_TEST(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_TEST(...)
+#define CONFIG_ASH_HELP 1
+#define ENABLE_ASH_HELP 1
+#ifdef MAKE_SUID
+# define IF_ASH_HELP(...) __VA_ARGS__ "CONFIG_ASH_HELP"
+#else
+# define IF_ASH_HELP(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_HELP(...)
+#define CONFIG_ASH_GETOPTS 1
+#define ENABLE_ASH_GETOPTS 1
+#ifdef MAKE_SUID
+# define IF_ASH_GETOPTS(...) __VA_ARGS__ "CONFIG_ASH_GETOPTS"
+#else
+# define IF_ASH_GETOPTS(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_GETOPTS(...)
+#define CONFIG_ASH_CMDCMD 1
+#define ENABLE_ASH_CMDCMD 1
+#ifdef MAKE_SUID
+# define IF_ASH_CMDCMD(...) __VA_ARGS__ "CONFIG_ASH_CMDCMD"
+#else
+# define IF_ASH_CMDCMD(...) __VA_ARGS__
+#endif
+#define IF_NOT_ASH_CMDCMD(...)
 #define CONFIG_CTTYHACK 1
 #define ENABLE_CTTYHACK 1
 #ifdef MAKE_SUID

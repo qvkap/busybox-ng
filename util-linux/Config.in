@@ -232,6 +232,12 @@ config FINDFS
 	select VOLUMEID
 	help
 	Prints the name of a filesystem with given label or UUID.
+config FINDMNT
+	bool "findmnt (8 kb)"
+	default y
+	help
+	Findmnt will list all mounted filesystems or search for
+	a filesystem.
 config FLOCK
 	bool "flock (6.5 kb)"
 	default y
@@ -390,11 +396,11 @@ config LSPCI
 
 	This version uses sysfs (/sys/bus/pci/devices) only.
 config LSUSB
-	bool "lsusb (4.4 kb)"
+	bool "lsusb (5 kb)"
 	default y
 	help
 	lsusb is a utility for displaying information about USB buses in the
-	system and devices connected to them.
+	system and the devices connected to them.
 
 	This version uses sysfs (/sys/bus/usb/devices) only.
 config MDEV

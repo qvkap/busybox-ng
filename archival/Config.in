@@ -357,10 +357,17 @@ config FEATURE_TAR_CREATE
 config FEATURE_TAR_AUTODETECT
 	bool "Autodetect compressed tarballs"
 	default y
-	depends on TAR && (FEATURE_SEAMLESS_Z || FEATURE_SEAMLESS_GZ || FEATURE_SEAMLESS_BZ2 || FEATURE_SEAMLESS_LZMA || FEATURE_SEAMLESS_XZ)
+	depends on TAR && (FEATURE_SEAMLESS_Z || FEATURE_SEAMLESS_GZ || FEATURE_SEAMLESS_BZ2 || FEATURE_SEAMLESS_LZMA || FEATURE_SEAMLESS_XZ || FEATURE_TAR_ZSTD || FEATURE_SEAMLESS_ZSTD)
 	help
 	With this option tar can automatically detect compressed
 	tarballs. Currently it works only on files (not pipes etc).
+
+config FEATURE_TAR_ZSTD
+	bool "Support for zstd compression"
+	default y
+	depends on TAR
+	help
+	Support for creating and extracting .tar.zst archives.
 
 config FEATURE_TAR_FROM
 	bool "Enable -X (exclude from) and -T (include from) options"
@@ -457,6 +464,12 @@ config FEATURE_UNZIP_XZ
 	bool "Support compression method 95 (xz)"
 	default y
 	depends on FEATURE_UNZIP_CDF && DESKTOP
+config ZSTD
+	bool "zstd (zstd compressor)"
+	default y
+	help
+	zstd compresses or decompresses files using Zstandard algorithm.
+	Compression levels 1-19 supported.
 
 config FEATURE_LZMA_FAST
 	bool "Optimize lzma for speed"

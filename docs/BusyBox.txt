@@ -77,52 +77,52 @@ COMMANDS
     Currently available applets include:
 
     [, [[, acpid, add-shell, addgroup, adduser, adjtimex, arch, arp, arping,
-    ascii, awk, base32, base64, basename, bc, beep, blkdiscard, blkid,
-    blockdev, bootchartd, brctl, bunzip2, bzcat, bzip2, cal, cat, chat,
-    chattr, chgrp, chmod, chown, chpasswd, chpst, chroot, chrt, chvt, cksum,
-    clear, cmp, comm, conspy, cp, cpio, crc32, crond, crontab, cryptpw,
-    cttyhack, curl, cut, date, dc, dd, deallocvt, delgroup, deluser, depmod,
-    devmem, df, dhcprelay, diff, dirname, dmesg, dnsd, dnsdomainname,
-    dos2unix, dpkg, dpkg-deb, du, dumpkmap, dumpleases, echo, ed, egrep,
-    eject, env, envdir, envuidgid, ether-wake, expand, expr, factor,
-    fallocate, false, fatattr, fbset, fbsplash, fdflush, fdformat, fdisk,
-    fgconsole, fgrep, find, findfs, flock, fold, free, freeramdisk, fsck,
-    fsck.minix, fsfreeze, fstrim, fsync, ftpd, ftpget, ftpput, fuser,
-    getfattr, getopt, getty, grep, groups, gunzip, gzip, halt, hd, hdparm,
-    head, hexdump, hexedit, hostid, hostname, httpd, hush, hwclock,
-    i2cdetect, i2cdump, i2cget, i2cset, i2ctransfer, id, ifconfig, ifdown,
-    ifenslave, ifplugd, ifup, inetd, init, insmod, install, ionice, iostat,
-    ip, ipaddr, ipcalc, ipcrm, ipcs, iplink, ipneigh, iproute, iprule,
-    iptunnel, kbd_mode, kill, killall, killall5, klogd, kmod, last, less,
-    link, linux32, linux64, linuxrc, ln, loadfont, loadkmap, logger, login,
-    logname, logread, losetup, lpd, lpq, lpr, ls, lsattr, lsblk, lsmod,
-    lsof, lspci, lsscsi, lsusb, lzcat, lzma, lzop, makedevs, makemime, man,
-    md5sum, mdev, mesg, microcom, mim, mkdir, mkdosfs, mke2fs, mkfifo,
-    mkfs.ext2, mkfs.minix, mkfs.vfat, mknod, mkpasswd, mkswap, mktemp,
-    modinfo, modprobe, more, mount, mountpoint, mpstat, mt, mv, nameif,
-    nanddump, nandwrite, nbd-client, nc, netstat, nice, nl, nmeter, nohup,
-    nologin, nproc, nsenter, nslookup, ntpd, od, openvt, partprobe, passwd,
-    paste, patch, pgrep, pidof, ping, ping6, pipe_progress, pivot_root,
-    pkill, pmap, popmaildir, poweroff, powertop, printenv, printf, ps,
-    pscan, pstree, pwd, pwdx, rdate, readahead, readlink, readprofile,
-    realpath, reboot, reformime, remove-shell, renice, reset, resize,
-    resume, rev, rm, rmdir, rmmod, route, rpm, rpm2cpio, rtcwake, run-init,
-    run-parts, runlevel, runsv, runsvdir, script, scriptreplay, sed,
-    seedrng, sendmail, seq, setarch, setconsole, setfattr, setfont,
-    setkeycodes, setlogcons, setpriv, setserial, setsid, setuidgid, sh,
-    sha1sum, sha256sum, sha384sum, sha3sum, sha512sum, showkey, shred, shuf,
-    sleep, smemcap, softlimit, sort, split, ssl_client, ssl_server,
-    start-stop-daemon, stat, strings, stty, su, sulogin, sum, sv, svc,
-    svlogd, svok, swapoff, swapon, switch_root, sync, sysctl, syslogd, tac,
-    tail, tar, taskset, tc, tcpsvd, tee, telnet, telnetd, test, tftp, tftpd,
-    time, timeout, top, touch, tr, traceroute, traceroute6, tree, true,
-    truncate, ts, tsort, tty, ttysize, tunctl, ubiattach, ubidetach,
-    ubimkvol, ubirename, ubirmvol, ubirsvol, ubiupdatevol, udhcpc, udhcpc6,
-    udhcpd, udpsvd, uevent, umount, uname, unexpand, uniq, unix2dos, unlink,
-    unlzma, unxz, unzip, unzstd, uptime, users, usleep, uudecode, uuencode,
-    uuidgen, vconfig, vi, vim, vlock, vmstat, volname, w, wall, watch,
-    watchdog, wc, wget, which, who, whoami, whois, xargs, xxd, xz, xzcat,
-    yes, zcat, zcip, zstdcat
+    ascii, ash, awk, base32, base64, basename, bash, bc, beep, blkdiscard,
+    blkid, blockdev, bootchartd, brctl, bunzip2, bzcat, bzip2, cal, cat,
+    chat, chattr, chgrp, chmod, chown, chpasswd, chpst, chroot, chrt, chvt,
+    cksum, clear, cmp, comm, conspy, cp, cpio, crc32, crond, crontab,
+    cryptpw, cttyhack, curl, cut, date, dc, dd, deallocvt, delgroup,
+    deluser, depmod, devmem, df, dhcprelay, diff, dirname, dmesg, dnsd,
+    dnsdomainname, dos2unix, dpkg, dpkg-deb, du, dumpkmap, dumpleases, echo,
+    ed, egrep, eject, env, envdir, envuidgid, ether-wake, expand, expr,
+    factor, fallocate, false, fatattr, fbset, fbsplash, fdflush, fdformat,
+    fdisk, fgconsole, fgrep, find, findfs, findmnt, flock, fold, free,
+    freeramdisk, fsck, fsck.minix, fsfreeze, fstrim, fsync, ftpd, ftpget,
+    ftpput, fuser, getfattr, getopt, getty, git, grep, groups, gunzip, gzip,
+    halt, hd, hdparm, head, hexdump, hexedit, hostid, hostname, httpd, hush,
+    hwclock, i2cdetect, i2cdump, i2cget, i2cset, i2ctransfer, id, ifconfig,
+    ifdown, ifenslave, ifplugd, ifup, inetd, init, insmod, install, ionice,
+    iostat, ip, ipaddr, ipcalc, ipcrm, ipcs, iplink, ipneigh, iproute,
+    iprule, iptunnel, jq, kbd_mode, kill, killall, killall5, klogd, kmod,
+    last, less, link, linux32, linux64, linuxrc, ln, loadfont, loadkmap,
+    logger, login, logname, logread, losetup, lpd, lpq, lpr, ls, lsattr,
+    lsblk, lsmod, lsof, lspci, lsscsi, lsusb, lzcat, lzma, lzop, makedevs,
+    makemime, man, md5sum, mdev, mesg, microcom, mim, mkdir, mkdosfs,
+    mke2fs, mkfifo, mkfs.ext2, mkfs.minix, mkfs.vfat, mknod, mkpasswd,
+    mkswap, mktemp, modinfo, modprobe, more, mount, mountpoint, mpstat, mt,
+    mv, nameif, nanddump, nandwrite, nbd-client, nc, netstat, nice, nl,
+    nmeter, nohup, nologin, nproc, nsenter, nslookup, ntpd, od, openvt,
+    partprobe, passwd, paste, patch, pgrep, pidof, ping, ping6,
+    pipe_progress, pivot_root, pkill, pmap, popmaildir, poweroff, powertop,
+    printenv, printf, ps, pscan, pstree, pwd, pwdx, rdate, readahead,
+    readlink, readprofile, realpath, reboot, reformime, remove-shell,
+    renice, reset, resize, resume, rev, rm, rmdir, rmmod, route, rpm,
+    rpm2cpio, rtcwake, run-init, run-parts, runlevel, runsv, runsvdir,
+    script, scriptreplay, sed, seedrng, sendmail, seq, setarch, setconsole,
+    setfattr, setfont, setkeycodes, setlogcons, setpriv, setserial, setsid,
+    setuidgid, sh, sha1sum, sha256sum, sha384sum, sha3sum, sha512sum,
+    showkey, shred, shuf, sleep, smemcap, softlimit, sort, split, ss,
+    ssl_client, ssl_server, start-stop-daemon, stat, strings, stty, su,
+    sulogin, sum, sv, svc, svlogd, svok, swapoff, swapon, switch_root, sync,
+    sysctl, syslogd, tac, tail, tar, taskset, tc, tcpsvd, tee, telnet,
+    telnetd, test, tftp, tftpd, time, timeout, top, touch, tr, traceroute,
+    traceroute6, tree, true, truncate, ts, tsort, tty, ttysize, tunctl,
+    ubiattach, ubidetach, ubimkvol, ubirename, ubirmvol, ubirsvol,
+    ubiupdatevol, udhcpc, udhcpc6, udhcpd, udpsvd, uevent, umount, uname,
+    unexpand, uniq, unix2dos, unlink, unlzma, unxz, unzip, unzstd, uptime,
+    users, usleep, uudecode, uuencode, uuidgen, vconfig, vi, vim, vlock,
+    vmstat, volname, w, wall, watch, watchdog, wc, wget, which, who, whoami,
+    whois, xargs, xxd, xz, xzcat, yes, zcat, zcip, zstd, zstdcat
 
 COMMAND DESCRIPTIONS
   acpid
@@ -222,6 +222,12 @@ COMMAND DESCRIPTIONS
             -s SRC_IP       Sender IP address
             DST_IP          Target IP address
 
+  ash
+    ash [-il] [-|+Cabefmnuvx] [-|+o OPT]... [-c 'SCRIPT' [ARG0 ARGS] | FILE
+    ARGS | -s ARGS]
+
+    Unix shell interpreter
+
   awk
     awk [OPTIONS] [AWK_PROGRAM] [FILE]...
 
@@ -253,6 +259,12 @@ COMMAND DESCRIPTIONS
 
             -a              All arguments are FILEs
             -s SUFFIX       Remove SUFFIX (implies -a)
+
+  bash
+    bash [-il] [-|+Cabefmnuvx] [-|+o OPT]... [-c 'SCRIPT' [ARG0 ARGS] | FILE
+    ARGS | -s ARGS]
+
+    Unix shell interpreter
 
   bc
     bc [-sqlw] [FILE]...
@@ -1160,6 +1172,49 @@ COMMAND DESCRIPTIONS
 
     Find filesystem device based on label or UUID
 
+  findmnt
+    findmnt [OPTIONS] [DEVICE|MOUNTPOINT]
+
+    Find a (mounted) filesystem
+
+            -s, --fstab          Search in /etc/fstab
+            -m, --mtab           Search in /proc/mounts
+            -k, --kernel         Search in /proc/self/mountinfo (default)
+            -c, --canonicalize   Canonicalize printed paths
+            -C, --nocanonicalize Don't canonicalize when comparing paths
+            -D, --df             Imitate df(1) output
+            -d, --direction DIR  Direction of search: forward/backward
+            -e, --evaluate       Convert tags (LABEL/UUID) to device names
+            -F, --tab-file PATH  Alternative file for -s, -m or -k
+            -f, --first-only     Print first matching filesystem only
+            -i, --invert         Invert sense of matching
+            -J, --json           Use JSON output format
+            -l, --list           Use list output format
+            -n, --noheadings     Don't print column headings
+            -u, --notruncate     Don't truncate text in columns
+            -O, --options LIST   Limit filesystems by mount options
+            -o, --output LIST    Output columns
+            -P, --pairs          Use key="value" output format
+            -p, --poll[=LIST]    Monitor filesystem events
+            -r, --raw            Use raw output format
+            -a, --ascii          Use ASCII characters for tree formatting
+            -t, --types LIST     Limit filesystems by FS type
+            -R, --submounts      Print submounts for selected filesystems
+            -S, --source SRC     Explicitly define mount source
+            -T, --target PATH    Explicitly define target path
+            -M, --mountpoint DIR Explicitly define mountpoint directory
+            -w, --timeout MSEC   Upper limit on time for --poll
+            -x, --verify         Verify mount table content
+            -b, --bytes          Print sizes in bytes
+            -U, --uniq           Ignore duplicate targets
+            -N, --task PID       Use /proc/PID/mountinfo
+            -v, --nofsroot       Don't print [/dir] for bind mounts
+            -A, --all            Disable built-in filters
+            -V, --version        Display version
+            -h, --help           Display help
+            --verbose            Print more details
+            --shadowed           Print filesystems over-shadowed by another
+
   flock
     flock [-sxun] FD | { FILE [-c] PROG ARGS }
 
@@ -1330,6 +1385,33 @@ COMMAND DESCRIPTIONS
             -H HOST         Log HOST into the utmp file as the hostname
 
     BAUD_RATE of 0 leaves it unchanged
+
+  git
+    git COMMAND [ARGS]
+
+    Minimal Git revision control
+
+    Commands:
+
+            init [DIR]          Initialize repository
+            clone URL [DIR]     Clone repository
+            status              Show working tree status
+            add FILE...         Add files to index
+            commit -m MSG       Record changes
+            diff [FILE...]      Show unstaged changes
+            log [-n N]          Show commit log
+            branch [NAME]       List or create branches
+            checkout BRANCH     Switch branches
+            merge BRANCH        Merge branch (fast-forward)
+            pull [REMOTE]       Fetch and merge
+            fetch [REMOTE]      Download objects
+            remote SUBCMD       Manage remotes
+            stash [push|pop]    Stash changes
+            tag [NAME]          List or create tags
+            reset [--hard] REF  Reset HEAD
+            show [OBJ]          Show object
+            hash-object [-w] F  Compute SHA1
+            cat-file -p|-t|-s OBJ  Show object
 
   grep
     grep [-HhnlLoqvsrRiwFE] [-m N] [-A|B|C N] { PATTERN | -e PATTERN... | -f
@@ -1879,6 +1961,25 @@ COMMAND DESCRIPTIONS
     [local ADDR] [[i|o]seq] [[i|o]key KEY] [[i|o]csum] [ttl TTL] [tos TOS]
     [[no]pmtudisc] [dev PHYS_DEV]
 
+  jq
+    jq [-crnRse] [-f FILE] [--arg K V] FILTER [FILE...]
+
+    JSON processor
+
+            -c      Compact output
+            -r      Raw string output
+            -n      Null input
+            -R      Raw input (lines as strings)
+            -s      Slurp into array
+            -e      Exit status based on last value
+            -a      ASCII output
+            -S      Sort keys
+            -f FILE Read filter from file
+            --arg NAME VAL  Bind $NAME to string VAL
+            --argjson NAME JSON     Bind $NAME to parsed JSON
+            --tab   Use tab indentation
+            --indent N      Use N-space indentation
+
   kbd_mode
     kbd_mode [-a|k|s|u] [-C TTY]
 
@@ -2095,9 +2196,28 @@ COMMAND DESCRIPTIONS
             -v      List version/generation number
 
   lsblk
-    lsblk [BLOCKDEV]...
+    lsblk [OPTIONS] [BLOCKDEV]...
 
-    List block devices
+    List information about block devices
+
+            -a, --all               Print all devices
+            -b, --bytes             Print SIZE in bytes
+            -d, --nodeps            Don't print partitions/holders
+            -f, --fs                Output filesystem info
+            -i, --ascii             Use ASCII characters only
+            -J, --json              Use JSON output format
+            -l, --list              Use list format output
+            -m, --perms             Output info about permissions
+            -n, --noheadings        Don't print headings
+            -o, --output LIST       Output columns
+            -O, --output-all        Output all columns
+            -p, --paths             Print complete device path
+            -P, --pairs             Use key="value" output format
+            -r, --raw               Use raw output format
+            -s, --inverse           Inverse dependencies
+            -t, --topology          Output info about topology
+            -x, --sort COL          Sort output by <column>
+            -z, --zoned             Print zone information
 
   lsmod
     lsmod
@@ -2116,6 +2236,16 @@ COMMAND DESCRIPTIONS
 
             -m      Parsable output
             -k      Show driver
+
+  lsusb
+    lsusb [-v] [-t] [-s [BUS]:[DEV]] [-d VENDOR:[PRODUCT]]
+
+    List USB devices
+
+            -v      Verbose (show device details)
+            -t      Show as tree (bus topology)
+            -s BUS:DEV      Show only device BUS/DEV (either may be omitted)
+            -d VID:PID      Show only devices with vendor:product ID
 
   lzcat
     lzcat [FILE]...
@@ -3223,7 +3353,8 @@ COMMAND DESCRIPTIONS
     PROG
 
   sh
-    sh [-enxl] [-c 'SCRIPT' [ARG0 ARGS] | FILE ARGS | -s ARGS]
+    sh [-il] [-|+Cabefmnuvx] [-|+o OPT]... [-c 'SCRIPT' [ARG0 ARGS] | FILE
+    ARGS | -s ARGS]
 
     Unix shell interpreter
 
@@ -3368,6 +3499,43 @@ COMMAND DESCRIPTIONS
             -b N[k|m]       Split by N (kilo|mega)bytes
             -l N            Split by N lines
             -a N            Use N letters as suffix
+
+  ss
+    ss [-nraeloepismbEZz460tuwxdS] [-N NSNAME] [-f FAMILY] [-A QUERY] [-D
+    FILE] [-F FILE]
+
+    Display socket statistics
+
+            -h, --help              Show this help
+            -V, --version           Show version
+            -n, --numeric           Don't resolve service names
+            -r, --resolve           Resolve host names
+            -a, --all               Display all sockets
+            -l, --listening         Display listening sockets
+            -o, --options           Show timer information
+            -e, --extended          Show detailed socket information
+            -m, --memory            Show socket memory usage
+            -p, --processes         Show process using socket
+            -i, --info              Show internal TCP information
+            -s, --summary           Show socket usage summary
+            -b, --bpf               Show BPF information
+            -E, --events            Display events
+            -Z, --context           Display security context
+            -z, --contexts          Display security contexts
+            -N, --net NSNAME        Switch network namespace
+            -4, --ipv4              Display only IP version 4 sockets
+            -6, --ipv6              Display only IP version 6 sockets
+            -0, --packet            Display PACKET sockets
+            -t, --tcp               Display only TCP sockets
+            -u, --udp               Display only UDP sockets
+            -d, --dccp              Display only DCCP sockets
+            -w, --raw               Display only RAW sockets
+            -x, --unix              Display only Unix domain sockets
+            -S, --sctp              Display only SCTP sockets
+            -f, --family=FAMILY     Display sockets of type FAMILY
+            -A, --query=QUERY       Display sockets of type QUERY
+            -D, --diag=FILE         Dump raw socket info to FILE
+            -F, --filter=FILE       Read filter from FILE
 
   ssl_client
     ssl_client [-n SNI] { -s FD [-r FD] | HOST | -e PROG ARGS }
@@ -3667,7 +3835,9 @@ COMMAND DESCRIPTIONS
             -J      (De)compress using xz
             -j      (De)compress using bzip2
             --lzma  (De)compress using lzma
+            --zstd  (De)compress using zstd
             -a      (De)compress based on extension
+            -I PROG Filter through PROG
             -h      Follow symlinks
             -T FILE File with names to include
             -X FILE File with glob patterns to exclude
@@ -4008,6 +4178,7 @@ COMMAND DESCRIPTIONS
             -t N            Send up to N discover packets (default 3)
             -T SEC          Pause between packets (default 3)
             -A SEC          Wait if lease is not obtained (default 20)
+            -b              Background if lease is not obtained
             -n              Exit if lease is not obtained
             -q              Exit after obtaining lease
             -R              Release IP on exit
@@ -4042,6 +4213,7 @@ COMMAND DESCRIPTIONS
             -t N            Send up to N discover packets
             -T SEC          Pause between packets (default 3)
             -A SEC          Wait if lease is not obtained (default 20)
+            -b              Background if lease is not obtained
             -n              Exit if lease is not obtained
             -q              Exit after obtaining lease
             -R              Release IP on exit
@@ -4453,6 +4625,26 @@ COMMAND DESCRIPTIONS
 
     With no -q, runs continuously monitoring for ARP conflicts, exits only
     on I/O errors (link down etc)
+
+  zstd
+    zstd [-cfkvdq] [-1..19] [FILE]...
+
+    Compress or decompress FILEs (or stdin) using Zstandard
+
+            -d              Decompress
+            -c              Write to stdout
+            -f              Force overwrite
+            -k              Keep original file
+            -t              Test integrity
+            -v              Verbose
+            -q              Quiet
+            -1..-19         Compression level (default 3)
+            -T N            Number of threads (ignored)
+            --fast[=N]      Use fast compression (level 1)
+            --best          Use best compression (level 19)
+            --check         Verify checksum
+            --no-check      Skip checksum
+            --rm            Remove source file
 
   zstdcat
     zstdcat [FILE]...
