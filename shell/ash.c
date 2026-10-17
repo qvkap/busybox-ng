@@ -2556,10 +2556,53 @@ bltinlookup(const char *name)
  * will go away.
  * Called with interrupts off.
  */
+static struct var *setvar(const char *name, const char *val, int flags);
+#if ENABLE_ASH_BASH_COMPAT
+static void arr_clear(const char *arrname);
+#endif
+
 static struct var *
 setvareq(char *s, int flags)
 {
 	struct var *vp, **vpp;
+#if ENABLE_ASH_BASH_COMPAT
+	const char *bracket;
+
+	if (strncmp(s, "__arr_clear_", 12) == 0) {
+		const char *eq = strchr(s + 12, '=');
+		if (eq) {
+			char clrname[64];
+			size_t clen = eq - (s + 12);
+			if (clen < sizeof(clrname)) {
+				memcpy(clrname, s + 12, clen);
+				clrname[clen] = '\0';
+				arr_clear(clrname);
+			}
+		}
+		if (flags & VNOSAVE)
+			free(s);
+		return NULL;
+	}
+
+	bracket = strchr(s, '[');
+	if (bracket && bracket > s) {
+		const char *close_b = strchr(bracket, ']');
+		const char *eq = strchr(bracket, '=');
+		if (close_b && eq && close_b < eq) {
+			char encname[64];
+			size_t alen = bracket - s;
+			const char *val = eq + 1;
+			int idx = atoi(bracket + 1);
+
+			if (alen < 32 && idx >= 0) {
+				snprintf(encname, sizeof(encname), "__%.*s_%d_", (int)alen, s, idx);
+				if (flags & VNOSAVE)
+					free(s);
+				return setvar(encname, val, flags & ~VNOSAVE);
+			}
+		}
+	}
+#endif
 
 	flags |= (VEXPORT & (((unsigned) (1 - aflag)) - 1));
 	vpp = findvar(s);
@@ -2631,6 +2674,23 @@ setvar(const char *name, const char *val, int flags)
 	size_t namelen;
 	size_t vallen;
 	struct var *vp;
+#if ENABLE_ASH_BASH_COMPAT
+	const char *bracket;
+
+	bracket = strchr(name, '[');
+	if (bracket && bracket > name) {
+		const char *close_b = strchr(bracket, ']');
+		if (close_b && (close_b[1] == '\0' || close_b[1] == '=')) {
+			char encname[64];
+			size_t alen = bracket - name;
+			int idx = atoi(bracket + 1);
+			if (alen < 32 && idx >= 0) {
+				snprintf(encname, sizeof(encname), "__%.*s_%d_", (int)alen, name, idx);
+				return setvar(encname, val, flags);
+			}
+		}
+	}
+#endif
 
 	q = endofname(name);
 	p = strchrnul(q, '=');
@@ -2670,7 +2730,112 @@ static void
 unsetvar(const char *s)
 {
 	setvar(s, NULL, 0);
+#if ENABLE_ASH_BASH_COMPAT
+	arr_clear(s);
+#endif
 }
+
+#if ENABLE_ASH_BASH_COMPAT
+/* Array name encoding: arr[N] stored as __arr_N_ */
+static void UNUSED_PARAM
+arr_encode_name(char *buf, size_t bufsize, const char *arrname, int idx)
+{
+	snprintf(buf, bufsize, "__%s_%d_", arrname, idx);
+}
+
+/* Parse "name[index]" — fills arrname and index, returns 1 on success */
+static int UNUSED_PARAM
+arr_parse_ref(const char *s, char *arrname, size_t namesz, int *idx)
+{
+	const char *p;
+	const char *q;
+	size_t len;
+
+	p = strchr(s, '[');
+	if (!p)
+		return 0;
+	q = strchr(p, ']');
+	if (!q)
+		return 0;
+	len = p - s;
+	if (len == 0 || len >= namesz)
+		return 0;
+	memcpy(arrname, s, len);
+	arrname[len] = '\0';
+	*idx = atoi(p + 1);
+	if (*idx < 0)
+		*idx = 0; /* negative indices: treat as 0 for simplicity */
+	return 1;
+}
+
+/* Clear all elements of an array */
+static void
+arr_clear(const char *arrname)
+{
+	char encname[128];
+	int i;
+
+	for (i = 0; i < 4096; i++) {
+		snprintf(encname, sizeof(encname), "__%s_%d_", arrname, i);
+		if (lookupvar(encname))
+			setvar(encname, NULL, 0);
+	}
+}
+
+/* Get all array elements for ${arr[@]} or ${arr[*]} expansion */
+/* Returns malloc'd space-separated string of all values, or NULL */
+static UNUSED_PARAM char *
+arr_expand_all(const char *arrname)
+{
+	char encname[128];
+	const char *val;
+	char *result;
+	size_t rlen;
+	size_t rsize;
+	size_t vlen;
+	size_t need;
+	int i;
+
+	result = NULL;
+	rlen = 0;
+	rsize = 0;
+	for (i = 0; i < 4096; i++) {
+		snprintf(encname, sizeof(encname), "__%s_%d_", arrname, i);
+		val = lookupvar(encname);
+		if (!val)
+			continue;
+		/* append val to result with space separator */
+		vlen = strlen(val);
+		need = rlen + (rlen ? 1 : 0) + vlen + 1;
+		if (need > rsize) {
+			rsize = need + 64;
+			result = xrealloc(result, rsize);
+		}
+		if (rlen)
+			result[rlen++] = ' ';
+		memcpy(result + rlen, val, vlen + 1);
+		rlen += vlen;
+	}
+	return result; /* NULL if no elements set */
+}
+
+/* Count array elements for ${#arr[@]} */
+static int
+arr_count(const char *arrname)
+{
+	char encname[128];
+	int n;
+	int i;
+
+	n = 0;
+	for (i = 0; i < 4096; i++) {
+		snprintf(encname, sizeof(encname), "__%s_%d_", arrname, i);
+		if (lookupvar(encname))
+			n++;
+	}
+	return n;
+}
+#endif /* ENABLE_ASH_BASH_COMPAT */
 
 /*
  * Generate a list of variables satisfying the given conditions.
@@ -7745,8 +7910,19 @@ varvalue(char *name, int varflags, int flags, int quoted)
 	int i;
 	ssize_t len = 0;
 	int sep;
+	char sepc;
 	int subtype = varflags & VSTYPE;
 	int discard = (subtype == VSPLUS || subtype == VSLENGTH) | (flags & EXP_DISCARD);
+#if ENABLE_ASH_BASH_COMPAT
+	char arrname[64];
+	char encname[128];
+	int arridx;
+	int namelen;
+	char arrc;
+	int has_any;
+	int is_at;
+	const char *bracket;
+#endif
 
 	if (!subtype) {
 		if (discard)
@@ -7798,7 +7974,6 @@ varvalue(char *name, int varflags, int flags, int quoted)
 		/* fall through */
 	case '*': {
 		char **ap;
-		char sepc;
 		char c;
 
 		/* We will set c to 0 or ~0 depending on whether
@@ -7849,8 +8024,80 @@ varvalue(char *name, int varflags, int flags, int quoted)
 		p = num ? shellparam.p[num - 1] : arg0;
 		goto value;
 	default:
+#if ENABLE_ASH_BASH_COMPAT
+		namelen = strcspn(name, "=");
+
+		/* Check for ${#arr[@]} or ${#arr[*]} or ${arr[@]} or ${arr[*]} */
+		if (namelen > 3
+		 && (name[namelen-3] == '[')
+		 && (name[namelen-2] == '@' || name[namelen-2] == '*')
+		 && name[namelen-1] == ']') {
+			if ((size_t)(namelen - 3) < sizeof(arrname)) {
+				memcpy(arrname, name, namelen - 3);
+				arrname[namelen - 3] = '\0';
+				if (subtype == VSLENGTH) {
+					return arr_count(arrname);
+				}
+
+				is_at = (name[namelen-2] == '@');
+				if (is_at && quoted && sep) {
+					sepc = 0;
+				} else {
+					arrc = !((quoted | ~sep) & EXP_QUOTED) - 1;
+					sep &= ~quoted;
+					sep |= ifsset() ? (unsigned char)(arrc & ifsval()[0]) : ' ';
+					sepc = sep;
+				}
+
+				has_any = 0;
+				for (i = 0; i < 4096; i++) {
+					snprintf(encname, sizeof(encname), "__%s_%d_", arrname, i);
+					p = lookupvar(encname);
+					if (!p)
+						continue;
+					if (has_any && sep) {
+						len++;
+						memtodest(&sepc, 1, flags);
+					}
+					has_any = 1;
+					len += strtodest(p, flags);
+				}
+				if (!has_any)
+					return -1;
+				break;
+			}
+			goto normal_var;
+		}
+
+		/* Check for ${arr[N]} — single index */
+		if (namelen > 2 && name[namelen-1] == ']') {
+			bracket = memchr(name, '[', (size_t)namelen);
+			if (bracket) {
+				size_t alen = bracket - name;
+				if (alen < sizeof(arrname)) {
+					memcpy(arrname, name, alen);
+					arrname[alen] = '\0';
+					arridx = atoi(bracket + 1);
+					snprintf(encname, sizeof(encname), "__%s_%d_", arrname, arridx);
+					p = lookupvar(encname);
+					goto value;
+				}
+			}
+		}
+ normal_var:
+#endif /* ENABLE_ASH_BASH_COMPAT */
 		/* NB: name has form "VAR=..." */
 		p = lookupvar(name);
+#if ENABLE_ASH_BASH_COMPAT
+		if (!p) {
+			/* Check if arr[0] exists for $arr or ${arr} */
+			int nlen = strcspn(name, "=");
+			if (nlen < 64) {
+				snprintf(encname, sizeof(encname), "__%.*s_0_", nlen, name);
+				p = lookupvar(encname);
+			}
+		}
+#endif
  value:
 		if (!p)
 			return -1;
@@ -7890,6 +8137,9 @@ evalvar(char *p, int flag)
 	ssize_t varlen;
 	int discard;
 	int quoted;
+#if ENABLE_ASH_BASH_COMPAT
+	const char *br;
+#endif
 
 	varflags = (unsigned char) *p++;
 	subtype = varflags & VSTYPE;
@@ -7980,6 +8230,13 @@ evalvar(char *p, int flag)
  really_record:
 	if (quoted) {
 		quoted = *var == '@' && shellparam.nparam;
+#if ENABLE_ASH_BASH_COMPAT
+		if (!quoted) {
+			br = strchr(var, '[');
+			if (br && br[1] == '@' && br[2] == ']')
+				quoted = 1;
+		}
+#endif
 		if (!quoted)
 			return p;
 	}
@@ -8380,6 +8637,238 @@ expandmeta(struct strlist *str /*, int flag*/)
 }
 #endif /* ENABLE_ASH_INTERNAL_GLOB */
 
+#if ENABLE_ASH_BASH_COMPAT
+/* Find matching '}' for '{' at cp, respecting nesting and escapes.
+ * Also checks if there is at least one ',' at depth 0, or if it's a sequence range.
+ * Returns pointer to matching '}' if valid brace expression, NULL otherwise.
+ */
+static const char *
+find_matching_brace(const char *cp, int *has_comma, int *is_range)
+{
+	unsigned depth;
+	const char *start;
+	const char *dotdot;
+
+	depth = 0;
+	start = cp;
+	dotdot = NULL;
+	*has_comma = 0;
+	*is_range = 0;
+	cp++; /* skip initial '{' */
+	while (*cp != '\0') {
+		if (*cp == '\\') {
+			if (*++cp == '\0')
+				break;
+			cp++;
+			continue;
+		}
+		if (*cp == '{') {
+			depth++;
+		} else if (*cp == '}') {
+			if (depth == 0) {
+				/* Found matching '}' */
+				if (*has_comma)
+					return cp;
+				/* Check for {start..end} */
+				if (dotdot && depth == 0) {
+					size_t len1 = dotdot - (start + 1);
+					size_t len2 = cp - (dotdot + 2);
+					if (len1 > 0 && len2 > 0) {
+						*is_range = 1;
+						return cp;
+					}
+				}
+				return NULL; /* {abc} with no comma or range is literal */
+			}
+			depth--;
+		} else if (*cp == ',' && depth == 0) {
+			*has_comma = 1;
+		} else if (*cp == '.' && cp[1] == '.' && depth == 0 && !dotdot) {
+			dotdot = cp;
+			cp++;
+		}
+		cp++;
+	}
+	return NULL;
+}
+
+static const char *
+find_expandable_brace(const char *str, const char **brace_end, int *has_comma, int *is_range)
+{
+	const char *p;
+
+	p = str;
+	while (*p != '\0') {
+		if (*p == '\\') {
+			if (*++p == '\0')
+				break;
+			p++;
+			continue;
+		}
+		if (*p == '{') {
+			*brace_end = find_matching_brace(p, has_comma, is_range);
+			if (*brace_end)
+				return p;
+		}
+		p++;
+	}
+	return NULL;
+}
+
+static void
+expand_brace_str(const char *pattern, struct strlist ***lastp, int depth)
+{
+	const char *begin;
+	const char *end;
+	int has_comma;
+	int is_range;
+	struct strlist *sp;
+	const char *p;
+	const char *suffix;
+	size_t prefix_len;
+	size_t suffix_len;
+	const char *dotdot;
+	char s1[32];
+	char s2[32];
+	size_t l1;
+	size_t l2;
+	int n1;
+	int n2;
+	int step;
+	int val;
+	char numbuf[32];
+	size_t num_len;
+	size_t total_len;
+	char *sub;
+	char c1;
+	char c2;
+	char c;
+	unsigned d;
+	const char *next_comma;
+	size_t alt_len;
+
+	if (depth > 10)
+		goto add_literal;
+
+	begin = find_expandable_brace(pattern, &end, &has_comma, &is_range);
+	if (!begin) {
+ add_literal:
+		sp = stzalloc(sizeof(*sp));
+		sp->text = sstrdup(pattern);
+		**lastp = sp;
+		*lastp = &sp->next;
+		return;
+	}
+
+	if (has_comma) {
+		prefix_len = begin - pattern;
+		suffix = end + 1;
+		suffix_len = strlen(suffix);
+
+		p = begin + 1;
+		while (p <= end) {
+			d = 0;
+			next_comma = p;
+			while (next_comma < end) {
+				if (*next_comma == '\\') {
+					next_comma++;
+					if (next_comma < end)
+						next_comma++;
+					continue;
+				}
+				if (*next_comma == '{')
+					d++;
+				else if (*next_comma == '}')
+					d--;
+				else if (*next_comma == ',' && d == 0)
+					break;
+				next_comma++;
+			}
+
+			alt_len = next_comma - p;
+			total_len = prefix_len + alt_len + suffix_len + 1;
+			sub = stalloc(total_len);
+
+			memcpy(sub, pattern, prefix_len);
+			memcpy(sub + prefix_len, p, alt_len);
+			memcpy(sub + prefix_len + alt_len, suffix, suffix_len + 1);
+
+			expand_brace_str(sub, lastp, depth + 1);
+			p = next_comma + 1;
+		}
+	} else if (is_range) {
+		dotdot = strstr(begin + 1, "..");
+		prefix_len = begin - pattern;
+		suffix = end + 1;
+		suffix_len = strlen(suffix);
+
+		if (dotdot && dotdot < end) {
+			l1 = dotdot - (begin + 1);
+			l2 = end - (dotdot + 2);
+			if (l1 < sizeof(s1) && l2 < sizeof(s2)) {
+				memcpy(s1, begin + 1, l1);
+				s1[l1] = '\0';
+				memcpy(s2, dotdot + 2, l2);
+				s2[l2] = '\0';
+
+				if (isdigit(s1[0]) && isdigit(s2[0])) {
+					n1 = atoi(s1);
+					n2 = atoi(s2);
+					step = (n1 <= n2) ? 1 : -1;
+					for (val = n1; ; val += step) {
+						snprintf(numbuf, sizeof(numbuf), "%d", val);
+						num_len = strlen(numbuf);
+						total_len = prefix_len + num_len + suffix_len + 1;
+						sub = stalloc(total_len);
+						memcpy(sub, pattern, prefix_len);
+						memcpy(sub + prefix_len, numbuf, num_len);
+						memcpy(sub + prefix_len + num_len, suffix, suffix_len + 1);
+
+						expand_brace_str(sub, lastp, depth + 1);
+						if (val == n2)
+							break;
+					}
+					return;
+				} else if (isalpha(s1[0]) && isalpha(s2[0]) && l1 == 1 && l2 == 1) {
+					c1 = s1[0];
+					c2 = s2[0];
+					step = (c1 <= c2) ? 1 : -1;
+					for (c = c1; ; c += step) {
+						total_len = prefix_len + 1 + suffix_len + 1;
+						sub = stalloc(total_len);
+						memcpy(sub, pattern, prefix_len);
+						sub[prefix_len] = c;
+						memcpy(sub + prefix_len + 1, suffix, suffix_len + 1);
+
+						expand_brace_str(sub, lastp, depth + 1);
+						if (c == c2)
+							break;
+					}
+					return;
+				}
+			}
+		}
+		goto add_literal;
+	}
+}
+
+static struct strlist *
+expand_braces(struct strlist *list)
+{
+	struct strlist *head;
+	struct strlist **lastp;
+	struct strlist *sp;
+
+	head = NULL;
+	lastp = &head;
+	for (sp = list; sp; sp = sp->next) {
+		expand_brace_str(sp->text, &lastp, 0);
+	}
+	*lastp = NULL;
+	return head;
+}
+#endif /* ENABLE_ASH_BASH_COMPAT */
+
 /*
  * Perform variable substitution and command substitution on an argument,
  * placing the resulting list of arguments in arglist.  If EXP_FULL is true,
@@ -8391,6 +8880,9 @@ expandarg(union node *arg, struct arglist *arglist, int flag)
 {
 	struct strlist *sp;
 	char *p;
+#if ENABLE_ASH_BASH_COMPAT
+	struct strlist *blist;
+#endif
 
 	argbackq = arg->narg.backquote;
 	STARTSTACKSTR(expdest);
@@ -8409,8 +8901,14 @@ expandarg(union node *arg, struct arglist *arglist, int flag)
 	if (flag & EXP_FULL) {
 		ifsbreakup(p, &exparg);
 		*exparg.lastp = NULL;
+#if ENABLE_ASH_BASH_COMPAT
+		blist = expand_braces(exparg.list);
+		exparg.lastp = &exparg.list;
+		expandmeta(blist /*, flag*/);
+#else
 		exparg.lastp = &exparg.list;
 		expandmeta(exparg.list /*, flag*/);
+#endif
 	} else {
 		sp = stzalloc(sizeof(*sp));
 		sp->text = p;
@@ -10891,7 +11389,18 @@ isassignment(const char *p)
 	const char *q = endofname(p);
 	if (p == q)
 		return 0;
-	return *q == '=';
+	if (*q == '=')
+		return 1;
+#if ENABLE_ASH_BASH_COMPAT
+	/* arr[N]=val */
+	if (*q == '[') {
+		while (*q && *q != ']')
+			q++;
+		if (*q == ']' && q[1] == '=')
+			return 1;
+	}
+#endif
+	return 0;
 }
 static int FAST_FUNC
 bltincmd(int argc UNUSED_PARAM, char **argv UNUSED_PARAM)
@@ -12588,6 +13097,16 @@ simplecmd(void)
 	smallint double_brackets_flag = 0;
 #endif
 	IF_BASH_FUNCTION(smallint function_flag = 0;)
+#if ENABLE_ASH_BASH_COMPAT
+	size_t wlen;
+	int next_t;
+	char arrname[64];
+	char clrbuf[128];
+	int arridx;
+	size_t elen;
+	char *elem_text;
+	const char *cb;
+#endif
 
 	args = NULL;
 	app = &args;
@@ -12622,6 +13141,64 @@ simplecmd(void)
 			wordtext = (char *) (t == TAND ? "&&" : "||");
 #endif
 		case TWORD:
+#if ENABLE_ASH_BASH_COMPAT
+			if (savecheckkwd && isassignment(wordtext)) {
+				wlen = strlen(wordtext);
+				if (wlen > 1 && wordtext[wlen - 1] == '='
+				 && endofname(wordtext) == wordtext + wlen - 1) {
+					checkkwd = 0;
+					next_t = readtoken();
+					if (next_t == TLP) {
+						/* Array assignment: arr=(elem1 elem2 ...) */
+						if (wlen - 1 < sizeof(arrname)) {
+							memcpy(arrname, wordtext, wlen - 1);
+							arrname[wlen - 1] = '\0';
+							snprintf(clrbuf, sizeof(clrbuf), "__arr_clear_%s=", arrname);
+							n = stzalloc(sizeof(struct narg));
+							n->type = NARG;
+							n->narg.text = sstrdup(clrbuf);
+							*vpp = n;
+							vpp = &n->narg.next;
+
+							arridx = 0;
+							for (;;) {
+								checkkwd = CHKNL | CHKKWD;
+								next_t = readtoken();
+								if (next_t == TRP)
+									break;
+								if (next_t == TNL)
+									continue;
+								if (next_t == TEOF)
+									raise_error_unexpected_syntax(TRP);
+								if (next_t == TWORD) {
+									n = stzalloc(sizeof(struct narg));
+									n->type = NARG;
+									n->narg.backquote = backquotelist;
+									elen = strlen(arrname) + strlen(wordtext) + 32;
+									elem_text = stalloc(elen);
+									if (wordtext[0] == '[') {
+										snprintf(elem_text, elen, "%s%s", arrname, wordtext);
+										cb = strchr(wordtext, ']');
+										if (cb)
+											arridx = atoi(wordtext + 1) + 1;
+									} else {
+										snprintf(elem_text, elen, "%s[%d]=%s", arrname, arridx++, wordtext);
+									}
+									n->narg.text = elem_text;
+									*vpp = n;
+									vpp = &n->narg.next;
+									continue;
+								}
+								raise_error_unexpected_syntax(next_t);
+							}
+							continue;
+						}
+					} else {
+						tokpushback = 1;
+					}
+				}
+			}
+#endif
 			n = stzalloc(sizeof(struct narg));
 			n->type = NARG;
 			/*n->narg.next = NULL; - stzalloc did it */
@@ -13440,6 +14017,18 @@ parsesub: {
 				STPUTC(c, out);
 				c = pgetc_eatbnl();
 			} while (is_in_name(c));
+#if ENABLE_ASH_BASH_COMPAT
+			if ((subtype == 0 || subtype == VSLENGTH) && c == '[') {
+				do {
+					STPUTC(c, out);
+					c = pgetc_eatbnl();
+				} while (c != PEOF && c != ']' && c != '\n');
+				if (c == ']') {
+					STPUTC(c, out);
+					c = pgetc_eatbnl();
+				}
+			}
+#endif
 		} else if (isdigit(c)) {
 			/* $[{[#]]NUM[}] */
 			do {
