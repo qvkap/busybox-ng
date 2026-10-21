@@ -3680,9 +3680,22 @@
      "\n	-o FILE	Write result to FILE" \
      "\n	-a	Append (else overwrite)" \
 
-#define tree_trivial_usage NOUSAGE_STR \
+#define tree_trivial_usage \
+       "[-adfhispugJ] [-L level] [DIR...]" \
 
-#define tree_full_usage "" \
+#define tree_full_usage "\n\n" \
+       "List contents of directories in a tree-like format\n" \
+     "\n	-a	All files (do not hide dotfiles)" \
+     "\n	-d	List directories only" \
+     "\n	-L level Max display depth of directory tree" \
+     "\n	-h	Print size in human readable format" \
+     "\n	-s	Print size in bytes" \
+     "\n	-p	Print file type and permissions" \
+     "\n	-u	Print file username or UID" \
+     "\n	-g	Print file groupname or GID" \
+     "\n	-f	Print full path prefix for each file" \
+     "\n	-i	Do not print indentation lines" \
+     "\n	-J	Output in JSON format" \
 
 #define ts_trivial_usage \
        "[-is] [STRFTIME]" \
@@ -5006,10 +5019,15 @@
      "\n	-o PID	Don't signal this PID" \
 
 #define lsof_trivial_usage \
-       "" \
+       "[-t] [-p PID] [-u USER] [-c NAME] [-i [TCP|UDP][@host][:port]]" \
 
 #define lsof_full_usage "\n\n" \
-       "Show all open files" \
+       "List open files\n" \
+     "\n	-p PID	List files for specified PID (comma-separated or multiple)" \
+     "\n	-u USER	List files for specified user (username or UID)" \
+     "\n	-c NAME	List files for commands matching NAME" \
+     "\n	-i [INET] List internet sockets matching protocol/port" \
+     "\n	-t	Terse output: print only process PIDs" \
 
 #define mpstat_trivial_usage \
        "[-A] [-I SUM|CPU|ALL|SCPU] [-u] [-P num|ALL] [INTERVAL [COUNT]]" \

@@ -95,7 +95,45 @@ tree3.tempdir\n\
 \n\
 7 directories, 9 files\n" \
 	"" ""
-#note: tree v2.0.1 says "8 directories, 7 files" (not "8 files", probably a/testfile4 -> ../b/testfile4 and b/testfile4 are counted as one file, not 2?)
+testing "tree directories only (-d)" \
+	"cd tree3.tempdir && tree -d" \
+	"\
+.\n\
+├── test1\n\
+├── test2\n\
+│   ├── a\n\
+│   └── b\n\
+└── test3\n\
+    ├── c\n\
+    └── d\n\
+\n\
+7 directories, 0 files\n" \
+	"" ""
+
+testing "tree max depth (-L 1)" \
+	"cd tree3.tempdir && tree -L 1" \
+	"\
+.\n\
+├── test1\n\
+├── test2\n\
+└── test3\n\
+\n\
+3 directories, 0 files\n" \
+	"" ""
+
+testing "tree no indent and full path (-i -f)" \
+	"cd tree2.tempdir && tree -i -f" \
+	"\
+.\n\
+./testfile\n\
+\n\
+0 directories, 1 files\n" \
+	"" ""
+
+testing "tree JSON output (-J)" \
+	"cd tree2.tempdir && tree -J" \
+	'[{"type":"directory","name":".","contents":[{"type":"file","name":"testfile"}]},{"type":"report","directories":0,"files":1}]\n' \
+	"" ""
 
 rm -rf tree.tempdir tree2.tempdir tree3.tempdir
 

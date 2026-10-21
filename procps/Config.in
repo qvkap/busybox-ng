@@ -68,8 +68,7 @@ config LSOF
 	bool "lsof (3.7 kb)"
 	default y
 	help
-	Show open files in the format of:
-	PID <TAB> /path/to/executable <TAB> /path/to/opened/file
+	Show open files.
 config MPSTAT
 	bool "mpstat (10 kb)"
 	default y
