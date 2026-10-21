@@ -240,6 +240,49 @@ config FEATURE_FIND_LINKS
 	depends on FIND
 	help
 	Support the 'find -links' option for matching number of links.
+
+config FEATURE_FIND_PRINTF
+	bool "Enable -printf: format and print file information"
+	default y
+	depends on FIND
+	help
+	Support the 'find -printf' action for printing formatted file
+	information.
+
+config FEATURE_FIND_ACCESS
+	bool "Enable -readable and -writable"
+	default y
+	depends on FIND
+	help
+	Support the 'find -readable' and 'find -writable' predicates.
+
+config FEATURE_FIND_BOOLEAN
+	bool "Enable -true and -false"
+	default y
+	depends on FIND
+	help
+	Support the 'find -true' and 'find -false' predicates.
+
+config FEATURE_FIND_NOUSER
+	bool "Enable -nouser and -nogroup"
+	default y
+	depends on FIND
+	help
+	Support the 'find -nouser' and 'find -nogroup' predicates.
+
+config FEATURE_FIND_LS
+	bool "Enable -ls: list file in ls -dils format"
+	default y
+	depends on FIND
+	help
+	Support the 'find -ls' action for listing files.
+
+config FEATURE_FIND_FSTYPE
+	bool "Enable -fstype: filesystem type matching"
+	default y
+	depends on FIND
+	help
+	Support the 'find -fstype' predicate for matching filesystem type.
 config GREP
 	bool "grep (8.9 kb)"
 	default y

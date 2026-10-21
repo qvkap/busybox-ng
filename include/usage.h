@@ -2372,6 +2372,14 @@
 	IF_FEATURE_FIND_EXECUTABLE( \
      "\n	-executable	File is executable" \
 	) \
+	IF_FEATURE_FIND_ACCESS( \
+     "\n	-readable	File is readable" \
+     "\n	-writable	File is writable" \
+	) \
+	IF_FEATURE_FIND_BOOLEAN( \
+     "\n	-true		Always true" \
+     "\n	-false		Always false" \
+	) \
 	IF_FEATURE_FIND_PERM( \
      "\n	-perm MASK	At least one mask bit (+MASK), all bits (-MASK)," \
      "\n			or exactly MASK bits are set in file's mode" \
@@ -2411,6 +2419,10 @@
 	IF_FEATURE_FIND_GROUP( \
      "\n	-group NAME/ID	File is owned by given group" \
 	) \
+	IF_FEATURE_FIND_NOUSER( \
+     "\n	-nouser		File belongs to no user in /etc/passwd" \
+     "\n	-nogroup	File belongs to no group in /etc/group" \
+	) \
 	IF_FEATURE_FIND_SIZE( \
      "\n	-size N[bck]	File size is N (c:bytes,k:kbytes,b:512 bytes(def.))" \
      "\n			+/-N: file size is bigger/smaller than N" \
@@ -2428,10 +2440,19 @@
 	IF_FEATURE_FIND_PRUNE( \
      "\n	-prune		If current file is directory, don't descend into it" \
 	) \
+	IF_FEATURE_FIND_FSTYPE( \
+     "\n	-fstype TYPE	File is on a filesystem of type TYPE" \
+	) \
      "\nIf none of the following actions is specified, -print is assumed" \
      "\n	-print		Print file name" \
 	IF_FEATURE_FIND_PRINT0( \
      "\n	-print0		Print file name, NUL terminated" \
+	) \
+	IF_FEATURE_FIND_PRINTF( \
+     "\n	-printf FORMAT	Print using FORMAT" \
+	) \
+	IF_FEATURE_FIND_LS( \
+     "\n	-ls		List file in 'ls -dils' format" \
 	) \
 	IF_FEATURE_FIND_EXEC( \
      "\n	-exec CMD ARG ;	Run CMD with all instances of {} replaced by" \

@@ -75,6 +75,64 @@ testing "find ./// -name .///" \
 	"" \
 	"" ""
 
+optional FEATURE_FIND_PRINTF
+testing "find -printf format %f" \
+	"cd find.tempdir && find testfile -printf '%f\n'" \
+	"testfile\n" \
+	"" ""
+testing "find -printf format %P" \
+	"find find.tempdir -name testfile -printf '%P\n'" \
+	"testfile\n" \
+	"" ""
+testing "find -printf type %y" \
+	"cd find.tempdir && find testfile -printf '%y\n'" \
+	"f\n" \
+	"" ""
+SKIP=
+
+optional FEATURE_FIND_ACCESS
+testing "find -readable and -writable" \
+	"cd find.tempdir && find testfile -readable -writable" \
+	"testfile\n" \
+	"" ""
+SKIP=
+
+optional FEATURE_FIND_BOOLEAN
+testing "find -true" \
+	"cd find.tempdir && find testfile -true" \
+	"testfile\n" \
+	"" ""
+testing "find -false" \
+	"cd find.tempdir && find testfile -false" \
+	"" \
+	"" ""
+SKIP=
+
+optional FEATURE_FIND_NOUSER
+testing "find -nouser" \
+	"cd find.tempdir && find testfile -nouser" \
+	"" \
+	"" ""
+testing "find ! -nouser" \
+	"cd find.tempdir && find testfile ! -nouser" \
+	"testfile\n" \
+	"" ""
+SKIP=
+
+optional FEATURE_FIND_LS
+testing "find -ls" \
+	"cd find.tempdir && find testfile -ls | grep -q ' testfile$' && echo yes" \
+	"yes\n" \
+	"" ""
+SKIP=
+
+optional FEATURE_FIND_FSTYPE
+testing "find -fstype" \
+	"cd find.tempdir && find testfile -fstype unknown" \
+	"" \
+	"" ""
+SKIP=
+
 # testing "description" "command" "result" "infile" "stdin"
 
 rm -rf find.tempdir

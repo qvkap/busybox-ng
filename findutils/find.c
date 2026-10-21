@@ -284,6 +284,49 @@
 //config:	depends on FIND
 //config:	help
 //config:	Support the 'find -links' option for matching number of links.
+//config:
+//config:config FEATURE_FIND_PRINTF
+//config:	bool "Enable -printf: format and print file information"
+//config:	default y
+//config:	depends on FIND
+//config:	help
+//config:	Support the 'find -printf' action for printing formatted file
+//config:	information.
+//config:
+//config:config FEATURE_FIND_ACCESS
+//config:	bool "Enable -readable and -writable"
+//config:	default y
+//config:	depends on FIND
+//config:	help
+//config:	Support the 'find -readable' and 'find -writable' predicates.
+//config:
+//config:config FEATURE_FIND_BOOLEAN
+//config:	bool "Enable -true and -false"
+//config:	default y
+//config:	depends on FIND
+//config:	help
+//config:	Support the 'find -true' and 'find -false' predicates.
+//config:
+//config:config FEATURE_FIND_NOUSER
+//config:	bool "Enable -nouser and -nogroup"
+//config:	default y
+//config:	depends on FIND
+//config:	help
+//config:	Support the 'find -nouser' and 'find -nogroup' predicates.
+//config:
+//config:config FEATURE_FIND_LS
+//config:	bool "Enable -ls: list file in ls -dils format"
+//config:	default y
+//config:	depends on FIND
+//config:	help
+//config:	Support the 'find -ls' action for listing files.
+//config:
+//config:config FEATURE_FIND_FSTYPE
+//config:	bool "Enable -fstype: filesystem type matching"
+//config:	default y
+//config:	depends on FIND
+//config:	help
+//config:	Support the 'find -fstype' predicate for matching filesystem type.
 
 //applet:IF_FIND(APPLET_NOEXEC(find, find, BB_DIR_USR_BIN, BB_SUID_DROP, find))
 
@@ -334,6 +377,14 @@
 //usage:	IF_FEATURE_FIND_EXECUTABLE(
 //usage:     "\n	-executable	File is executable"
 //usage:	)
+//usage:	IF_FEATURE_FIND_ACCESS(
+//usage:     "\n	-readable	File is readable"
+//usage:     "\n	-writable	File is writable"
+//usage:	)
+//usage:	IF_FEATURE_FIND_BOOLEAN(
+//usage:     "\n	-true		Always true"
+//usage:     "\n	-false		Always false"
+//usage:	)
 //usage:	IF_FEATURE_FIND_PERM(
 //usage:     "\n	-perm MASK	At least one mask bit (+MASK), all bits (-MASK),"
 //usage:     "\n			or exactly MASK bits are set in file's mode"
@@ -373,6 +424,10 @@
 //usage:	IF_FEATURE_FIND_GROUP(
 //usage:     "\n	-group NAME/ID	File is owned by given group"
 //usage:	)
+//usage:	IF_FEATURE_FIND_NOUSER(
+//usage:     "\n	-nouser		File belongs to no user in /etc/passwd"
+//usage:     "\n	-nogroup	File belongs to no group in /etc/group"
+//usage:	)
 //usage:	IF_FEATURE_FIND_SIZE(
 //usage:     "\n	-size N[bck]	File size is N (c:bytes,k:kbytes,b:512 bytes(def.))"
 //usage:     "\n			+/-N: file size is bigger/smaller than N"
@@ -390,10 +445,19 @@
 //usage:	IF_FEATURE_FIND_PRUNE(
 //usage:     "\n	-prune		If current file is directory, don't descend into it"
 //usage:	)
+//usage:	IF_FEATURE_FIND_FSTYPE(
+//usage:     "\n	-fstype TYPE	File is on a filesystem of type TYPE"
+//usage:	)
 //usage:     "\nIf none of the following actions is specified, -print is assumed"
 //usage:     "\n	-print		Print file name"
 //usage:	IF_FEATURE_FIND_PRINT0(
 //usage:     "\n	-print0		Print file name, NUL terminated"
+//usage:	)
+//usage:	IF_FEATURE_FIND_PRINTF(
+//usage:     "\n	-printf FORMAT	Print using FORMAT"
+//usage:	)
+//usage:	IF_FEATURE_FIND_LS(
+//usage:     "\n	-ls		List file in 'ls -dils' format"
 //usage:	)
 //usage:	IF_FEATURE_FIND_EXEC(
 //usage:     "\n	-exec CMD ARG ;	Run CMD with all instances of {} replaced by"
@@ -492,6 +556,15 @@ IF_FEATURE_FIND_EXEC(   ACTS(exec,
 				))
 IF_FEATURE_FIND_GROUP(  ACTS(group, gid_t gid;))
 IF_FEATURE_FIND_LINKS(  ACTS(links, char links_char; int links_count;))
+IF_FEATURE_FIND_PRINTF( ACTS(printf, const char *format;))
+IF_FEATURE_FIND_ACCESS( ACTS(readable))
+IF_FEATURE_FIND_ACCESS( ACTS(writable))
+IF_FEATURE_FIND_BOOLEAN(ACTS(true))
+IF_FEATURE_FIND_BOOLEAN(ACTS(false))
+IF_FEATURE_FIND_NOUSER( ACTS(nouser))
+IF_FEATURE_FIND_NOUSER( ACTS(nogroup))
+IF_FEATURE_FIND_LS(     ACTS(ls))
+IF_FEATURE_FIND_FSTYPE( ACTS(fstype, const char *type_name;))
 
 struct globals {
 	IF_FEATURE_FIND_XDEV(dev_t *xdev_dev;)
@@ -505,6 +578,7 @@ struct globals {
 	smalluint exitstatus;
 	recurse_flags_t recurse_flags;
 	IF_FEATURE_FIND_EXEC_PLUS(unsigned max_argv_len;)
+	IF_FEATURE_FIND_PRINTF(const char *cur_start_arg;)
 } FIX_ALIASING;
 #define G (*(struct globals*)bb_common_bufsiz1)
 #define INIT_G() do { \
@@ -1009,6 +1083,337 @@ ACTF(links)
 }
 #endif
 
+#if ENABLE_FEATURE_FIND_ACCESS
+ACTF(readable)
+{
+	return access(fileName, R_OK) == 0;
+}
+ACTF(writable)
+{
+	return access(fileName, W_OK) == 0;
+}
+#endif
+
+#if ENABLE_FEATURE_FIND_BOOLEAN
+ACTF(true)
+{
+	return 1;
+}
+ACTF(false)
+{
+	return 0;
+}
+#endif
+
+#if ENABLE_FEATURE_FIND_NOUSER
+ACTF(nouser)
+{
+	return getpwuid(statbuf->st_uid) == NULL;
+}
+ACTF(nogroup)
+{
+	return getgrgid(statbuf->st_gid) == NULL;
+}
+#endif
+
+#if ENABLE_FEATURE_FIND_LS
+ACTF(ls)
+{
+	char mbuf[12];
+	char timebuf[32];
+	struct tm tm_buf;
+	struct tm *tm;
+	time_t now;
+	time_t mtime;
+	const char *u;
+	const char *g;
+	char *target;
+
+	mtime = statbuf->st_mtime;
+	bb_mode_string(mbuf, statbuf->st_mode);
+	time(&now);
+	tm = localtime_r(&mtime, &tm_buf);
+	if (tm) {
+		/* If within last 6 months: "Mon DD HH:MM", else "Mon DD  YYYY" */
+		if (mtime > now || (now - mtime) > 180 * 24 * 3600)
+			strftime(timebuf, sizeof(timebuf), "%b %e  %Y", tm);
+		else
+			strftime(timebuf, sizeof(timebuf), "%b %e %H:%M", tm);
+	} else {
+		strcpy(timebuf, "??? ?? ??:??");
+	}
+
+	u = uid2uname(statbuf->st_uid);
+	g = gid2group(statbuf->st_gid);
+
+	printf("%7llu %4llu %10s %3u %-8s %-8s ",
+		(unsigned long long)statbuf->st_ino,
+		(unsigned long long)(statbuf->st_blocks + 1) / 2,
+		mbuf,
+		(unsigned)statbuf->st_nlink,
+		u ? u : utoa(statbuf->st_uid),
+		g ? g : utoa(statbuf->st_gid)
+	);
+
+	if (S_ISCHR(statbuf->st_mode) || S_ISBLK(statbuf->st_mode)) {
+		printf("%4u, %4u ", (unsigned)major(statbuf->st_rdev), (unsigned)minor(statbuf->st_rdev));
+	} else {
+		printf("%8llu ", (unsigned long long)statbuf->st_size);
+	}
+
+	printf("%s %s", timebuf, fileName);
+
+	if (S_ISLNK(statbuf->st_mode)) {
+		target = xmalloc_readlink(fileName);
+		if (target) {
+			printf(" -> %s", target);
+			free(target);
+		}
+	}
+	putchar('\n');
+	return TRUE;
+}
+#endif
+
+#if ENABLE_FEATURE_FIND_FSTYPE
+ACTF(fstype)
+{
+	struct statfs sfs;
+	const char *fs_name = "unknown";
+
+	if (statfs(fileName, &sfs) == 0) {
+		switch ((unsigned long)sfs.f_type) {
+		case 0xef53UL: fs_name = "ext2/ext3/ext4"; break;
+		case 0x9123683eUL: fs_name = "btrfs"; break;
+		case 0x58465342UL: fs_name = "xfs"; break;
+		case 0x01021994UL: fs_name = "tmpfs"; break;
+		case 0x9fa0UL: fs_name = "proc"; break;
+		case 0x62656572UL: fs_name = "sysfs"; break;
+		case 0x6969UL: fs_name = "nfs"; break;
+		case 0x4d44UL: fs_name = "vfat"; break;
+		case 0x5346544eUL: fs_name = "ntfs"; break;
+		case 0x858458f6UL: fs_name = "ramfs"; break;
+		case 0x73717368UL: fs_name = "squashfs"; break;
+		case 0x27e0ebUL:
+		case 0x63677270UL: fs_name = "cgroup"; break;
+		case 0x794c7630UL: fs_name = "overlay"; break;
+		case 0xf2f52010UL: fs_name = "f2fs"; break;
+		}
+	}
+	if (strcmp(ap->type_name, "ext2") == 0 || strcmp(ap->type_name, "ext3") == 0 || strcmp(ap->type_name, "ext4") == 0) {
+		return strcmp(fs_name, "ext2/ext3/ext4") == 0;
+	}
+	return strcasecmp(ap->type_name, fs_name) == 0;
+}
+#endif
+
+#if ENABLE_FEATURE_FIND_PRINTF
+static char file_type_char(mode_t mode)
+{
+	if (S_ISREG(mode)) return 'f';
+	if (S_ISDIR(mode)) return 'd';
+	if (S_ISLNK(mode)) return 'l';
+	if (S_ISCHR(mode)) return 'c';
+	if (S_ISBLK(mode)) return 'b';
+	if (S_ISFIFO(mode)) return 'p';
+	if (S_ISSOCK(mode)) return 's';
+	return '?';
+}
+
+ACTF(printf)
+{
+	const char *fmt;
+	const char *slash;
+	const char *p;
+	const char *u;
+	const char *g;
+	char *target;
+	char *ct;
+	char *nl;
+	size_t slen;
+	time_t tt;
+	struct tm tm_buf;
+	struct tm *tm;
+	struct stat target_st;
+	int val, n;
+	char sub;
+	char mbuf[12];
+	char tbuf[32];
+	char sbuf[64];
+	char fmt_s[3];
+
+	fmt = ap->format;
+	while (*fmt) {
+		if (*fmt == '\\') {
+			fmt++;
+			if (*fmt == '\0') {
+				putchar('\\');
+				break;
+			}
+			if (*fmt == 'a') {
+				putchar('\a');
+			} else if (*fmt == 'b') {
+				putchar('\b');
+			} else if (*fmt == 'f') {
+				putchar('\f');
+			} else if (*fmt == 'n') {
+				putchar('\n');
+			} else if (*fmt == 'r') {
+				putchar('\r');
+			} else if (*fmt == 't') {
+				putchar('\t');
+			} else if (*fmt == 'v') {
+				putchar('\v');
+			} else if (*fmt == '\\') {
+				putchar('\\');
+			} else if (*fmt >= '0' && *fmt <= '7') {
+				val = 0;
+				n = 0;
+				while (n < 3 && *fmt >= '0' && *fmt <= '7') {
+					val = (val << 3) + (*fmt++ - '0');
+					n++;
+				}
+				putchar((char)val);
+				continue;
+			} else {
+				putchar('\\');
+				putchar(*fmt);
+			}
+			fmt++;
+			continue;
+		}
+
+		if (*fmt == '%') {
+			fmt++;
+			if (*fmt == '\0') {
+				putchar('%');
+				break;
+			}
+			if (*fmt == '%') {
+				putchar('%');
+			} else if (*fmt == 'p') {
+				fputs(fileName, stdout);
+			} else if (*fmt == 'P') {
+				p = fileName;
+				if (G.cur_start_arg) {
+					slen = strlen(G.cur_start_arg);
+					if (strncmp(p, G.cur_start_arg, slen) == 0) {
+						p += slen;
+						while (*p == '/') p++;
+					}
+				}
+				fputs(p, stdout);
+			} else if (*fmt == 'f') {
+				fputs(bb_basename(fileName), stdout);
+			} else if (*fmt == 'h') {
+				slash = strrchr(fileName, '/');
+				if (!slash) {
+					putchar('.');
+				} else if (slash == fileName) {
+					putchar('/');
+				} else {
+					printf("%.*s", (int)(slash - fileName), fileName);
+				}
+			} else if (*fmt == 's') {
+				printf("%llu", (unsigned long long)statbuf->st_size);
+			} else if (*fmt == 'k') {
+				printf("%llu", (unsigned long long)(((uintmax_t)statbuf->st_size + 1023) / 1024));
+			} else if (*fmt == 'b') {
+				printf("%llu", (unsigned long long)statbuf->st_blocks);
+			} else if (*fmt == 'm') {
+				printf("%o", (unsigned)(statbuf->st_mode & 07777));
+			} else if (*fmt == 'M') {
+				bb_mode_string(mbuf, statbuf->st_mode);
+				fputs(mbuf, stdout);
+			} else if (*fmt == 'u') {
+				u = uid2uname(statbuf->st_uid);
+				fputs(u ? u : utoa(statbuf->st_uid), stdout);
+			} else if (*fmt == 'U') {
+				printf("%u", (unsigned)statbuf->st_uid);
+			} else if (*fmt == 'g') {
+				g = gid2group(statbuf->st_gid);
+				fputs(g ? g : utoa(statbuf->st_gid), stdout);
+			} else if (*fmt == 'G') {
+				printf("%u", (unsigned)statbuf->st_gid);
+			} else if (*fmt == 'i') {
+				printf("%llu", (unsigned long long)statbuf->st_ino);
+			} else if (*fmt == 'n') {
+				printf("%u", (unsigned)statbuf->st_nlink);
+			} else if (*fmt == 'l') {
+				if (S_ISLNK(statbuf->st_mode)) {
+					target = xmalloc_readlink(fileName);
+					if (target) {
+						fputs(target, stdout);
+						free(target);
+					}
+				}
+			} else if (*fmt == 'y') {
+				putchar(file_type_char(statbuf->st_mode));
+			} else if (*fmt == 'Y') {
+				if (!S_ISLNK(statbuf->st_mode)) {
+					putchar(file_type_char(statbuf->st_mode));
+				} else {
+					if (stat(fileName, &target_st) == 0) {
+						putchar(file_type_char(target_st.st_mode));
+					} else if (errno == ENOENT) {
+						putchar('N');
+					} else if (errno == ELOOP) {
+						putchar('L');
+					} else {
+						putchar('?');
+					}
+				}
+			} else if (*fmt == 't' || *fmt == 'a' || *fmt == 'c') {
+				if (*fmt == 't') tt = statbuf->st_mtime;
+				else if (*fmt == 'a') tt = statbuf->st_atime;
+				else tt = statbuf->st_ctime;
+
+				ct = ctime(&tt);
+				if (ct) {
+					safe_strncpy(tbuf, ct, sizeof(tbuf));
+					nl = strchr(tbuf, '\n');
+					if (nl) *nl = '\0';
+					fputs(tbuf, stdout);
+				}
+			} else if (*fmt == 'T' || *fmt == 'A' || *fmt == 'C') {
+				if (*fmt == 'T') tt = statbuf->st_mtime;
+				else if (*fmt == 'A') tt = statbuf->st_atime;
+				else tt = statbuf->st_ctime;
+
+				fmt++;
+				if (*fmt == '\0') {
+					putchar('%');
+					break;
+				}
+				sub = *fmt;
+				if (sub == '@') {
+					printf("%ld", (long)tt);
+				} else if (sub == '+') {
+					tm = localtime_r(&tt, &tm_buf);
+					if (tm && strftime(sbuf, sizeof(sbuf), "%Y-%m-%d+%H:%M:%S", tm))
+						fputs(sbuf, stdout);
+				} else {
+					fmt_s[0] = '%';
+					fmt_s[1] = sub;
+					fmt_s[2] = '\0';
+					tm = localtime_r(&tt, &tm_buf);
+					if (tm && strftime(sbuf, sizeof(sbuf), fmt_s, tm))
+						fputs(sbuf, stdout);
+				}
+			} else {
+				putchar('%');
+				putchar(*fmt);
+			}
+			fmt++;
+			continue;
+		}
+
+		putchar(*fmt++);
+	}
+	return TRUE;
+}
+#endif
+
 static int FAST_FUNC fileAction(
 		struct recursive_state *state IF_NOT_FEATURE_FIND_MAXDEPTH(UNUSED_PARAM),
 		const char *fileName,
@@ -1150,6 +1555,13 @@ static action*** parse_params(char **argv)
 	IF_FEATURE_FIND_EXEC_OK(PARM_ok        ,)
 	IF_FEATURE_FIND_EXECUTABLE(PARM_executable,)
 	IF_FEATURE_FIND_PAREN(  PARM_char_brace,)
+	IF_FEATURE_FIND_ACCESS( PARM_readable  ,)
+	IF_FEATURE_FIND_ACCESS( PARM_writable  ,)
+	IF_FEATURE_FIND_BOOLEAN(PARM_true      ,)
+	IF_FEATURE_FIND_BOOLEAN(PARM_false     ,)
+	IF_FEATURE_FIND_NOUSER( PARM_nouser    ,)
+	IF_FEATURE_FIND_NOUSER( PARM_nogroup   ,)
+	IF_FEATURE_FIND_LS(     PARM_ls        ,)
 	/* All options/actions starting from here require argument */
 	                        PARM_name      ,
 	                        PARM_iname     ,
@@ -1178,6 +1590,8 @@ static action*** parse_params(char **argv)
 	IF_FEATURE_FIND_CONTEXT(PARM_context   ,)
 	IF_FEATURE_FIND_LINKS(  PARM_links     ,)
 	IF_FEATURE_FIND_MAXDEPTH(OPT_MINDEPTH,OPT_MAXDEPTH,)
+	IF_FEATURE_FIND_PRINTF( PARM_printf    ,)
+	IF_FEATURE_FIND_FSTYPE( PARM_fstype    ,)
 	};
 
 	static const char params[] ALIGN1 =
@@ -1202,6 +1616,13 @@ static action*** parse_params(char **argv)
 	IF_FEATURE_FIND_EXEC_OK("-ok\0"     )
 	IF_FEATURE_FIND_EXECUTABLE("-executable\0")
 	IF_FEATURE_FIND_PAREN(  "(\0"       )
+	IF_FEATURE_FIND_ACCESS( "-readable\0" )
+	IF_FEATURE_FIND_ACCESS( "-writable\0" )
+	IF_FEATURE_FIND_BOOLEAN("-true\0"     )
+	IF_FEATURE_FIND_BOOLEAN("-false\0"    )
+	IF_FEATURE_FIND_NOUSER( "-nouser\0"   )
+	IF_FEATURE_FIND_NOUSER( "-nogroup\0"  )
+	IF_FEATURE_FIND_LS(     "-ls\0"       )
 	/* All options/actions starting from here require argument */
 	                        "-name\0"
 	                        "-iname\0"
@@ -1228,6 +1649,8 @@ static action*** parse_params(char **argv)
 	IF_FEATURE_FIND_CONTEXT("-context\0")
 	IF_FEATURE_FIND_LINKS(  "-links\0"  )
 	IF_FEATURE_FIND_MAXDEPTH("-mindepth\0""-maxdepth\0")
+	IF_FEATURE_FIND_PRINTF( "-printf\0" )
+	IF_FEATURE_FIND_FSTYPE( "-fstype\0" )
 	;
 
 #if !USE_NESTED_FUNCTION
@@ -1490,6 +1913,43 @@ static action*** parse_params(char **argv)
 			(void) ALLOC_ACTION(executable);
 		}
 #endif
+#if ENABLE_FEATURE_FIND_ACCESS
+		else if (parm == PARM_readable) {
+			dbg("%d", __LINE__);
+			(void) ALLOC_ACTION(readable);
+		}
+		else if (parm == PARM_writable) {
+			dbg("%d", __LINE__);
+			(void) ALLOC_ACTION(writable);
+		}
+#endif
+#if ENABLE_FEATURE_FIND_BOOLEAN
+		else if (parm == PARM_true) {
+			dbg("%d", __LINE__);
+			(void) ALLOC_ACTION(true);
+		}
+		else if (parm == PARM_false) {
+			dbg("%d", __LINE__);
+			(void) ALLOC_ACTION(false);
+		}
+#endif
+#if ENABLE_FEATURE_FIND_NOUSER
+		else if (parm == PARM_nouser) {
+			dbg("%d", __LINE__);
+			(void) ALLOC_ACTION(nouser);
+		}
+		else if (parm == PARM_nogroup) {
+			dbg("%d", __LINE__);
+			(void) ALLOC_ACTION(nogroup);
+		}
+#endif
+#if ENABLE_FEATURE_FIND_LS
+		else if (parm == PARM_ls) {
+			dbg("%d", __LINE__);
+			G.need_print = 0;
+			(void) ALLOC_ACTION(ls);
+		}
+#endif
 #if ENABLE_FEATURE_FIND_PERM
 /* -perm BITS   File's mode bits are exactly BITS (octal or symbolic).
  *              Symbolic modes use mode 0 as a point of departure.
@@ -1647,6 +2107,23 @@ static action*** parse_params(char **argv)
 			ap->links_count = xatoul(plus_minus_num(arg1));
 		}
 #endif
+#if ENABLE_FEATURE_FIND_PRINTF
+		else if (parm == PARM_printf) {
+			action_printf *ap;
+			dbg("%d", __LINE__);
+			G.need_print = 0;
+			ap = ALLOC_ACTION(printf);
+			ap->format = arg1;
+		}
+#endif
+#if ENABLE_FEATURE_FIND_FSTYPE
+		else if (parm == PARM_fstype) {
+			action_fstype *ap;
+			dbg("%d", __LINE__);
+			ap = ALLOC_ACTION(fstype);
+			ap->type_name = arg1;
+		}
+#endif
 		else {
 			bb_error_msg("unrecognized: %s", arg);
 			bb_show_usage();
@@ -1737,6 +2214,7 @@ int find_main(int argc UNUSED_PARAM, char **argv)
 #endif
 
 	for (i = 0; argv[i]; i++) {
+		IF_FEATURE_FIND_PRINTF(G.cur_start_arg = argv[i];)
 		if (!recursive_action(argv[i],
 				G.recurse_flags,/* flags */
 				fileAction,     /* file action */
