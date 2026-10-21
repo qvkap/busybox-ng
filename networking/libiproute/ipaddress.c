@@ -109,7 +109,7 @@ static void print_queuelen(char *name)
 		printf("qlen %d", ifr.ifr_qlen);
 }
 
-static NOINLINE int print_linkinfo(const struct nlmsghdr *n)
+int FAST_FUNC print_linkinfo(const struct nlmsghdr *n)
 {
 	struct ifinfomsg *ifi = NLMSG_DATA(n);
 	struct rtattr *tb[IFLA_MAX+1];
@@ -223,7 +223,7 @@ static int flush_update(void)
 	return 0;
 }
 
-static int FAST_FUNC print_addrinfo(const struct sockaddr_nl *who UNUSED_PARAM,
+int FAST_FUNC print_addrinfo(const struct sockaddr_nl *who UNUSED_PARAM,
 		struct nlmsghdr *n, void *arg UNUSED_PARAM)
 {
 	struct ifaddrmsg *ifa = NLMSG_DATA(n);
@@ -251,6 +251,17 @@ static int FAST_FUNC print_addrinfo(const struct sockaddr_nl *who UNUSED_PARAM,
 		rta_tb[IFA_LOCAL] = rta_tb[IFA_ADDRESS];
 	if (!rta_tb[IFA_ADDRESS])
 		rta_tb[IFA_ADDRESS] = rta_tb[IFA_LOCAL];
+
+	if (brief_output) {
+		const char *name = ll_index_to_name(ifa->ifa_index);
+		if (rta_tb[IFA_LOCAL]) {
+			printf("%-16s %-8s %s/%d\n", name, "UNKNOWN",
+				rt_addr_n2a(ifa->ifa_family, RTA_DATA(rta_tb[IFA_LOCAL])),
+				ifa->ifa_prefixlen);
+		}
+		return 0;
+	}
+
 
 	if (G_filter.ifindex && G_filter.ifindex != ifa->ifa_index)
 		return 0;

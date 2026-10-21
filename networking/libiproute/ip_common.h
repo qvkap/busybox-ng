@@ -27,9 +27,16 @@ int FAST_FUNC do_iprule(char **argv);
 int FAST_FUNC do_ipneigh(char **argv);
 int FAST_FUNC do_iptunnel(char **argv);
 int FAST_FUNC do_iplink(char **argv);
-//int FAST_FUNC do_ipmonitor(char **argv);
-//int FAST_FUNC do_multiaddr(char **argv);
-//int FAST_FUNC do_multiroute(char **argv);
+int FAST_FUNC do_ipnetns(char **argv);
+int FAST_FUNC do_ipmonitor(char **argv);
+int FAST_FUNC do_iptuntap(char **argv);
+int FAST_FUNC do_ipmaddr(char **argv);
+
+int FAST_FUNC print_linkinfo(const struct nlmsghdr *n);
+int FAST_FUNC print_addrinfo(const struct sockaddr_nl *who, struct nlmsghdr *n, void *arg);
+int FAST_FUNC print_route(const struct sockaddr_nl *who, struct nlmsghdr *n, void *arg);
+int FAST_FUNC print_neigh(const struct sockaddr_nl *who, struct nlmsghdr *n, void *arg);
+
 
 POP_SAVED_FUNCTION_VISIBILITY
 

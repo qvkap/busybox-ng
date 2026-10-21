@@ -64,7 +64,7 @@ static int flush_update(void)
 	return 0;
 }
 
-static int FAST_FUNC print_route(const struct sockaddr_nl *who UNUSED_PARAM,
+int FAST_FUNC print_route(const struct sockaddr_nl *who UNUSED_PARAM,
 		struct nlmsghdr *n, void *arg UNUSED_PARAM)
 {
 	struct rtmsg *r = NLMSG_DATA(n);

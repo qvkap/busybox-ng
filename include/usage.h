@@ -4171,6 +4171,26 @@
 
 #define ipneigh_full_usage "" \
 
+#define ipnetns_trivial_usage \
+       "list | add NAME | del NAME | exec NAME CMD... | identify [PID] | pids NAME | monitor" \
+
+#define ipnetns_full_usage "" \
+
+#define ipmonitor_trivial_usage \
+       "[all | LISTofOBJECTS]" \
+
+#define ipmonitor_full_usage "" \
+
+#define iptuntap_trivial_usage \
+       "add|del [dev] NAME mode tun|tap [user USER] [group GROUP] [pi] [vnet_hdr] [multi_queue] | list" \
+
+#define iptuntap_full_usage "" \
+
+#define ipmaddr_trivial_usage \
+       "show [DEV] | add MULTICAST_ADDR dev DEV | del MULTICAST_ADDR dev DEV" \
+
+#define ipmaddr_full_usage "" \
+
 #if ENABLE_FEATURE_IP_ADDRESS || ENABLE_FEATURE_IP_ROUTE \
 
 # define IP_BAR_LINK   "|" \
@@ -4219,10 +4239,14 @@
 	IF_FEATURE_IP_TUNNEL( IP_BAR_TUNNEL"tunnel") \
 	IF_FEATURE_IP_NEIGH(  IP_BAR_NEIGH "neigh") \
 	IF_FEATURE_IP_RULE(   IP_BAR_RULE  "rule") \
+	IF_FEATURE_IP_NETNS(  "|netns") \
+	IF_FEATURE_IP_MONITOR("|monitor") \
+	IF_FEATURE_IP_TUNTAP( "|tuntap") \
+	IF_FEATURE_IP_MADDR(  "|maddr") \
        " [ARGS]" \
 
 #define ip_full_usage "\n\n" \
-       "OPTIONS := -f[amily] inet|inet6|link | -o[neline]\n" \
+       "OPTIONS := -f[amily] inet|inet6|link | -4 | -6 | -0 | -o[neline] | -s[tats] | -d[etails] | -j[son] | -br[ief] | -c[olor] | -N[umeric] | -a[ll] | -l[oops] N | -n[etns] NAME\n" \
 	IF_FEATURE_IP_ADDRESS("\n" \
 	"ip addr "ipaddr_trivial_usage) \
 	IF_FEATURE_IP_ROUTE("\n" \
@@ -4235,6 +4259,14 @@
 	"ip neigh "ipneigh_trivial_usage) \
 	IF_FEATURE_IP_RULE("\n" \
 	"ip rule "iprule_trivial_usage) \
+	IF_FEATURE_IP_NETNS("\n" \
+	"ip netns "ipnetns_trivial_usage) \
+	IF_FEATURE_IP_MONITOR("\n" \
+	"ip monitor "ipmonitor_trivial_usage) \
+	IF_FEATURE_IP_TUNTAP("\n" \
+	"ip tuntap "iptuntap_trivial_usage) \
+	IF_FEATURE_IP_MADDR("\n" \
+	"ip maddr "ipmaddr_trivial_usage) \
 
 #define ipcalc_trivial_usage \
        "[-bnm"IF_FEATURE_IPCALC_FANCY("phs")"] ADDRESS" \
@@ -5531,12 +5563,6 @@
      "\n	$ exec cttyhack sh" \
      "\nStarting interactive shell from boot shell script:" \
      "\n	setsid cttyhack sh" \
-
-#define hush_trivial_usage \
-	"[-enxl] [-c 'SCRIPT' [ARG0 ARGS] | FILE ARGS | -s ARGS]" \
-
-#define hush_full_usage "\n\n" \
-	"Unix shell interpreter" \
 
 #define klogd_trivial_usage \
        "[-c N] [-n]" \

@@ -675,6 +675,35 @@ config FEATURE_IP_NEIGH
 	help
 	Add support for neighbor commands to "ip".
 
+config FEATURE_IP_NETNS
+	bool "ip netns"
+	default y
+	depends on IP
+	help
+	Network namespace management.
+
+config FEATURE_IP_MONITOR
+	bool "ip monitor"
+	default y
+	depends on IP
+	help
+	Monitor netlink events.
+
+config FEATURE_IP_TUNTAP
+	bool "ip tuntap"
+	default y
+	depends on IP
+	help
+	Configure tun and tap network interfaces.
+
+config FEATURE_IP_MADDR
+	bool "ip maddr"
+	default y
+	depends on IP
+	help
+	Multicast address management.
+
+
 config FEATURE_IP_RARE_PROTOCOLS
 	bool "Support displaying rarely used link types"
 	default n

@@ -81,3 +81,9 @@ lib-$(CONFIG_FEATURE_IP_NEIGH) += \
 	ll_map.o \
 	rt_names.o \
 	utils.o
+
+lib-$(CONFIG_FEATURE_IP_NETNS) += ipnetns.o
+lib-$(CONFIG_FEATURE_IP_MONITOR) += ipmonitor.o
+lib-$(CONFIG_FEATURE_IP_TUNTAP) += iptuntap.o
+lib-$(CONFIG_FEATURE_IP_MADDR) += ipmaddr.o
+

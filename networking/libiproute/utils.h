@@ -9,12 +9,17 @@
 PUSH_AND_SET_FUNCTION_VISIBILITY_TO_HIDDEN
 
 extern family_t preferred_family;
-extern smallint show_stats;    /* UNUSED */
-extern smallint show_details;  /* UNUSED */
+extern smallint show_stats;    /* -s/-stats/-statistics */
+extern smallint show_details;  /* -d/-details */
 extern smallint show_raw;      /* UNUSED */
-extern smallint resolve_hosts; /* UNUSED */
+extern smallint resolve_hosts; /* -r/-resolve */
 extern smallint oneline;
+extern smallint json_output;   /* -j/-json */
+extern smallint brief_output;  /* -br/-brief */
+extern smallint pretty_output; /* -p/-pretty */
+extern smallint numeric_output;/* -N/-Numeric */
 extern char _SL_;
+
 
 #ifndef IPPROTO_ESP
 #define IPPROTO_ESP  50

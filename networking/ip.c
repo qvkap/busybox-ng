@@ -115,6 +115,36 @@
 //config:	help
 //config:	Add support for neighbor commands to "ip".
 //config:
+//config:config FEATURE_IP_NETNS
+//config:	bool "ip netns"
+//config:	default y
+//config:	depends on IP
+//config:	help
+//config:	Network namespace management.
+//config:
+//config:config FEATURE_IP_MONITOR
+//config:	bool "ip monitor"
+//config:	default y
+//config:	depends on IP
+//config:	help
+//config:	Monitor netlink events.
+//config:
+//config:config FEATURE_IP_TUNTAP
+//config:	bool "ip tuntap"
+//config:	default y
+//config:	depends on IP
+//config:	help
+//config:	Configure tun and tap network interfaces.
+//config:
+//config:config FEATURE_IP_MADDR
+//config:	bool "ip maddr"
+//config:	default y
+//config:	depends on IP
+//config:	help
+//config:	Multicast address management.
+//config:
+
+//config:
 //config:config FEATURE_IP_RARE_PROTOCOLS
 //config:	bool "Support displaying rarely used link types"
 //config:	default n
@@ -140,6 +170,10 @@
 //kbuild:lib-$(CONFIG_IPRULE) += ip.o
 //kbuild:lib-$(CONFIG_IPTUNNEL) += ip.o
 //kbuild:lib-$(CONFIG_IPNEIGH) += ip.o
+//kbuild:lib-$(CONFIG_FEATURE_IP_NETNS) += libiproute/ipnetns.o
+//kbuild:lib-$(CONFIG_FEATURE_IP_MONITOR) += libiproute/ipmonitor.o
+//kbuild:lib-$(CONFIG_FEATURE_IP_TUNTAP) += libiproute/iptuntap.o
+//kbuild:lib-$(CONFIG_FEATURE_IP_MADDR) += libiproute/ipmaddr.o
 
 //--------------123456789.123456789.123456789.123456789.123456789.123456789.123456789.123....79
 //usage:#define ipaddr_trivial_usage
@@ -324,6 +358,22 @@
 //usage:       "show|flush [to PREFIX] [dev DEV] [nud STATE]"
 //usage:#define ipneigh_full_usage ""
 //usage:
+//usage:#define ipnetns_trivial_usage
+//usage:       "list | add NAME | del NAME | exec NAME CMD... | identify [PID] | pids NAME | monitor"
+//usage:#define ipnetns_full_usage ""
+//usage:
+//usage:#define ipmonitor_trivial_usage
+//usage:       "[all | LISTofOBJECTS]"
+//usage:#define ipmonitor_full_usage ""
+//usage:
+//usage:#define iptuntap_trivial_usage
+//usage:       "add|del [dev] NAME mode tun|tap [user USER] [group GROUP] [pi] [vnet_hdr] [multi_queue] | list"
+//usage:#define iptuntap_full_usage ""
+//usage:
+//usage:#define ipmaddr_trivial_usage
+//usage:       "show [DEV] | add MULTICAST_ADDR dev DEV | del MULTICAST_ADDR dev DEV"
+//usage:#define ipmaddr_full_usage ""
+//usage:
 //usage:#if ENABLE_FEATURE_IP_ADDRESS || ENABLE_FEATURE_IP_ROUTE
 //usage:# define IP_BAR_LINK   "|"
 //usage:#else
@@ -353,9 +403,13 @@
 //usage:	IF_FEATURE_IP_TUNNEL( IP_BAR_TUNNEL"tunnel")
 //usage:	IF_FEATURE_IP_NEIGH(  IP_BAR_NEIGH "neigh")
 //usage:	IF_FEATURE_IP_RULE(   IP_BAR_RULE  "rule")
+//usage:	IF_FEATURE_IP_NETNS(  "|netns")
+//usage:	IF_FEATURE_IP_MONITOR("|monitor")
+//usage:	IF_FEATURE_IP_TUNTAP( "|tuntap")
+//usage:	IF_FEATURE_IP_MADDR(  "|maddr")
 //usage:       " [ARGS]"
 //usage:#define ip_full_usage "\n\n"
-//usage:       "OPTIONS := -f[amily] inet|inet6|link | -o[neline]\n"
+//usage:       "OPTIONS := -f[amily] inet|inet6|link | -4 | -6 | -0 | -o[neline] | -s[tats] | -d[etails] | -j[son] | -br[ief] | -c[olor] | -N[umeric] | -a[ll] | -l[oops] N | -n[etns] NAME\n"
 //usage:	IF_FEATURE_IP_ADDRESS("\n"
 //usage:	"ip addr "ipaddr_trivial_usage)
 //usage:	IF_FEATURE_IP_ROUTE("\n"
@@ -368,6 +422,15 @@
 //usage:	"ip neigh "ipneigh_trivial_usage)
 //usage:	IF_FEATURE_IP_RULE("\n"
 //usage:	"ip rule "iprule_trivial_usage)
+//usage:	IF_FEATURE_IP_NETNS("\n"
+//usage:	"ip netns "ipnetns_trivial_usage)
+//usage:	IF_FEATURE_IP_MONITOR("\n"
+//usage:	"ip monitor "ipmonitor_trivial_usage)
+//usage:	IF_FEATURE_IP_TUNTAP("\n"
+//usage:	"ip tuntap "iptuntap_trivial_usage)
+//usage:	IF_FEATURE_IP_MADDR("\n"
+//usage:	"ip maddr "ipmaddr_trivial_usage)
+
 
 #include "libbb.h"
 
@@ -450,6 +513,10 @@ int ip_main(int argc UNUSED_PARAM, char **argv)
 		IF_FEATURE_IP_TUNNEL("tunl\0")
 		IF_FEATURE_IP_RULE("rule\0")
 		IF_FEATURE_IP_NEIGH("neigh\0")
+		IF_FEATURE_IP_NETNS("netns\0")
+		IF_FEATURE_IP_MONITOR("monitor\0")
+		IF_FEATURE_IP_TUNTAP("tuntap\0")
+		IF_FEATURE_IP_MADDR("maddr\0")
 		;
 	static const ip_func_ptr_t ip_func_ptrs[] ALIGN_PTR = {
 		ip_print_help,
@@ -461,6 +528,10 @@ int ip_main(int argc UNUSED_PARAM, char **argv)
 		IF_FEATURE_IP_TUNNEL(do_iptunnel,)
 		IF_FEATURE_IP_RULE(do_iprule,)
 		IF_FEATURE_IP_NEIGH(do_ipneigh,)
+		IF_FEATURE_IP_NETNS(do_ipnetns,)
+		IF_FEATURE_IP_MONITOR(do_ipmonitor,)
+		IF_FEATURE_IP_TUNTAP(do_iptuntap,)
+		IF_FEATURE_IP_MADDR(do_ipmaddr,)
 	};
 	ip_func_ptr_t ip_func;
 	int key;

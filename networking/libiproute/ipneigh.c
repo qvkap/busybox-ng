@@ -89,7 +89,7 @@ static unsigned nud_state_a2n(char *arg)
 #endif
 
 
-static int FAST_FUNC print_neigh(const struct sockaddr_nl *who UNUSED_PARAM,
+int FAST_FUNC print_neigh(const struct sockaddr_nl *who UNUSED_PARAM,
 				 struct nlmsghdr *n, void *arg UNUSED_PARAM)
 {
 	struct ndmsg *r = NLMSG_DATA(n);
