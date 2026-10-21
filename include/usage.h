@@ -3878,15 +3878,24 @@
 	) \
 
 #define curl_trivial_usage \
-       "[OPTIONS] URL" \
+       "[-sSvILiOkf] [-X METHOD] [-H HDR] [-d DATA] [-u USER:PASS] [-o FILE] URL" \
 
 #define curl_full_usage "\n\n" \
-       "Fetch content from URL\n" \
-     "\n	-X METH	HTTP method" \
-     "\n	-H HDR	HTTP header" \
-     "\n	-d DATA	HTTP data" \
-     "\n	-o FILE	Output file" \
-     "\n	-s	Silent" \
+       "Transfer data from or to a server\n" \
+     "\n	-X METHOD	HTTP method (GET, POST, PUT, DELETE, HEAD, etc.)" \
+     "\n	-H HDR		Custom HTTP header (can be used multiple times)" \
+     "\n	-d DATA		HTTP POST data" \
+     "\n	-o FILE		Write output to FILE instead of stdout" \
+     "\n	-O		Write output to a local file named like remote file" \
+     "\n	-s		Silent mode (no progress or error messages)" \
+     "\n	-S		Show error message even with -s" \
+     "\n	-v		Verbose (show request/response headers)" \
+     "\n	-L		Follow HTTP redirects (301, 302, 303, 307, 308)" \
+     "\n	-i		Include HTTP response headers in output" \
+     "\n	-I		Show HTTP headers only (HEAD request)" \
+     "\n	-k		Allow insecure SSL/TLS connections" \
+     "\n	-u USER:PASS	Server user and password for authentication" \
+     "\n	-f		Fail silently on server errors (HTTP 4xx/5xx)" \
 
 #define dnsd_trivial_usage \
        "[-dvs] [-c CONFFILE] [-t TTL_SEC] [-p PORT] [-i ADDR]" \

@@ -120,10 +120,13 @@ config FEATURE_BRCTL_SHOW
 	Add support for option which prints the current config:
 		show
 config CURL
-	bool "curl (minimal curl implementation)"
+	bool "curl (HTTP/HTTPS transfer tool)"
 	default y
 	help
-	Minimal curl implementation.
+	cURL-compatible command-line tool for transferring data with URLs.
+	Supports HTTP/HTTPS, redirects (-L), custom headers (-H),
+	HEAD/include headers (-I/-i), basic auth (-u), remote name (-O),
+	verbose output (-v), and error handling (-f).
 config DNSD
 	bool "dnsd (10 kb)"
 	default y

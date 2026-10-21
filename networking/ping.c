@@ -218,11 +218,17 @@ create_icmp_socket(void)
 {
 	int sock;
 #if ENABLE_PING6
-	if (lsa->u.sa.sa_family == AF_INET6)
+	if (lsa->u.sa.sa_family == AF_INET6) {
 		sock = socket(AF_INET6, SOCK_RAW, IPPROTO_ICMPV6);
-	else
+		if (sock < 0 && (errno == EPERM || errno == EACCES))
+			sock = socket(AF_INET6, SOCK_DGRAM, IPPROTO_ICMPV6);
+	} else
 #endif
+	{
 		sock = socket(AF_INET, SOCK_RAW, 1); /* 1 == ICMP */
+		if (sock < 0 && (errno == EPERM || errno == EACCES))
+			sock = socket(AF_INET, SOCK_DGRAM, 1);
+	}
 	if (sock < 0) {
 		if (errno == EPERM)
 			bb_simple_error_msg_and_die(bb_msg_perm_denied_are_you_root);
