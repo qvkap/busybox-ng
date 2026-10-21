@@ -2,7 +2,7 @@
  * Automatically generated C config: don't edit
  * Busybox version: 1.38.0
  */
-#define AUTOCONF_TIMESTAMP "2026-10-16 21:40:21 MSK"
+#define AUTOCONF_TIMESTAMP "2026-10-21 16:19:03 MSK"
 
 #define CONFIG_HAVE_DOT_CONFIG 1
 #define ENABLE_HAVE_DOT_CONFIG 1
@@ -7668,314 +7668,162 @@
 # define IF_CTTYHACK(...) __VA_ARGS__
 #endif
 #define IF_NOT_CTTYHACK(...)
-#define CONFIG_HUSH 1
-#define ENABLE_HUSH 1
-#ifdef MAKE_SUID
-# define IF_HUSH(...) __VA_ARGS__ "CONFIG_HUSH"
-#else
-# define IF_HUSH(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH(...)
-#define CONFIG_SHELL_HUSH 1
-#define ENABLE_SHELL_HUSH 1
-#ifdef MAKE_SUID
-# define IF_SHELL_HUSH(...) __VA_ARGS__ "CONFIG_SHELL_HUSH"
-#else
-# define IF_SHELL_HUSH(...) __VA_ARGS__
-#endif
-#define IF_NOT_SHELL_HUSH(...)
-#define CONFIG_HUSH_NEED_FOR_SPEED 1
-#define ENABLE_HUSH_NEED_FOR_SPEED 1
-#ifdef MAKE_SUID
-# define IF_HUSH_NEED_FOR_SPEED(...) __VA_ARGS__ "CONFIG_HUSH_NEED_FOR_SPEED"
-#else
-# define IF_HUSH_NEED_FOR_SPEED(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_NEED_FOR_SPEED(...)
-#define CONFIG_HUSH_BASH_COMPAT 1
-#define ENABLE_HUSH_BASH_COMPAT 1
-#ifdef MAKE_SUID
-# define IF_HUSH_BASH_COMPAT(...) __VA_ARGS__ "CONFIG_HUSH_BASH_COMPAT"
-#else
-# define IF_HUSH_BASH_COMPAT(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_BASH_COMPAT(...)
-#define CONFIG_HUSH_BRACE_EXPANSION 1
-#define ENABLE_HUSH_BRACE_EXPANSION 1
-#ifdef MAKE_SUID
-# define IF_HUSH_BRACE_EXPANSION(...) __VA_ARGS__ "CONFIG_HUSH_BRACE_EXPANSION"
-#else
-# define IF_HUSH_BRACE_EXPANSION(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_BRACE_EXPANSION(...)
+#undef CONFIG_HUSH
+#define ENABLE_HUSH 0
+#define IF_HUSH(...)
+#define IF_NOT_HUSH(...) __VA_ARGS__
+#undef CONFIG_SHELL_HUSH
+#define ENABLE_SHELL_HUSH 0
+#define IF_SHELL_HUSH(...)
+#define IF_NOT_SHELL_HUSH(...) __VA_ARGS__
+#undef CONFIG_HUSH_NEED_FOR_SPEED
+#define ENABLE_HUSH_NEED_FOR_SPEED 0
+#define IF_HUSH_NEED_FOR_SPEED(...)
+#define IF_NOT_HUSH_NEED_FOR_SPEED(...) __VA_ARGS__
+#undef CONFIG_HUSH_BASH_COMPAT
+#define ENABLE_HUSH_BASH_COMPAT 0
+#define IF_HUSH_BASH_COMPAT(...)
+#define IF_NOT_HUSH_BASH_COMPAT(...) __VA_ARGS__
+#undef CONFIG_HUSH_BRACE_EXPANSION
+#define ENABLE_HUSH_BRACE_EXPANSION 0
+#define IF_HUSH_BRACE_EXPANSION(...)
+#define IF_NOT_HUSH_BRACE_EXPANSION(...) __VA_ARGS__
 #undef CONFIG_HUSH_BASH_SOURCE_CURDIR
 #define ENABLE_HUSH_BASH_SOURCE_CURDIR 0
 #define IF_HUSH_BASH_SOURCE_CURDIR(...)
 #define IF_NOT_HUSH_BASH_SOURCE_CURDIR(...) __VA_ARGS__
-#define CONFIG_HUSH_LINENO_VAR 1
-#define ENABLE_HUSH_LINENO_VAR 1
-#ifdef MAKE_SUID
-# define IF_HUSH_LINENO_VAR(...) __VA_ARGS__ "CONFIG_HUSH_LINENO_VAR"
-#else
-# define IF_HUSH_LINENO_VAR(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_LINENO_VAR(...)
-#define CONFIG_HUSH_INTERACTIVE 1
-#define ENABLE_HUSH_INTERACTIVE 1
-#ifdef MAKE_SUID
-# define IF_HUSH_INTERACTIVE(...) __VA_ARGS__ "CONFIG_HUSH_INTERACTIVE"
-#else
-# define IF_HUSH_INTERACTIVE(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_INTERACTIVE(...)
-#define CONFIG_HUSH_SAVEHISTORY 1
-#define ENABLE_HUSH_SAVEHISTORY 1
-#ifdef MAKE_SUID
-# define IF_HUSH_SAVEHISTORY(...) __VA_ARGS__ "CONFIG_HUSH_SAVEHISTORY"
-#else
-# define IF_HUSH_SAVEHISTORY(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_SAVEHISTORY(...)
-#define CONFIG_HUSH_JOB 1
-#define ENABLE_HUSH_JOB 1
-#ifdef MAKE_SUID
-# define IF_HUSH_JOB(...) __VA_ARGS__ "CONFIG_HUSH_JOB"
-#else
-# define IF_HUSH_JOB(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_JOB(...)
-#define CONFIG_HUSH_TICK 1
-#define ENABLE_HUSH_TICK 1
-#ifdef MAKE_SUID
-# define IF_HUSH_TICK(...) __VA_ARGS__ "CONFIG_HUSH_TICK"
-#else
-# define IF_HUSH_TICK(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_TICK(...)
-#define CONFIG_HUSH_IF 1
-#define ENABLE_HUSH_IF 1
-#ifdef MAKE_SUID
-# define IF_HUSH_IF(...) __VA_ARGS__ "CONFIG_HUSH_IF"
-#else
-# define IF_HUSH_IF(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_IF(...)
-#define CONFIG_HUSH_LOOPS 1
-#define ENABLE_HUSH_LOOPS 1
-#ifdef MAKE_SUID
-# define IF_HUSH_LOOPS(...) __VA_ARGS__ "CONFIG_HUSH_LOOPS"
-#else
-# define IF_HUSH_LOOPS(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_LOOPS(...)
-#define CONFIG_HUSH_CASE 1
-#define ENABLE_HUSH_CASE 1
-#ifdef MAKE_SUID
-# define IF_HUSH_CASE(...) __VA_ARGS__ "CONFIG_HUSH_CASE"
-#else
-# define IF_HUSH_CASE(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_CASE(...)
-#define CONFIG_HUSH_ALIAS 1
-#define ENABLE_HUSH_ALIAS 1
-#ifdef MAKE_SUID
-# define IF_HUSH_ALIAS(...) __VA_ARGS__ "CONFIG_HUSH_ALIAS"
-#else
-# define IF_HUSH_ALIAS(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_ALIAS(...)
-#define CONFIG_HUSH_FUNCTIONS 1
-#define ENABLE_HUSH_FUNCTIONS 1
-#ifdef MAKE_SUID
-# define IF_HUSH_FUNCTIONS(...) __VA_ARGS__ "CONFIG_HUSH_FUNCTIONS"
-#else
-# define IF_HUSH_FUNCTIONS(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_FUNCTIONS(...)
-#define CONFIG_HUSH_FUNCTION_KEYWORD 1
-#define ENABLE_HUSH_FUNCTION_KEYWORD 1
-#ifdef MAKE_SUID
-# define IF_HUSH_FUNCTION_KEYWORD(...) __VA_ARGS__ "CONFIG_HUSH_FUNCTION_KEYWORD"
-#else
-# define IF_HUSH_FUNCTION_KEYWORD(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_FUNCTION_KEYWORD(...)
-#define CONFIG_HUSH_LOCAL 1
-#define ENABLE_HUSH_LOCAL 1
-#ifdef MAKE_SUID
-# define IF_HUSH_LOCAL(...) __VA_ARGS__ "CONFIG_HUSH_LOCAL"
-#else
-# define IF_HUSH_LOCAL(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_LOCAL(...)
-#define CONFIG_HUSH_RANDOM_SUPPORT 1
-#define ENABLE_HUSH_RANDOM_SUPPORT 1
-#ifdef MAKE_SUID
-# define IF_HUSH_RANDOM_SUPPORT(...) __VA_ARGS__ "CONFIG_HUSH_RANDOM_SUPPORT"
-#else
-# define IF_HUSH_RANDOM_SUPPORT(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_RANDOM_SUPPORT(...)
-#define CONFIG_HUSH_MODE_X 1
-#define ENABLE_HUSH_MODE_X 1
-#ifdef MAKE_SUID
-# define IF_HUSH_MODE_X(...) __VA_ARGS__ "CONFIG_HUSH_MODE_X"
-#else
-# define IF_HUSH_MODE_X(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_MODE_X(...)
-#define CONFIG_HUSH_ECHO 1
-#define ENABLE_HUSH_ECHO 1
-#ifdef MAKE_SUID
-# define IF_HUSH_ECHO(...) __VA_ARGS__ "CONFIG_HUSH_ECHO"
-#else
-# define IF_HUSH_ECHO(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_ECHO(...)
-#define CONFIG_HUSH_PRINTF 1
-#define ENABLE_HUSH_PRINTF 1
-#ifdef MAKE_SUID
-# define IF_HUSH_PRINTF(...) __VA_ARGS__ "CONFIG_HUSH_PRINTF"
-#else
-# define IF_HUSH_PRINTF(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_PRINTF(...)
-#define CONFIG_HUSH_TEST 1
-#define ENABLE_HUSH_TEST 1
-#ifdef MAKE_SUID
-# define IF_HUSH_TEST(...) __VA_ARGS__ "CONFIG_HUSH_TEST"
-#else
-# define IF_HUSH_TEST(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_TEST(...)
-#define CONFIG_HUSH_HELP 1
-#define ENABLE_HUSH_HELP 1
-#ifdef MAKE_SUID
-# define IF_HUSH_HELP(...) __VA_ARGS__ "CONFIG_HUSH_HELP"
-#else
-# define IF_HUSH_HELP(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_HELP(...)
-#define CONFIG_HUSH_EXPORT 1
-#define ENABLE_HUSH_EXPORT 1
-#ifdef MAKE_SUID
-# define IF_HUSH_EXPORT(...) __VA_ARGS__ "CONFIG_HUSH_EXPORT"
-#else
-# define IF_HUSH_EXPORT(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_EXPORT(...)
-#define CONFIG_HUSH_EXPORT_N 1
-#define ENABLE_HUSH_EXPORT_N 1
-#ifdef MAKE_SUID
-# define IF_HUSH_EXPORT_N(...) __VA_ARGS__ "CONFIG_HUSH_EXPORT_N"
-#else
-# define IF_HUSH_EXPORT_N(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_EXPORT_N(...)
-#define CONFIG_HUSH_READONLY 1
-#define ENABLE_HUSH_READONLY 1
-#ifdef MAKE_SUID
-# define IF_HUSH_READONLY(...) __VA_ARGS__ "CONFIG_HUSH_READONLY"
-#else
-# define IF_HUSH_READONLY(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_READONLY(...)
-#define CONFIG_HUSH_KILL 1
-#define ENABLE_HUSH_KILL 1
-#ifdef MAKE_SUID
-# define IF_HUSH_KILL(...) __VA_ARGS__ "CONFIG_HUSH_KILL"
-#else
-# define IF_HUSH_KILL(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_KILL(...)
-#define CONFIG_HUSH_WAIT 1
-#define ENABLE_HUSH_WAIT 1
-#ifdef MAKE_SUID
-# define IF_HUSH_WAIT(...) __VA_ARGS__ "CONFIG_HUSH_WAIT"
-#else
-# define IF_HUSH_WAIT(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_WAIT(...)
-#define CONFIG_HUSH_COMMAND 1
-#define ENABLE_HUSH_COMMAND 1
-#ifdef MAKE_SUID
-# define IF_HUSH_COMMAND(...) __VA_ARGS__ "CONFIG_HUSH_COMMAND"
-#else
-# define IF_HUSH_COMMAND(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_COMMAND(...)
-#define CONFIG_HUSH_TRAP 1
-#define ENABLE_HUSH_TRAP 1
-#ifdef MAKE_SUID
-# define IF_HUSH_TRAP(...) __VA_ARGS__ "CONFIG_HUSH_TRAP"
-#else
-# define IF_HUSH_TRAP(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_TRAP(...)
-#define CONFIG_HUSH_TYPE 1
-#define ENABLE_HUSH_TYPE 1
-#ifdef MAKE_SUID
-# define IF_HUSH_TYPE(...) __VA_ARGS__ "CONFIG_HUSH_TYPE"
-#else
-# define IF_HUSH_TYPE(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_TYPE(...)
-#define CONFIG_HUSH_TIMES 1
-#define ENABLE_HUSH_TIMES 1
-#ifdef MAKE_SUID
-# define IF_HUSH_TIMES(...) __VA_ARGS__ "CONFIG_HUSH_TIMES"
-#else
-# define IF_HUSH_TIMES(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_TIMES(...)
-#define CONFIG_HUSH_READ 1
-#define ENABLE_HUSH_READ 1
-#ifdef MAKE_SUID
-# define IF_HUSH_READ(...) __VA_ARGS__ "CONFIG_HUSH_READ"
-#else
-# define IF_HUSH_READ(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_READ(...)
-#define CONFIG_HUSH_SET 1
-#define ENABLE_HUSH_SET 1
-#ifdef MAKE_SUID
-# define IF_HUSH_SET(...) __VA_ARGS__ "CONFIG_HUSH_SET"
-#else
-# define IF_HUSH_SET(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_SET(...)
-#define CONFIG_HUSH_UNSET 1
-#define ENABLE_HUSH_UNSET 1
-#ifdef MAKE_SUID
-# define IF_HUSH_UNSET(...) __VA_ARGS__ "CONFIG_HUSH_UNSET"
-#else
-# define IF_HUSH_UNSET(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_UNSET(...)
-#define CONFIG_HUSH_ULIMIT 1
-#define ENABLE_HUSH_ULIMIT 1
-#ifdef MAKE_SUID
-# define IF_HUSH_ULIMIT(...) __VA_ARGS__ "CONFIG_HUSH_ULIMIT"
-#else
-# define IF_HUSH_ULIMIT(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_ULIMIT(...)
-#define CONFIG_HUSH_UMASK 1
-#define ENABLE_HUSH_UMASK 1
-#ifdef MAKE_SUID
-# define IF_HUSH_UMASK(...) __VA_ARGS__ "CONFIG_HUSH_UMASK"
-#else
-# define IF_HUSH_UMASK(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_UMASK(...)
-#define CONFIG_HUSH_GETOPTS 1
-#define ENABLE_HUSH_GETOPTS 1
-#ifdef MAKE_SUID
-# define IF_HUSH_GETOPTS(...) __VA_ARGS__ "CONFIG_HUSH_GETOPTS"
-#else
-# define IF_HUSH_GETOPTS(...) __VA_ARGS__
-#endif
-#define IF_NOT_HUSH_GETOPTS(...)
+#undef CONFIG_HUSH_LINENO_VAR
+#define ENABLE_HUSH_LINENO_VAR 0
+#define IF_HUSH_LINENO_VAR(...)
+#define IF_NOT_HUSH_LINENO_VAR(...) __VA_ARGS__
+#undef CONFIG_HUSH_INTERACTIVE
+#define ENABLE_HUSH_INTERACTIVE 0
+#define IF_HUSH_INTERACTIVE(...)
+#define IF_NOT_HUSH_INTERACTIVE(...) __VA_ARGS__
+#undef CONFIG_HUSH_SAVEHISTORY
+#define ENABLE_HUSH_SAVEHISTORY 0
+#define IF_HUSH_SAVEHISTORY(...)
+#define IF_NOT_HUSH_SAVEHISTORY(...) __VA_ARGS__
+#undef CONFIG_HUSH_JOB
+#define ENABLE_HUSH_JOB 0
+#define IF_HUSH_JOB(...)
+#define IF_NOT_HUSH_JOB(...) __VA_ARGS__
+#undef CONFIG_HUSH_TICK
+#define ENABLE_HUSH_TICK 0
+#define IF_HUSH_TICK(...)
+#define IF_NOT_HUSH_TICK(...) __VA_ARGS__
+#undef CONFIG_HUSH_IF
+#define ENABLE_HUSH_IF 0
+#define IF_HUSH_IF(...)
+#define IF_NOT_HUSH_IF(...) __VA_ARGS__
+#undef CONFIG_HUSH_LOOPS
+#define ENABLE_HUSH_LOOPS 0
+#define IF_HUSH_LOOPS(...)
+#define IF_NOT_HUSH_LOOPS(...) __VA_ARGS__
+#undef CONFIG_HUSH_CASE
+#define ENABLE_HUSH_CASE 0
+#define IF_HUSH_CASE(...)
+#define IF_NOT_HUSH_CASE(...) __VA_ARGS__
+#undef CONFIG_HUSH_ALIAS
+#define ENABLE_HUSH_ALIAS 0
+#define IF_HUSH_ALIAS(...)
+#define IF_NOT_HUSH_ALIAS(...) __VA_ARGS__
+#undef CONFIG_HUSH_FUNCTIONS
+#define ENABLE_HUSH_FUNCTIONS 0
+#define IF_HUSH_FUNCTIONS(...)
+#define IF_NOT_HUSH_FUNCTIONS(...) __VA_ARGS__
+#undef CONFIG_HUSH_FUNCTION_KEYWORD
+#define ENABLE_HUSH_FUNCTION_KEYWORD 0
+#define IF_HUSH_FUNCTION_KEYWORD(...)
+#define IF_NOT_HUSH_FUNCTION_KEYWORD(...) __VA_ARGS__
+#undef CONFIG_HUSH_LOCAL
+#define ENABLE_HUSH_LOCAL 0
+#define IF_HUSH_LOCAL(...)
+#define IF_NOT_HUSH_LOCAL(...) __VA_ARGS__
+#undef CONFIG_HUSH_RANDOM_SUPPORT
+#define ENABLE_HUSH_RANDOM_SUPPORT 0
+#define IF_HUSH_RANDOM_SUPPORT(...)
+#define IF_NOT_HUSH_RANDOM_SUPPORT(...) __VA_ARGS__
+#undef CONFIG_HUSH_MODE_X
+#define ENABLE_HUSH_MODE_X 0
+#define IF_HUSH_MODE_X(...)
+#define IF_NOT_HUSH_MODE_X(...) __VA_ARGS__
+#undef CONFIG_HUSH_ECHO
+#define ENABLE_HUSH_ECHO 0
+#define IF_HUSH_ECHO(...)
+#define IF_NOT_HUSH_ECHO(...) __VA_ARGS__
+#undef CONFIG_HUSH_PRINTF
+#define ENABLE_HUSH_PRINTF 0
+#define IF_HUSH_PRINTF(...)
+#define IF_NOT_HUSH_PRINTF(...) __VA_ARGS__
+#undef CONFIG_HUSH_TEST
+#define ENABLE_HUSH_TEST 0
+#define IF_HUSH_TEST(...)
+#define IF_NOT_HUSH_TEST(...) __VA_ARGS__
+#undef CONFIG_HUSH_HELP
+#define ENABLE_HUSH_HELP 0
+#define IF_HUSH_HELP(...)
+#define IF_NOT_HUSH_HELP(...) __VA_ARGS__
+#undef CONFIG_HUSH_EXPORT
+#define ENABLE_HUSH_EXPORT 0
+#define IF_HUSH_EXPORT(...)
+#define IF_NOT_HUSH_EXPORT(...) __VA_ARGS__
+#undef CONFIG_HUSH_EXPORT_N
+#define ENABLE_HUSH_EXPORT_N 0
+#define IF_HUSH_EXPORT_N(...)
+#define IF_NOT_HUSH_EXPORT_N(...) __VA_ARGS__
+#undef CONFIG_HUSH_READONLY
+#define ENABLE_HUSH_READONLY 0
+#define IF_HUSH_READONLY(...)
+#define IF_NOT_HUSH_READONLY(...) __VA_ARGS__
+#undef CONFIG_HUSH_KILL
+#define ENABLE_HUSH_KILL 0
+#define IF_HUSH_KILL(...)
+#define IF_NOT_HUSH_KILL(...) __VA_ARGS__
+#undef CONFIG_HUSH_WAIT
+#define ENABLE_HUSH_WAIT 0
+#define IF_HUSH_WAIT(...)
+#define IF_NOT_HUSH_WAIT(...) __VA_ARGS__
+#undef CONFIG_HUSH_COMMAND
+#define ENABLE_HUSH_COMMAND 0
+#define IF_HUSH_COMMAND(...)
+#define IF_NOT_HUSH_COMMAND(...) __VA_ARGS__
+#undef CONFIG_HUSH_TRAP
+#define ENABLE_HUSH_TRAP 0
+#define IF_HUSH_TRAP(...)
+#define IF_NOT_HUSH_TRAP(...) __VA_ARGS__
+#undef CONFIG_HUSH_TYPE
+#define ENABLE_HUSH_TYPE 0
+#define IF_HUSH_TYPE(...)
+#define IF_NOT_HUSH_TYPE(...) __VA_ARGS__
+#undef CONFIG_HUSH_TIMES
+#define ENABLE_HUSH_TIMES 0
+#define IF_HUSH_TIMES(...)
+#define IF_NOT_HUSH_TIMES(...) __VA_ARGS__
+#undef CONFIG_HUSH_READ
+#define ENABLE_HUSH_READ 0
+#define IF_HUSH_READ(...)
+#define IF_NOT_HUSH_READ(...) __VA_ARGS__
+#undef CONFIG_HUSH_SET
+#define ENABLE_HUSH_SET 0
+#define IF_HUSH_SET(...)
+#define IF_NOT_HUSH_SET(...) __VA_ARGS__
+#undef CONFIG_HUSH_UNSET
+#define ENABLE_HUSH_UNSET 0
+#define IF_HUSH_UNSET(...)
+#define IF_NOT_HUSH_UNSET(...) __VA_ARGS__
+#undef CONFIG_HUSH_ULIMIT
+#define ENABLE_HUSH_ULIMIT 0
+#define IF_HUSH_ULIMIT(...)
+#define IF_NOT_HUSH_ULIMIT(...) __VA_ARGS__
+#undef CONFIG_HUSH_UMASK
+#define ENABLE_HUSH_UMASK 0
+#define IF_HUSH_UMASK(...)
+#define IF_NOT_HUSH_UMASK(...) __VA_ARGS__
+#undef CONFIG_HUSH_GETOPTS
+#define ENABLE_HUSH_GETOPTS 0
+#define IF_HUSH_GETOPTS(...)
+#define IF_NOT_HUSH_GETOPTS(...) __VA_ARGS__
 #undef CONFIG_HUSH_MEMLEAK
 #define ENABLE_HUSH_MEMLEAK 0
 #define IF_HUSH_MEMLEAK(...)

@@ -1,1 +1,1 @@
-#define CONFIG_HUSH_TEST 1
+#undef CONFIG_HUSH_TEST

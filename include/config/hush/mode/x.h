@@ -1,1 +1,1 @@
-#define CONFIG_HUSH_MODE_X 1
+#undef CONFIG_HUSH_MODE_X
