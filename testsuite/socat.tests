@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Copyright 2026 BusyBox-ng Authors
+# Licensed under GPLv2, see file LICENSE in this source tree.
+
+. ./testing.sh
+
+# testing "description" "arguments" "result" "infile" "stdin"
+
+testing "socat EXEC echo" \
+	"socat - EXEC:\"echo test_pong\"" \
+	"test_pong\n" '' ''
+
+testing "socat FILE transfer" \
+	"echo 'file_relay_data' > input.socat && socat FILE:input.socat FILE:output.socat && cat output.socat && rm -f input.socat output.socat" \
+	"file_relay_data\n" '' ''
+
+testing "socat -v verbose dump" \
+	"socat -v - EXEC:\"echo hi\" 2>&1 | grep -o '< 3 bytes'" \
+	"< 3 bytes\n" '' ''
+
+exit $FAILCOUNT

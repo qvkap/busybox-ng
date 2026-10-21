@@ -2,7 +2,7 @@
  * Automatically generated C config: don't edit
  * Busybox version: 1.38.0
  */
-#define AUTOCONF_TIMESTAMP "2026-10-21 18:40:54 MSK"
+#define AUTOCONF_TIMESTAMP "2026-10-21 19:00:24 MSK"
 
 #define CONFIG_HAVE_DOT_CONFIG 1
 #define ENABLE_HAVE_DOT_CONFIG 1
@@ -6528,6 +6528,14 @@
 # define IF_ROUTE(...) __VA_ARGS__
 #endif
 #define IF_NOT_ROUTE(...)
+#define CONFIG_SOCAT 1
+#define ENABLE_SOCAT 1
+#ifdef MAKE_SUID
+# define IF_SOCAT(...) __VA_ARGS__ "CONFIG_SOCAT"
+#else
+# define IF_SOCAT(...) __VA_ARGS__
+#endif
+#define IF_NOT_SOCAT(...)
 #define CONFIG_SS 1
 #define ENABLE_SS 1
 #ifdef MAKE_SUID
@@ -7296,6 +7304,14 @@
 # define IF_SMEMCAP(...) __VA_ARGS__
 #endif
 #define IF_NOT_SMEMCAP(...)
+#define CONFIG_STRACE 1
+#define ENABLE_STRACE 1
+#ifdef MAKE_SUID
+# define IF_STRACE(...) __VA_ARGS__ "CONFIG_STRACE"
+#else
+# define IF_STRACE(...) __VA_ARGS__
+#endif
+#define IF_NOT_STRACE(...)
 #define CONFIG_BB_SYSCTL 1
 #define ENABLE_BB_SYSCTL 1
 #ifdef MAKE_SUID

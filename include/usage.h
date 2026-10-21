@@ -4604,6 +4604,26 @@
      "\n	-e	Display other/more information" \
      "\n	-A inet" IF_FEATURE_IPV6("[6]") "	Select address family" \
 
+#define socat_trivial_usage "[-v] [-d] [-t TIMEOUT] <address1> <address2>" \
+
+#define socat_full_usage "\n\n" \
+       "Bidirectional data relay between two channels\n" \
+     "\n	-v		Verbose (hex/text dump of transferred data)" \
+     "\n	-d		Increase verbosity / debug output" \
+     "\n	-t TIMEOUT	Timeout in seconds before closing other half on EOF" \
+     "\n" \
+     "\nSupported addresses:" \
+     "\n	- or STDIN / STDOUT" \
+     "\n	TCP:<host>:<port> or TCP4:<host>:<port>" \
+     "\n	TCP-LISTEN:<port> or TCP4-LISTEN:<port>" \
+     "\n	UDP:<host>:<port> or UDP4:<host>:<port>" \
+     "\n	UDP-LISTEN:<port>" \
+     "\n	UNIX-CONNECT:<path> or UNIX:<path>" \
+     "\n	UNIX-LISTEN:<path>" \
+     "\n	EXEC:\"<command>\"" \
+     "\n	SYSTEM:\"<command>\"" \
+     "\n	FILE:<path>" \
+
 #define ss_trivial_usage \
        "[-nraeloepismbEZz460tuwxdS] [-N NSNAME] [-f FAMILY] [-A QUERY] [-D FILE] [-F FILE]" \
 
@@ -5222,6 +5242,17 @@
 
 #define smemcap_full_usage "\n\n" \
        "Collect memory usage data in /proc and write it to stdout" \
+
+#define strace_trivial_usage "[-c] [-f] [-s STRSIZE] [-o FILE] [-p PID | PROG [ARGS...]]" \
+
+#define strace_full_usage "\n\n" \
+       "Trace system calls and signals\n" \
+     "\n	-p PID		Attach to process with PID" \
+     "\n	-c		Count time, calls, and errors for each syscall and report summary" \
+     "\n	-f		Follow forks" \
+     "\n	-o FILE		Write trace output to FILE" \
+     "\n	-s STRSIZE	Maximum string length to print (default 32)" \
+     "\n	-q		Suppress attach/detach messages" \
 
 #define sysctl_trivial_usage \
        "[-enq] { -a | -p [FILE]... | [-w] [KEY[=VALUE]]... }" \

@@ -897,6 +897,12 @@ config ROUTE
 	default y
 	help
 	Route displays or manipulates the kernel's IP routing tables.
+config SOCAT
+	bool "socat (multipurpose relay)"
+	default y
+	help
+	socat is a relay for bidirectional data transfers between two
+	independent data channels.
 config SS
 	bool "ss (12 kb)"
 	default y

@@ -28,6 +28,7 @@ lib-$(CONFIG_MINIPS) += ps.o
 lib-$(CONFIG_PSTREE) += pstree.o
 lib-$(CONFIG_PWDX) += pwdx.o
 lib-$(CONFIG_SMEMCAP) += smemcap.o
+lib-$(CONFIG_STRACE) += strace.o
 lib-$(CONFIG_BB_SYSCTL) += sysctl.o
 lib-$(CONFIG_TOP) += top.o
 lib-$(CONFIG_UPTIME) += uptime.o

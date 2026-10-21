@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Copyright 2026 BusyBox-ng Authors
+# Licensed under GPLv2, see file LICENSE in this source tree.
+
+. ./testing.sh
+
+# testing "description" "arguments" "result" "infile" "stdin"
+
+testing "strace traces write" \
+	"strace echo hello 2>&1 | grep -o 'write(1, \"hello\\\n\", 6) = 6'" \
+	'write(1, "hello\\n", 6) = 6\n' '' ''
+
+testing "strace -c summary contains header" \
+	"strace -c echo hello 2>&1 | grep -o '% time.*syscall'" \
+	'% time     seconds  usecs/call     calls    errors syscall\n' '' ''
+
+testing "strace -s truncates strings" \
+	"strace -s 5 echo hello_world 2>&1 | grep -o 'write(1, \"hello\"..., 12) = 12'" \
+	'write(1, "hello"..., 12) = 12\n' '' ''
+
+exit $FAILCOUNT

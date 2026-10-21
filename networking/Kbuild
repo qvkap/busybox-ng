@@ -55,6 +55,7 @@ lib-$(CONFIG_PING)  += ping.o
 lib-$(CONFIG_PING6) += ping.o
 lib-$(CONFIG_PSCAN) += pscan.o
 lib-$(CONFIG_ROUTE) += route.o
+lib-$(CONFIG_SOCAT) += socat.o
 lib-$(CONFIG_SS) += ss.o
 lib-$(CONFIG_SSL_CLIENT) += ssl_client.o
 lib-$(CONFIG_SSL_SERVER) += ssl_server.o

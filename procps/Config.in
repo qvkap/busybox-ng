@@ -186,6 +186,12 @@ config SMEMCAP
 	help
 	smemcap is a tool for capturing process data for smem,
 	a memory usage statistic tool.
+config STRACE
+	bool "strace (trace system calls)"
+	default y
+	help
+	strace is a diagnostic, debugging and instructional userspace
+	tracer for Linux.
 config BB_SYSCTL
 	bool "sysctl (7.9 kb)"
 	default y
